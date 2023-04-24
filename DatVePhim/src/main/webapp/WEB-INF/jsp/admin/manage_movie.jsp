@@ -18,9 +18,9 @@
 
 
     <script>
-        $(document).on('submit', '#addMovieForm', function (e) {
+
+        $(document).on('submit', '#addMovieForm', function (event) {
             var frm = $('#addMovieForm');
-            e.preventDefault();
             var Form = this;
             var data = {};
 
@@ -34,16 +34,15 @@
 
             console.log(data);
             $.ajax({
-                context: this,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
                 type: frm.attr('method'),
                 url: frm.attr('action'),
                 data: JSON.stringify(data),
-                error: function () {
+                success: function () {
                     window.location.reload();
                 }
             });
+
         });
 
         $(document).on('submit', '#updateForm', function (e) {
@@ -64,12 +63,11 @@
             console.log(JSON.stringify(data));
 
             $.ajax({
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
                 type: frm.attr('method'),
                 url: frm.attr('action') + data["movieId"],
                 data: JSON.stringify(data),
-                error: function () {
+                success: function () {
                     window.location.reload();
                 }
             });
@@ -111,8 +109,9 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form id="addMovieForm" method="POST"
-                                                                      action="${pageContext.request.contextPath}/api/addMovie">
+                                                                <form id="addMovieForm" method="post"
+                                                                      action="${pageContext.request.contextPath}/api/addMovie"
+                                                                      onsubmit="return false">
                                                                     <div class="row">
                                                                         <div class="col-sm-12">
                                                                             <div class="form-group">
@@ -229,7 +228,7 @@
                                     <tbody>
                                     <c:forEach var="mov" items="${movies}">
                                         <tr>
-                                            <form id="updateForm" method="PUT"
+                                            <form id="updateForm" method="PUT" onsubmit="return false"
                                                   action="${pageContext.request.contextPath}/api/updateMovie/">
                                                 <td>
                                                     <input class="form-control" name="movieId" type="text"

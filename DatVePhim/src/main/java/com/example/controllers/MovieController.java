@@ -15,16 +15,16 @@ public class MovieController {
     private MovieService service;
 
     @PostMapping(value = "/api/addMovie")
-    public ModelAndView addMovie(@RequestBody MovieDTO movieDTO) {
+    public String addMovie(@RequestBody MovieDTO movieDTO) {
         System.out.println(movieDTO.toString());
         Boolean ad = service.addMovie(movieDTO);
-        return new ModelAndView("redirect:/api/manage_movie");
+        return "success";
     }
 
     @PutMapping(value = "/api/updateMovie/{id}")
-    public ModelAndView updateMovie(@PathVariable("id") int id, @RequestBody MovieDTO movieDTO) {
+    public String updateMovie(@PathVariable("id") int id, @RequestBody MovieDTO movieDTO) {
         Boolean up = service.updateMovie(movieDTO, id);
-        return new ModelAndView("redirect:/api/manage_movie");
+        return "success";
     }
 
     @RequestMapping(value = "/api/deleteMovie/{id}", method = RequestMethod.GET)
