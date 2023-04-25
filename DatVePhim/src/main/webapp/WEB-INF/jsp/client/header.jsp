@@ -5,7 +5,6 @@
     <div class="top-header span_top">
         <div class="logo">
             <a href="/Home"><img src="../../../static/images/logo.png" alt=""/></a>
-            <p>SYSU THEATRE</p>
         </div>
         <!--<div class="search v-search">-->
         <!--<form>-->

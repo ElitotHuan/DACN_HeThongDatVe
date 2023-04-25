@@ -209,8 +209,8 @@
                                 <table class="table table-sm">
                                     <thead>
                                     <tr>
-                                        <th>MOVIE ID</th>
-                                        <th>MOVIE NAME</th>
+                                        <th>MOVIEID</th>
+                                        <th>NAMEOFMOVIES</th>
                                         <th>SMALLIMAGEURL</th>
                                         <th>LARGEIMAGEURL</th>
                                         <th>RELEASE DATE</th>
