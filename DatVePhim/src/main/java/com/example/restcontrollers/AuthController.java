@@ -1,4 +1,4 @@
-package com.example.controllers;
+package com.example.restcontrollers;
 
 import com.example.models.User;
 import com.example.security.jwt.JwtResponse;

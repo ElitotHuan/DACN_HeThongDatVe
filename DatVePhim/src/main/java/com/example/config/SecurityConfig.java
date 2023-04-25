@@ -23,6 +23,15 @@ public class  SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
+//    @Bean
+//    public InternalResourceViewResolver viewResolver() {
+//        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+//        viewResolver.setPrefix("/WEB-INF/jsp/");
+//        viewResolver.setSuffix(".jsp");
+//        viewResolver.setViewClass(JstlView.class);
+//        return viewResolver;
+//    }
+
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
@@ -57,10 +66,11 @@ public class  SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().ignoringAntMatchers("/**");
-        http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
+//        http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
         http.authorizeRequests()
-                .antMatchers("/", "/login","/api/movies/showing","/api/movies/showing/search","/register","/api/movies/details").permitAll()
-                .antMatchers("/api/**").hasRole("CLIENT")
+                .antMatchers("/", "/login","/api/movies/showing","/api/movies/showing/search","/register","/api/movies/details", "/Home").permitAll()
+                .antMatchers("/**").hasRole("CLIENT")
+//                .antMatchers("/api/**").hasRole("CLIENT")
                 .anyRequest().authenticated()
                 .and().csrf().disable();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
