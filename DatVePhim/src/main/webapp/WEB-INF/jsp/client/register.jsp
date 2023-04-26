@@ -22,7 +22,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <jsp:include page="header.jsp"/>
             <div class="main-contact">
                 <div class="contact-form">
-                    <form action="#" method="post" class="form-signin" role="form">
+                    <form action="/register" method="post" class="form-signin" role="form">
                         <div class="form-group">
                             <input type="text" class="form-control" name="Username" placeholder="Username" required
                                    autofocus/>

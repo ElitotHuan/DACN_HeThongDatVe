@@ -3,6 +3,7 @@ package com.example.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Entity
 @Table(name = "user")
 @Data
 @AllArgsConstructor
@@ -21,5 +22,8 @@ public class User {
     private String password;
 
     @Column(name = "username")
-    private String userName;
+    private String username;
+
+    @Column(name = "email")
+    private String email;
 }
