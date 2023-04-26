@@ -7,15 +7,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class HomeController {
-    //@RequestMapping(value = "/home", method = RequestMethod.GET)
-//    @GetMapping("home")
-//    public String home(){
-//        return "home";
-//    }
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/Home"}, method = RequestMethod.GET)
     public ModelAndView home() {
-        ModelAndView mav = new ModelAndView("/client/home");
-        System.out.println(mav);
+        ModelAndView mav = new ModelAndView("client/home");
         return mav;
     }
 
