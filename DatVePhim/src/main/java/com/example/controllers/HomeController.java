@@ -1,8 +1,6 @@
 package com.example.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
@@ -28,6 +26,12 @@ public class HomeController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView RegisterView() {
         ModelAndView mav = new ModelAndView("client/register");
+        return mav;
+    }
+
+    @RequestMapping(value = "/404", method = RequestMethod.GET)
+    public ModelAndView NotFound404Page() {
+        ModelAndView mav = new ModelAndView("client/404");
         return mav;
     }
 }
