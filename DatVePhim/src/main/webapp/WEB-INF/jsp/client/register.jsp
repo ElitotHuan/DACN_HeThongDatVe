@@ -22,7 +22,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <jsp:include page="header.jsp"/>
             <div class="main-contact">
                 <div class="contact-form">
-                    <form action="#" method="post" class="form-signin" role="form">
+                    <form action="/register" method="post" class="form-signin" role="form">
                         <div class="form-group">
                             <input type="text" class="form-control" name="Username" placeholder="Username" required
                                    autofocus/>
@@ -35,6 +35,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <div class="form-group">
                             <input type="password" class="form-control" name="confirmPassword"
                                    placeholder="Confirm Password" required="required"/>
+                        </div>
+                        <!-- Thêm thông báo lỗi ở đây -->
+                        <div class="form-group">
+                            <p style="color: red">${errorMsg}</p>
                         </div>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
                     </form>
