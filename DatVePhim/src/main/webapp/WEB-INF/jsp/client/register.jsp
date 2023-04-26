@@ -36,6 +36,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <input type="password" class="form-control" name="confirmPassword"
                                    placeholder="Confirm Password" required="required"/>
                         </div>
+                        <!-- Thêm thông báo lỗi ở đây -->
+                        <div class="form-group">
+                            <p style="color: red">${errorMsg}</p>
+                        </div>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
                     </form>
                 </div>

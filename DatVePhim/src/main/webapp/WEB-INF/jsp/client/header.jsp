@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html>
 <body>
 <div class="top-header">

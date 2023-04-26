@@ -2,8 +2,8 @@ package com.example.controllers;
 
 import com.example.models.User;
 import com.example.services.UserService;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
 
 @RestController
 public class UserController {
@@ -32,5 +31,23 @@ public class UserController {
             model.addAttribute("errorMsg", "Tên đăng nhập đã tồn tại, vui lòng chọn tên đăng nhập khác!");
         }
         return new ModelAndView("client/register");
+    }
+
+    @PostMapping("/login")
+    public ModelAndView loginUser(@ModelAttribute("user") @Valid User user,BindingResult bindingResult,  Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("client/login");
+        }
+        boolean result = userService.authenticateUser(user.getUsername(), user.getPassword());
+        if (result) {
+            User loggedInUser = userService.getUserByUsername(user.getUsername());
+            model.addAttribute("loggedInUser", loggedInUser);
+            model.addAttribute("successMsg", "Đăng Nhập thành công!");
+            return new ModelAndView("redirect:/");
+        } else {
+            model.addAttribute("errorMsg", "Tên đăng nhập hoặc mật khẩu không đúng !");
+        }
+        return new ModelAndView("client/login");
     }
 }

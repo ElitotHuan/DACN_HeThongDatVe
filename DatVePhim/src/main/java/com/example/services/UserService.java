@@ -33,4 +33,18 @@ public class UserService {
 
         return true;
     }
+
+    public boolean authenticateUser(String username, String password) {
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 }
