@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.example.dto.UserDTO;
 import com.example.models.User;
 import com.example.services.UserService;
 import javax.validation.Valid;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ModelAndView loginUser(@ModelAttribute("user") @Valid User user,BindingResult bindingResult,  Model model) {
+    public ModelAndView loginUser(@ModelAttribute("user") @Valid UserDTO user, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             return new ModelAndView("client/login");
