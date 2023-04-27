@@ -28,7 +28,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <jsp:include page="header.jsp"/>
             <div class="main-contact">
                 <div class="contact-form">
-                    <form action="/index" method="post" class="form-signin" role="form">
+                    <form action="/login" method="post" class="form-signin" role="form">
 
                         <div class="form-group">
                             <input type="text" class="form-control" name="username" placeholder="Username" required
@@ -37,6 +37,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <div class="form-group">
                             <input type="password" class="form-control" name="password" placeholder="Password"
                                    required/>
+                        </div>
+                        <!-- Thêm thông báo lỗi ở đây -->
+                        <div class="form-group">
+                            <a id="forgot-password" href="forgot-password">Forgot Password</a>
+                            <p style="color: red">${errorMsg}</p>
                         </div>
 
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
