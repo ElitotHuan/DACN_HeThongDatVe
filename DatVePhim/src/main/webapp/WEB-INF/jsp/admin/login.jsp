@@ -12,8 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/admin/style.css">
+    <link rel="stylesheet" href="../../../static/css/admin/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../static/css/admin/style.css">
     <link href='https://fonts.googleapis.com/css?family=Baloo' rel='stylesheet'>
 
     <title>Login :: Bookmymovie.com</title>

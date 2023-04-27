@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <html>
 <head>
     <link href="../../../static/css/bootstrap.css" rel='stylesheet' type='text/css'/>
@@ -104,12 +105,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </div>
         <div class="more-reviews">
             <ul id="flexiselDemo2">
-                <li onclick="location.href='movie-detail'"><img src="../../../static/images/m1.jpg" alt=""/></li>
-                <li><img src="../../../static/images/m2.jpg" alt=""/></li>
-                <li><img src="../../../static/images/m3.jpg" alt=""/></li>
-                <li><img src="../../../static/images/m4.jpg" alt=""/></li>
+                <c:forEach var="movie" begin="0" end="5" items="${movies}">
+                    <li onclick="location.href='movie-detail/${movie.id}'"><img src="${movie.largeImageURL}" alt=""/></li>
+                </c:forEach>
             </ul>
-
         </div>
         <jsp:include page="footer.jsp"/>
 
