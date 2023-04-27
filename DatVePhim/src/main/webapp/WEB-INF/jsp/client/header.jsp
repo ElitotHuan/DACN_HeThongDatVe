@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <html>
 <head>
     <script type="text/javascript">
@@ -32,8 +33,14 @@
             </form>
         </div>
         <div class="login-signup">
-            <a id="login" href="login">Log In</a>
-            <a id="signup" href="register">Sign Up</a>
+            <c:if test="${sessionScope.loggedInUser != null}">
+                <span>Hello, <strong>${sessionScope.loggedInUser.username}</strong>!</span>
+                <a href="/logout">Đăng xuất</a>
+            </c:if>
+            <c:if test="${sessionScope.loggedInUser == null}">
+                <a id="login" href="login">Log In</a>
+                <a id="signup" href="register">Sign Up</a>
+            </c:if>
         </div>
         <div class="clearfix"></div>
     </div>

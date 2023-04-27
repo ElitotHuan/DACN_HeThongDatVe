@@ -1,0 +1,9 @@
+INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (1, NULL, NULL, '$2a$10$8JjFCX43vy7mk3LBABm6FOziLB9vl.kVnGB.w2UuDHRD6NIiVWJTW', 'nthduc');
+INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (2, NULL, NULL, '$2a$10$inkzlFTbkLiH88njGn5Le.sFPoyM8CZ.CHtZM/Jycehwcu4n44Xpq', 'huan');
+INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (3, NULL, NULL, '$2a$10$JCqwwL87w5NF09xgjMttSOQKwpTvZadCcUOj51PTAUaS6HUMWe21C', 'thicac');
+INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (4, NULL, NULL, '$2a$10$YdXrV1Oh253knjmy4nI.beLxEWE3adHzIDmLSZQyXJbITsAgvdF0m', 'abc');
+INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (5, NULL, NULL, '$2a$10$vQ1PUM28.hww0f893CsBjOrNUUtEYdcNPS5MFKzWErLYx3aw3ooVK', 'duc1');
+INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (6, NULL, NULL, '$2a$10$zDwZvkH5u.b6LsP/FNtWheQtWySJV23shT4npoJaiLxDIuPy3Ho3i', 'duc123');
+INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (7, NULL, NULL, '$2a$10$cFD9AXR/kMQ3N2M5hj84d.b5lkQDbdbel/lzW8zSAPhCmj9COR.3O', 'duc321');
+INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (8, NULL, NULL, '$2a$10$VHsHCs5H3bzgZxpCAA9sjuflvTfIP8fuDMeRrPZ1Wf6Vs.0s9MRZO', 'duc341');
+INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (9, NULL, NULL, '$2a$10$gPDf6sPQljt4ag66PQxr4Onf5z.tycjbtjhfPAW3gZi4BWKZm8vce', 'duc');

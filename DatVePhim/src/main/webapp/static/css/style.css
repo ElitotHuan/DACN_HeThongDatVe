@@ -2715,6 +2715,14 @@ a.b-home:hover {
         font-weight: 400;
     }
 
+    .main-contact form input[type="email"], .main-contact form textarea {
+        padding: 7px 11px;
+        border: 1px solid #000;
+        font-size: 1em;
+        margin-bottom: 1em;
+        font-weight: 400;
+    }
+
     .contact_info h3 {
         font-size: 1.7em;
     }

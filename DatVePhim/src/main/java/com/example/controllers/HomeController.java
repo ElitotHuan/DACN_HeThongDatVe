@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+
 import com.example.models.Movie;
 import com.example.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,12 @@ public class HomeController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView RegisterView() {
         ModelAndView mav = new ModelAndView("client/register");
+        return mav;
+    }
+
+    @RequestMapping(value = "/404", method = RequestMethod.GET)
+    public ModelAndView NotFound404Page() {
+        ModelAndView mav = new ModelAndView("client/404");
         return mav;
     }
 }
