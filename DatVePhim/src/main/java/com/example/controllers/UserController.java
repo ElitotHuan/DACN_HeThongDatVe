@@ -4,6 +4,8 @@ import com.example.dto.UserDTO;
 import com.example.models.User;
 import com.example.services.UserService;
 import javax.validation.Valid;
+
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
@@ -35,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ModelAndView loginUser(@ModelAttribute("user") @Valid UserDTO user, BindingResult bindingResult, Model model) {
+    public ModelAndView loginUser(@ModelAttribute("user") @Valid UserDTO user, BindingResult bindingResult, Model model, HttpSession session) {
 
         if (bindingResult.hasErrors()) {
             return new ModelAndView("client/login");
@@ -43,12 +45,14 @@ public class UserController {
         boolean result = userService.authenticateUser(user.getUsername(), user.getPassword());
         if (result) {
             User loggedInUser = userService.getUserByUsername(user.getUsername());
+            session.setAttribute("loggedInUser", loggedInUser);
             model.addAttribute("loggedInUser", loggedInUser);
             model.addAttribute("successMsg", "Đăng Nhập thành công!");
+            System.out.println(loggedInUser);
             return new ModelAndView("redirect:/");
         } else {
             model.addAttribute("errorMsg", "Tên đăng nhập hoặc mật khẩu không đúng !");
+            return new ModelAndView("client/login");
         }
-        return new ModelAndView("client/login");
     }
 }
