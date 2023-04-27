@@ -27,6 +27,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <input type="text" class="form-control" name="Username" placeholder="Username" required
                                    autofocus/>
                         </div>
+
+                        <div class="form-group" style="border: 3px solid #000">
+                            <input type="email" class="form-control" name="email" placeholder="Email" required autofocus/>
+                        </div>
                         <div class="form-group">
                             <input type="password" class="form-control" name="password" placeholder="Password"
                                    required/>
