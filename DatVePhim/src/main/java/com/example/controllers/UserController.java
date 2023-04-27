@@ -73,6 +73,14 @@ public class UserController {
         return mav;
     }
 
+    @GetMapping("/logout")
+    public ModelAndView logout(HttpSession session) {
+        // Xóa thông tin người dùng đăng nhập khỏi session
+        session.removeAttribute("loggedInUser");
+        // Điều hướng đến trang đăng nhập
+        return new ModelAndView("redirect:/");
+    }
+
     @PostMapping("/forgot-password")
     public ModelAndView forgotPassword(@RequestParam("email") String email, Model model) {
         User user = userService.findByEmail(email);
