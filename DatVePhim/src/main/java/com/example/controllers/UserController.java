@@ -5,13 +5,15 @@ import com.example.models.User;
 import com.example.services.UserService;
 import javax.validation.Valid;
 
+import com.example.utils.Email;
+import com.example.utils.EmailUtils;
+import com.example.utils.PasswordUtils;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -20,6 +22,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     public ModelAndView registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
@@ -54,5 +58,47 @@ public class UserController {
             model.addAttribute("errorMsg", "Tên đăng nhập hoặc mật khẩu không đúng !");
             return new ModelAndView("client/login");
         }
+    }
+    // Get Quên mật khẩu
+    @RequestMapping(value = "/forgot-password", method = RequestMethod.GET)
+    public ModelAndView ForgotPasswordPage() {
+        ModelAndView mav = new ModelAndView("client/forgot-password");
+        return mav;
+    }
+
+    // Get Quên mật khẩu
+    @RequestMapping(value = "/reset-password-success", method = RequestMethod.GET)
+    public ModelAndView ResetPasswordPage() {
+        ModelAndView mav = new ModelAndView("client/reset-password-success");
+        return mav;
+    }
+
+    @PostMapping("/forgot-password")
+    public ModelAndView forgotPassword(@RequestParam("email") String email, Model model) {
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            model.addAttribute("errorMsg", "Địa chỉ email không tồn tại trong hệ thống");
+            return new ModelAndView("client/forgot-password");
+        }
+        // Tạo mật khẩu mới cho người dùng
+        String newPassword = PasswordUtils.generateNewPassword();
+        // Cập nhật mật khẩu mới vào cơ sở dữ liệu
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userService.saveUser(user);
+        // Gửi email chứa mật khẩu mới đến địa chỉ email của người dùng
+        try {
+            Email emailObj = new Email();
+            emailObj.setFrom("nguyenthaiducbhsmn@gmail.com");
+            emailObj.setFromPassword("hjfxosozfyrtzrfc");
+            emailObj.setTo(email);
+            emailObj.setSubject("Mật khẩu mới của bạn");
+            emailObj.setContent("Chào bạn,\n\nMật khẩu mới của bạn là: " + newPassword + "\n\nVui lòng đăng nhập bằng mật khẩu mới này và đổi lại mật khẩu của riêng bạn để đảm bảo an toàn tài khoản.\n\nTrân trọng,\nĐội ngũ hỗ trợ của chúng tôi");
+            EmailUtils.send(emailObj);
+        } catch (Exception e) {
+            model.addAttribute("errorMsg", "Lỗi gửi email: " + e.getMessage());
+            return new ModelAndView("client/forgot-password");
+        }
+
+        return new ModelAndView("client/reset-password-success");
     }
 }

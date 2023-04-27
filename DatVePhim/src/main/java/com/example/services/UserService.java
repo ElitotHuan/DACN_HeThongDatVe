@@ -21,6 +21,11 @@ public class UserService {
             return false;
         }
 
+        // Kiểm tra xem địa chỉ email đã được sử dụng bởi một tài khoản khác chưa
+        if (userRepository.findByEmail(email) != null) {
+            return false;
+        }
+
         // Tạo một đối tượng User mới
         User user = new User();
         user.setUsername(username);
@@ -47,4 +52,13 @@ public class UserService {
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+    public User findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
 }

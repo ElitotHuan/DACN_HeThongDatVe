@@ -40,8 +40,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </div>
                         <!-- Thêm thông báo lỗi ở đây -->
                         <div class="form-group">
+                            <a id="forgot-password" href="forgot-password">Forgot Password</a>
                             <p style="color: red">${errorMsg}</p>
                         </div>
+
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
                     </form>
 
