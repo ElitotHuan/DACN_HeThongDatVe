@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,13 +89,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="col-md-9 reviews-grids">
                 <div class="review">
                     <div class="movie-pic">
-                        <img src="../../../static/images/r1.jpg" alt=""/>
+                        <img src="${movie.smallImageURl}" alt=""/>
                     </div>
                     <div class="review-info">
-                        <a class="span">Interstellar</a>
+                        <a class="span">${movie.name}</a>
                         <p class="dirctr"><a href="">Reagan Gavin Rasquinha, </a>TNN,
                             Mar 12, 2015, 12.47PM IST</p>
                         <div class="clearfix"></div>
+                        ư
                         <p class="ratingview c-rating">Avg Readers' Rating:</p>
                         <p class="ratingview c-rating">&nbsp; 3.3/5</p>
                         <div class="clearfix"></div>
@@ -105,8 +107,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         <div class="form-group input-group">
                                             <input name="mname" style="display:none;"/>
                                             <span class="input-group-btn">
-                                                            <input class="btn btn-warning" type="submit"
-                                                                   value="BOOK NOW"/>
+                                                              <c:choose>
+                                                                  <c:when test="${movie.isShowing eq 1}">
+                                                                          <input class="btn btn-warning" type="submit"
+                                                                                 value="BOOK NOW"/>
+                                                                  </c:when>
+                                                                  <c:otherwise>
+                                                                           <input class="btn btn-warning" type="submit" disabled
+                                                                                  value="NOT SCREENING"/>
+                                                                  </c:otherwise>
+                                                              </c:choose>
+
                                                         </span>
                                         </div>
                                     </fieldset>
@@ -118,13 +129,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <p class="info"><span>CAST: </span>Will Smith, Margot Robbie, Adrian
-                            Martinez, Rodrigo Santoro, BD Wong, Robert Taylor</p>
-                        <p class="info"><span>DIRECTION: </span> Glenn Ficarra, John Requa</p>
-                        <p class="info"><span>GENRE: </span> Crime</p>
-                        <p class="info"><span>DESCRIPTION: </span> Interstellar is about Earth's last chance to find a
-                            habitable planet before a lack of resources causes the human race to go extinct</p>
-                        <p class="info"><span>DURATION: </span> 1 hour 45 minutes</p>
+                        <p class="info"><span>CAST: </span>${movie.actors}</p>
+                        <p class="info"><span>DIRECTORS: </span> ${movie.director}</p>
+                        <p class="info"><span>GENRE: </span> ${movie.categories}</p>
+                        <p class="info"><span>DESCRIPTION: </span> ${movie.description}</p>
+                        <p class="info"><span>DURATION: </span> ${movie.duration} minutes</p>
+                        <c:choose>
+                            <c:when test="${movie.isShowing eq 1}">
+                                <p class="info"><span>SHOWING: </span>Availible</p>
+                            </c:when>
+                            <c:otherwise>
+                                <p class="info"><span>SHOWING: </span>Unavailable</p>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                     <div class="clearfix"></div>
                 </div>

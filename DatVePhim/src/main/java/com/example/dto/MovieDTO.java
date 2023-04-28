@@ -14,4 +14,7 @@ public class MovieDTO {
     private String releaseDate;
     private int duration;
     private String language;
+    private  int isShowing;
 }
+
+
