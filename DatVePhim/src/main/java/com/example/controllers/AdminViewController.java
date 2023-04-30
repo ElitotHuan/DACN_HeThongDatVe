@@ -1,8 +1,14 @@
 package com.example.controllers;
 
 import com.example.models.Movie;
+import com.example.models.Schedule;
+import com.example.services.BranchService;
 import com.example.services.MovieService;
+import com.example.services.RoomService;
+import com.example.services.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,10 +21,20 @@ public class AdminViewController {
     @Autowired
     private MovieService movieService;
 
+    @Autowired
+    private ScheduleService scheduleService;
 
-    @GetMapping(value = {"/api", "/api/admin_home"})
-    public ModelAndView adminHomeView() {
+    @Autowired
+    private RoomService roomService;
+
+    @Autowired
+    private BranchService branchService;
+
+
+    @GetMapping(value = {"/api/", "/api/admin_home"})
+    public ModelAndView adminHomeView(@AuthenticationPrincipal UserDetails user) {
         ModelAndView mav = new ModelAndView("admin/admin_home");
+        mav.addObject("user",user);
         return mav;
     }
 
@@ -30,13 +46,17 @@ public class AdminViewController {
         return mav;
     }
 
-    @GetMapping(value = "/api/login")
+    @GetMapping(value = "/api/manage_schedule")
     public ModelAndView scheduleMangamentView() {
         ModelAndView mav = new ModelAndView("admin/manage_schedule");
+        mav.addObject("movies", movieService.getAll());
+        mav.addObject("rooms", roomService.getAll());
+        mav.addObject("branches", branchService.getAll());
+        mav.addObject("schedules",  scheduleService.getAll());
         return mav;
     }
 
-    @GetMapping(value = "/api")
+    @GetMapping(value = "/api/login")
     public ModelAndView adminLoginView() {
         ModelAndView mav = new ModelAndView("admin/login");
         return mav;
