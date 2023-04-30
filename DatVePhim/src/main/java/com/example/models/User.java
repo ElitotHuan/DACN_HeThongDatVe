@@ -3,6 +3,8 @@ package com.example.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "user")
 @Data
@@ -26,4 +28,7 @@ public class User {
 
     @Column(name = "email")
     private String email;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> roles;
 }

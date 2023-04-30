@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+
 @Service
 public class UserService {
 
@@ -32,6 +34,8 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(password)); // Mã hóa mật khẩu bằng BCrypt trước khi lưu vào cơ sở dữ liệu
         user.setEmail(email);
         user.setFullName(fullName);
+        // Set mặc định role to "USER"
+        user.setRoles(Collections.singleton("USER"));
 
         // Lưu thông tin người dùng vào cơ sở dữ liệu
         userRepository.save(user);
