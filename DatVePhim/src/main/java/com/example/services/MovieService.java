@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
@@ -36,12 +37,16 @@ public class MovieService {
         return true;
     }
 
+    public List<String> doAutoComplete(final String input) {
+        return getStrings(input);
+    }
+
     public Movie getMovieById(int id) {
         return movieRepository.getById(id);
     }
 
     public Movie getMovieByName(String name) {
-        return movieRepository.searchByName(name);
+        return movieRepository.findByNameContainsIgnoreCase(name);
     }
 
     public boolean deleteMovie(int id) {
@@ -62,6 +67,9 @@ public class MovieService {
         newMovie.setLanguage(movie.getLanguage());
     }
 
+    private List<String> getStrings(final String input) {
+        return movieRepository.getNames().stream().filter(s -> s.toLowerCase().contains(input.toLowerCase())).collect(Collectors.toList());
+    }
 
 }
 
