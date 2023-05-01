@@ -1,6 +1,6 @@
 package com.example.controllers;
 
-import com.example.dto.UserDTO;
+import com.example.dto.LoginDTO;
 import com.example.models.User;
 import com.example.services.UserService;
 import javax.validation.Valid;
@@ -41,7 +41,7 @@ import org.springframework.web.servlet.ModelAndView;
         }
 
         @PostMapping("/login")
-        public ModelAndView loginUser(@ModelAttribute("user") @Valid UserDTO user, BindingResult bindingResult, Model model, HttpSession session) {
+        public ModelAndView loginUser(@ModelAttribute("user") @Valid LoginDTO user, BindingResult bindingResult, Model model, HttpSession session) {
 
             if (bindingResult.hasErrors()) {
                 return new ModelAndView("client/login");
@@ -109,4 +109,8 @@ import org.springframework.web.servlet.ModelAndView;
 
             return new ModelAndView("client/reset-password-success");
         }
+
+        // CRUD
+
+
 }
