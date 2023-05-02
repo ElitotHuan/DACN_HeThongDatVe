@@ -6,6 +6,8 @@ import com.example.models.User;
 import com.example.repositories.RoleRepository;
 import com.example.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +55,7 @@ public class UserService {
         user.getRoles().add(userRole);
 
         // Lưu thông tin người dùng vào cơ sở dữ liệu
-        System.out.println("Đăng Kí: "+ user);
+        System.out.println("Đăng Kí: " + user);
         userRepository.save(user);
 
         return true;
@@ -122,7 +124,7 @@ public class UserService {
     // CRUD
     public boolean addUser(UserDTO userDTO) {
         User newUser = new User();
-        setData(userDTO,newUser);
+        setData(userDTO, newUser);
         return true;
     }
 
@@ -196,4 +198,25 @@ public class UserService {
         return true;
     }
 
+    public boolean checkAdminRoleByUsername(String username) {
+        // Lấy thông tin người dùng từ cơ sở dữ liệu
+        User user = userRepository.findByUsername(username);
+
+        // Kiểm tra xem người dùng có tồn tại hay không
+        if (user != null) {
+            // Lấy danh sách các role của người dùng
+            List<Role> roles = user.getRoles();
+
+            // Kiểm tra xem người dùng có role là "ADMIN" hay không
+            for (Role role : roles) {
+                System.out.println(role.getName());
+                if (role.getName().equals("ADMIN")) {
+                    return true;
+                }
+            }
+        }
+
+        // Người dùng không có role là "ADMIN"
+        return false;
+    }
 }

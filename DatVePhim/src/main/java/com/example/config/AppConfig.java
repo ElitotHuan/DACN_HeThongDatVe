@@ -37,7 +37,7 @@ public class AppConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/","/api/admin_home","/api/manage_movie","/api/manage_schedule","/api/manage_user").hasRole("ADMIN")
+                .requestMatchers("/api/","/api/admin_home","/api/manage_movie","/api/manage_schedule","/api/manage_user").authenticated()
                 .requestMatchers(HttpMethod.POST, "/register").permitAll() // allow unauthenticated access to /register
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
                 .anyRequest().permitAll()

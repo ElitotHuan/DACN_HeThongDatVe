@@ -35,6 +35,7 @@
                         <label>Password</label>
                         <input type="password" name="Password" id="password" class="form-control">
                     </div>
+                    <p style="color: red">${errorMsg}</p>
                     <input type="submit" value="Login" class="btn cust-btn form-control">
                 </form>
             </div>
