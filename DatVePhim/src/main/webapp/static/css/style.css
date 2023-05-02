@@ -2757,3 +2757,33 @@ a.b-home:hover {
         overflow: hidden;
     }
 }
+
+.ui-autocomplete {
+    margin-top: 6px;
+    list-style-type: none;
+    padding: 8px 10px;
+    width: 18%;
+    float: right;
+    border: 1px solid #f0f0f0;
+    background-color: #fff;
+
+}
+
+.ui-autocomplete li {
+    font-family: Arial, Verdana, Sans-Serif;
+    cursor: pointer;
+    display: block;
+    height: 34px;
+    font-size: 14px;
+    line-height: 1.428571429;
+}
+
+
+.ui-autocomplete .ui-state-focus {
+    background-color: #66afe9;
+}
+
+
+.ui-helper-hidden-accessible {
+    display: none;
+}

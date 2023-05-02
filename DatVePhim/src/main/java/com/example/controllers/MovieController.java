@@ -21,6 +21,7 @@ public class MovieController {
         return "success";
     }
 
+
     @PutMapping(value = "/api/updateMovie/{id}")
     public String updateMovie(@PathVariable("id") int id, @RequestBody MovieDTO movieDTO) {
         Boolean up = service.updateMovie(movieDTO, id);
@@ -32,6 +33,7 @@ public class MovieController {
         Boolean del = service.deleteMovie(id);
         return new ModelAndView("redirect:/api/manage_movie");
     }
+
 
 
 }
