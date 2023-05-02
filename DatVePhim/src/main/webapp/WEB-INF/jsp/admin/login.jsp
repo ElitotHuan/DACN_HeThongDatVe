@@ -26,7 +26,7 @@
             <div class="login-panel">
                 <h1>Admin</h1>
                 <br>
-                <form action="performLogin" method="post">
+                <form action="/admin/login" method="post">
                     <div class="form-group">
                         <label>Username</label>
                         <input name="Username" id="email" class="form-control">
@@ -35,6 +35,7 @@
                         <label>Password</label>
                         <input type="password" name="Password" id="password" class="form-control">
                     </div>
+                    <p style="color: red">${errorMsg}</p>
                     <input type="submit" value="Login" class="btn cust-btn form-control">
                 </form>
             </div>
