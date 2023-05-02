@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -42,6 +39,7 @@ public class UserService {
         user.setRoles(Collections.singleton("USER"));
 
         // Lưu thông tin người dùng vào cơ sở dữ liệu
+        System.out.println("Đăng Kí: "+ user);
         userRepository.save(user);
 
         return true;

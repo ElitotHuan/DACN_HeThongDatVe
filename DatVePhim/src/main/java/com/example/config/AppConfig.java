@@ -1,7 +1,10 @@
 package com.example.config;
 
+import com.example.services.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -15,14 +18,18 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class AppConfig  {
 
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.authorizeHttpRequests()
-                .requestMatchers("/api/admin_home").hasRole("ADMIN")
+        return http.csrf().disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/","/api/admin_home","/api/manage_movie","/api/manage_schedule","/api/manage_user").permitAll()
+                .requestMatchers("/register","/login").permitAll() // allow unauthenticated access to /register
                 .anyRequest().permitAll()
                 .and()
-                .formLogin()
+                .formLogin().loginPage("/api/login")
                 .and()
                 .logout().logoutSuccessUrl("/Home")
                 .and()
@@ -30,23 +37,20 @@ public class AppConfig  {
     }
 
     @Bean
-    UserDetailsService users(BCryptPasswordEncoder passwordEncoder){
-        UserDetails user = User.builder()
-                .username("user")
-                .password(passwordEncoder.encode("top"))
-                .roles("USER")
-                .build();
-
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder.encode("secret"))
-                .roles("USER","ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(user,admin);
+    public UserDetailsService userDetailsService() {
+        return customUserDetailsService;
     }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService());
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
     }
 }
