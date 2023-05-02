@@ -1,5 +1,6 @@
 package com.example.services;
 
+import com.example.models.Role;
 import com.example.models.User;
 import com.example.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
         System.out.println(user.getUsername());
         System.out.println(user.getPassword());
-        System.out.println(getAuthorities(user));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthorities(user));
+        System.out.println(mapRolesToAuthorities(user.getRoles()));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(User user) {
-        return user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+        Collection<? extends GrantedAuthority> mapRoles = roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
+        return mapRoles;
     }
 }

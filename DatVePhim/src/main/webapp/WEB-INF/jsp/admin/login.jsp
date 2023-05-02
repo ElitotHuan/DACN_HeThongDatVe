@@ -26,7 +26,7 @@
             <div class="login-panel">
                 <h1>Admin</h1>
                 <br>
-                <form action="performLogin" method="post">
+                <form action="/admin/login" method="post">
                     <div class="form-group">
                         <label>Username</label>
                         <input name="Username" id="email" class="form-control">
