@@ -54,7 +54,7 @@ public class AdminViewController {
     public ModelAndView foodMangamentView() {
         List<Food> foodList =  foodService.getAll();
         ModelAndView mav = new ModelAndView("admin/manage_food");
-        mav.addObject("movies", foodList);
+        mav.addObject("foods", foodList);
         return mav;
     }
     @GetMapping(value = "/api/manage_schedule")
