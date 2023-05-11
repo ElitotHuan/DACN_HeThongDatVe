@@ -1,6 +1,7 @@
 package com.example.controllers;
 
 import com.example.models.Movie;
+import com.example.models.Food;
 import com.example.models.Schedule;
 import com.example.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class AdminViewController {
     private RoomService roomService;
 
     @Autowired
+    private FoodService foodService;
+
+    @Autowired
     private BranchService branchService;
 
     @Autowired
@@ -46,7 +50,13 @@ public class AdminViewController {
         mav.addObject("movies", movieList);
         return mav;
     }
-
+    @GetMapping(value = "/api/manage_food")
+    public ModelAndView foodMangamentView() {
+        List<Food> foodList =  foodService.getAll();
+        ModelAndView mav = new ModelAndView("admin/manage_food");
+        mav.addObject("movies", foodList);
+        return mav;
+    }
     @GetMapping(value = "/api/manage_schedule")
     public ModelAndView scheduleMangamentView() {
         ModelAndView mav = new ModelAndView("admin/manage_schedule");

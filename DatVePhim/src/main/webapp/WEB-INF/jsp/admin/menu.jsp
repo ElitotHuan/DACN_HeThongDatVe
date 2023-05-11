@@ -12,7 +12,7 @@
         <a class="dropdown-item" href="/api/manage_schedule">Manage Schedule</a>
         <a class="dropdown-item" href="#">Manage Branch</a>
         <a class="dropdown-item" href="#">Manage Room</a>
-        <a class="dropdown-item" href="#">Manage Food</a>
+        <a class="dropdown-item" href="/api/manage_food">Manage Food</a>
         <a class="dropdown-item" href="#">Manage Bookings</a>
     </div>
 </li>
