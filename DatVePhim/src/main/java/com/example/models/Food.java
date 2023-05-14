@@ -15,5 +15,7 @@ public class Food {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+
+    private String urlImage;
     private int price;
 }

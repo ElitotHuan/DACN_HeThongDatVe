@@ -28,7 +28,7 @@ public class FoodController {
     }
 
     @RequestMapping(value = "/api/deleteFood/{id}", method = RequestMethod.GET)
-    public ModelAndView deleteMovie(@PathVariable("id") int id) {
+    public ModelAndView deleteFood(@PathVariable("id") int id) {
         Boolean del = service.deleteFood(id);
         return new ModelAndView("redirect:/api/manage_food");
     }

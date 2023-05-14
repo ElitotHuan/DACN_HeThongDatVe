@@ -150,6 +150,7 @@
                                     <tr>
                                         <th>FOOD ID</th>
                                         <th>FOOD NAME</th>
+                                        <th>FOOD IMAGE</th>
                                         <th>FOOD PRICE</th>
                                         <th>UPDATE</th>
                                         <th>DELETE</th>
@@ -165,6 +166,9 @@
                                                 </td>
                                                 <td>
                                                     <input name="name" class="form-control" type="text" value="${food.name}"/>
+                                                </td>
+                                                <td>
+                                                    <input name="urlImage" class="form-control" type="text" value="${food.urlImage}"/>
                                                 </td>
                                                 <td>
                                                     <input name="price" class="form-control" type="number" value="${food.price}"/>
