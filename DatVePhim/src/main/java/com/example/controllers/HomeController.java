@@ -1,7 +1,9 @@
 package com.example.controllers;
 
 
+import com.example.models.Food;
 import com.example.models.Movie;
+import com.example.services.FoodService;
 import com.example.services.MovieService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,6 +21,9 @@ public class HomeController {
     @Autowired
     private MovieService movieService;
 
+    @Autowired
+    private FoodService foodService;
+
     @RequestMapping(value = {"/", "/Home"}, method = RequestMethod.GET)
     public ModelAndView home() {
         List<Movie> movieList = movieService.getAll();
@@ -29,9 +34,9 @@ public class HomeController {
 
     @RequestMapping(value = {"/food"}, method = RequestMethod.GET)
     public ModelAndView food() {
-        List<Movie> movieList = movieService.getAll();
+        List<Food> foodList = foodService.getAll();
         ModelAndView mav = new ModelAndView("client/food");
-        mav.addObject("movies", movieList);
+        mav.addObject("foods", foodList);
         return mav;
     }
 
