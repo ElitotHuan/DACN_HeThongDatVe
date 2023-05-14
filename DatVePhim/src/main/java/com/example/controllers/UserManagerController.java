@@ -2,6 +2,7 @@ package com.example.controllers;
 
 import com.example.dto.LoginDTO;
 import com.example.dto.UserDTO;
+import com.example.models.Role;
 import com.example.models.User;
 import com.example.services.UserService;
 import jakarta.servlet.ServletException;
@@ -56,14 +57,29 @@ public class UserManagerController {
     }
 
     @PostMapping("/admin/login")
-    public ModelAndView login(HttpServletRequest request) {
-        String username = request.getParameter("Username");
-        String password = request.getParameter("Password");
-        try {
-            request.login(username, password);
-            return new  ModelAndView("redirect:/api/admin_home");
-        } catch (ServletException e) {
-            return  new ModelAndView ("redirect:/admin/login?error=true");
+    public ModelAndView loginAdmin(@ModelAttribute("user") @Valid LoginDTO user, BindingResult bindingResult, Model model, HttpSession session) {
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("admin/login");
+        }
+
+        boolean result = userService.authenticateAdmin(user.getUsername(), user.getPassword());
+        if (result) {
+            User loggedInUser = userService.getUserByUsername(user.getUsername());
+            List<Role> roles = loggedInUser.getRoles();
+            String roleNames = "";
+            for (Role role : roles) {
+                roleNames += role.getName() + " ";
+                System.out.println("ROLE" + roleNames);
+            }
+            session.setAttribute("loggedInUser", loggedInUser);
+            model.addAttribute("loggedInUser", loggedInUser);
+            model.addAttribute("successMsg", "Đăng Nhập thành công! Vai trò: " + roleNames);
+            System.out.println(loggedInUser);
+            return new ModelAndView("redirect:/api/admin_home");
+
+        } else {
+            model.addAttribute("errorMsg", "Tên đăng nhập hoặc mật khẩu không đúng hoặc bạn không có quyền truy cập !");
+            return new ModelAndView("redirect:/admin/login?error=true");
         }
     }
 }

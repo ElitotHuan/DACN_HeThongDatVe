@@ -44,10 +44,10 @@ public class AppConfig {
                 .and()
                 .formLogin()
                 .loginPage("/api/login")
+                .usernameParameter("username") // set the input name for the username field
+                .passwordParameter("password") // set the input name for the password field
                 .defaultSuccessUrl("/api/admin_home")
                 .failureUrl("/api/login?error=true")
-                .usernameParameter("Username")
-                .passwordParameter("Password")
                 .and()
                 .logout()
                 .logoutUrl("/Home")
