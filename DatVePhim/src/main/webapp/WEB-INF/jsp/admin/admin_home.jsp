@@ -41,7 +41,7 @@
                 <div class="col-md-8 admin-box">
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="/api/manage_user">
+                            <a href="#">
                                 <div class="option-box">
                                     <div class="option-box-img">
                                         <img src="<%=request.getContextPath()%>/static/images/admin/manage-user.png"

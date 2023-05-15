@@ -2,11 +2,11 @@ package com.example.controllers;
 
 import com.example.models.Movie;
 import com.example.models.Schedule;
-import com.example.services.*;
+import com.example.services.BranchService;
+import com.example.services.MovieService;
+import com.example.services.RoomService;
+import com.example.services.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,14 +28,10 @@ public class AdminViewController {
     @Autowired
     private BranchService branchService;
 
-    @Autowired
-    private UserService userService;
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = {"/api/", "/api/admin_home"})
-    public ModelAndView adminHomeView(@AuthenticationPrincipal UserDetails user) {
+    public ModelAndView adminHomeView() {
         ModelAndView mav = new ModelAndView("admin/admin_home");
-        mav.addObject("user",user);
         return mav;
     }
 
@@ -70,12 +66,6 @@ public class AdminViewController {
         ModelAndView mav = new ModelAndView("admin/manage_room");
         mav.addObject("rooms", roomService.getAll());
         mav.addObject("branches", branchService.getAll());
-    }
-
-    @GetMapping(value = "/api/manage_user")
-    public ModelAndView userManagementView(){
-        ModelAndView mav = new ModelAndView("admin/manage_user");
-        mav.addObject("users",userService.getAllUsers());
         return mav;
     }
 
