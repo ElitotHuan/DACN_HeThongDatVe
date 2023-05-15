@@ -80,45 +80,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
           rel='stylesheet' type='text/css'/>
 
-        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-        <script type="text/javascript">
-            $(document).on('submit', '#searchFrom', function (event) {
-                var frm = $('#searchFrom');
-                var searchInput = document.getElementById("search-input").value;
-                $.ajax({
-                    type: frm.attr('method'),
-                    url: frm.attr('action'),
-                    data: {
-                        name: searchInput
-                    },
-                    success: function () {
-                        window.location.replace(frm.attr('action') + searchInput);
-                    }
-                });
-            });
-
-            $(function () {
-                $("#search-input").autocomplete({
-                    source: function (request, response) {
-                        $.ajax({
-                            url: "http://localhost:8080/search",
-                            dataType: "json",
-                            data: {
-                                q: request.term
-                            },
-                            success: function (data) {
-                                //alert(data);
-                                console.log(data);
-                                response(data);
-                            }
-                        });
-                    },
-                });
-            });
-        </script>
-        <script type="text/javascript" src="../../../static/js/jquery.flexisel.js"></script>
-
 
     <title>Movie Ticket and Service Website | Home</title>
 

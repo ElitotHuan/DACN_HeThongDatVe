@@ -20,11 +20,7 @@ public class Room {
     private double totalArea;
 
     @ManyToOne
+    @JoinColumn(nullable = false, name = "branch_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "branch_id", nullable = false)
     private Branch branch;
-
-
-
-
 }
