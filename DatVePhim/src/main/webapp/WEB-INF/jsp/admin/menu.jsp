@@ -10,8 +10,8 @@
         <a class="dropdown-item" href="#">Manage Users</a>
         <a class="dropdown-item" href="/api/manage_movie">Manage Movies</a>
         <a class="dropdown-item" href="/api/manage_schedule">Manage Schedule</a>
-        <a class="dropdown-item" href="#">Manage Branch</a>
-        <a class="dropdown-item" href="#">Manage Room</a>
+        <a class="dropdown-item" href="/api/manage_branch">Manage Branch</a>
+        <a class="dropdown-item" href="/api/manage_room">Manage Room</a>
         <a class="dropdown-item" href="#">Manage Food</a>
         <a class="dropdown-item" href="#">Manage Bookings</a>
     </div>
