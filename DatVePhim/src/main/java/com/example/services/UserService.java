@@ -71,6 +71,20 @@ public class UserService {
         return false;
     }
 
+    public boolean authenticateAdmin(String username, String password) {
+        User user = userRepository.findByUsername(username);
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+            List<Role> roles = user.getRoles();
+            for (Role role : roles) {
+                if ("ADMIN".equals(role.getName())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
