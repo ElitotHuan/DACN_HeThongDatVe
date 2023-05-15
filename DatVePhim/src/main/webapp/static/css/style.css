@@ -170,7 +170,7 @@ a.book:hover, a.video:hover {
 
 i.book1 {
     width: 40px;
-    height: 35px;
+    height: 25px;
     background: url('../images/img-sprite.png') no-repeat -300px -87px;
     display: inline-block;
     vertical-align: middle;
@@ -2291,8 +2291,8 @@ a.b-home:hover {
     }
 
     i.book1 {
-        width: 30px;
-        height: 25px;
+        width: 10px;
+        height: 10px;
         background: url('../images/img-sprite.png') no-repeat -219px -63px;
         margin-right: 5px;
         background-size: 268px;
