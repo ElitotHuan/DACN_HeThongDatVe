@@ -30,15 +30,12 @@
 <!-- header-section-starts -->
 <div class="full">
     <jsp:include page="menu.jsp"/>
-    <div class="menu">
-    </div>
-    <div class="main" style=" background: url(../static/images/ticket_banner.jpg) no-repeat center;">
+
+    <div class="main">
         <div class="error-content">
             <div class="top-header span_top">
-
             </div>
-
-            <div class="">
+            <div class="main-ticket">
                 <h2>Multiplex Theatre Showing Screen 1</h2>
                 <div class="demo">
                     <div id="seat-map">

@@ -1780,6 +1780,7 @@ a.b-home:hover {
 @media screen and (max-width: 1024px) {
     .main {
         border-left: 80px solid #383838;
+
     }
 
     .full {
