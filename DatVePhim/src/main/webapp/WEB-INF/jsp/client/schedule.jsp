@@ -8,9 +8,6 @@
     <link href="../../../static/css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <!-- Custom Theme files -->
     <script src="../../../static/js/jquery.min.js"></script>
-    function hideURLbar() {
-    window.scrollTo(0, 1);
-    } </script>
 
     <script type="text/javascript">
         $(window).load(function () {
