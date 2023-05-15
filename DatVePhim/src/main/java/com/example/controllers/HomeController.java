@@ -1,8 +1,11 @@
 package com.example.controllers;
 
 
+import com.example.models.Branch;
+import com.example.models.Food;
 import com.example.models.Movie;
-import com.example.services.MovieService;
+import com.example.models.Schedule;
+import com.example.services.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,15 @@ public class HomeController {
     @Autowired
     private MovieService movieService;
 
+    @Autowired
+    private RoomService roomService;
+    @Autowired
+    private BranchService branchService;
+    @Autowired
+    private ScheduleService scheduleService;
+    @Autowired
+    private FoodService foodService;
+
     @RequestMapping(value = {"/", "/Home"}, method = RequestMethod.GET)
     public ModelAndView home() {
         List<Movie> movieList = movieService.getAll();
@@ -27,6 +39,30 @@ public class HomeController {
         return mav;
     }
 
+    @RequestMapping(value = {"/food"}, method = RequestMethod.GET)
+    public ModelAndView food() {
+        List<Food> foodList = foodService.getAll();
+        ModelAndView mav = new ModelAndView("client/food");
+        mav.addObject("foods", foodList);
+        return mav;
+    }
+
+    @RequestMapping(value = {"/ticket"}, method = RequestMethod.GET)
+    public ModelAndView ticket() {
+        List<Food> foodList = foodService.getAll();
+        ModelAndView mav = new ModelAndView("client/ticket");
+        mav.addObject("foods", foodList);
+        return mav;
+    }
+    @RequestMapping(value = {"/schedule"}, method = RequestMethod.GET)
+    public ModelAndView schedule() {
+        ModelAndView mav = new ModelAndView("client/schedule");
+        mav.addObject("movies", movieService.getAll());
+        mav.addObject("rooms", roomService.getAll());
+        mav.addObject("branches", branchService.getAll());
+        mav.addObject("schedules",  scheduleService.getAll());
+        return mav;
+    }
     @RequestMapping(value = "/movie-detail/{id}", method = RequestMethod.GET)
     public ModelAndView movieDetail(@PathVariable("id") int id) {
         Movie m = movieService.getMovieById(id);

@@ -41,7 +41,7 @@
                 <div class="col-md-8 admin-box">
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="#">
+                            <a href="/api/manage_user">
                                 <div class="option-box">
                                     <div class="option-box-img">
                                         <img src="<%=request.getContextPath()%>/static/images/admin/manage-user.png"
@@ -65,7 +65,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="#">
+                            <a href="/api/manage_food">
                                 <div class="option-box">
                                     <div class="option-box-img">
                                         <img src="<%=request.getContextPath()%>/static/images/admin/manage-combos.png"
