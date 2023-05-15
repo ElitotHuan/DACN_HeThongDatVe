@@ -40,6 +40,13 @@ public class HomeController {
         return mav;
     }
 
+    @RequestMapping(value = {"/ticket"}, method = RequestMethod.GET)
+    public ModelAndView ticket() {
+        List<Food> foodList = foodService.getAll();
+        ModelAndView mav = new ModelAndView("client/ticket");
+        mav.addObject("foods", foodList);
+        return mav;
+    }
     @RequestMapping(value = "/movie-detail/{id}", method = RequestMethod.GET)
     public ModelAndView movieDetail(@PathVariable("id") int id) {
         Movie m = movieService.getMovieById(id);

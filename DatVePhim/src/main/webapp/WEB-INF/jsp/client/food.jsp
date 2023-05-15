@@ -3,15 +3,9 @@
 <html>
 <head>
     <title>Menu FOOD</title>
-    <style>
-        /* Thiết lập kiểu dáng cho các phần tử */
-
-
-    </style>
-
     <link href="../../../static/css/bootstrap.css" rel='stylesheet' type='text/css'/>
     <!-- Custom Theme files -->
-    <link href="../../../static/css/style_food.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="../../../static/css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <!-- Custom Theme files -->
     <script src="../../../static/js/jquery.min.js"></script>
 
