@@ -87,7 +87,7 @@
                             </a>
                         </div>
                         <div class="col-md-6">
-                            <a href="/api/manage_room">
+                            <a href="#">
                                 <div class="option-box">
                                     <div class="option-box-img">
                                         <img src="<%=request.getContextPath()%>/static/images/admin/manage-cinemas.png"
@@ -98,7 +98,7 @@
                             </a>
                         </div>
                         <div class="col-md-6">
-                            <a href="/api/manage_branch">
+                            <a href="#">
                                 <div class="option-box">
                                     <div class="option-box-img">
                                         <img src="<%=request.getContextPath()%>/static/images/admin/manage-branch.png"
