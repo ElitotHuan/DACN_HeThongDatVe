@@ -8,7 +8,64 @@
     <link href="../../../static/css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <!-- Custom Theme files -->
     <script src="../../../static/js/jquery.min.js"></script>
+    function hideURLbar() {
+    window.scrollTo(0, 1);
+    } </script>
 
+    <script type="text/javascript">
+        $(window).load(function () {
+            $("#flexiselDemo1").flexisel({
+                visibleItems: 6,
+                animationSpeed: 1000,
+                autoPlay: true,
+                autoPlaySpeed: 3000,
+                pauseOnHover: false,
+                enableResponsiveBreakpoints: true,
+                responsiveBreakpoints: {
+                    portrait: {
+                        changePoint: 480,
+                        visibleItems: 2
+                    },
+                    landscape: {
+                        changePoint: 640,
+                        visibleItems: 3
+                    },
+                    tablet: {
+                        changePoint: 768,
+                        visibleItems: 4
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(window).load(function () {
+
+            $("#flexiselDemo2").flexisel({
+                visibleItems: 4,
+                animationSpeed: 1000,
+                autoPlay: true,
+                autoPlaySpeed: 3000,
+                pauseOnHover: false,
+                enableResponsiveBreakpoints: true,
+                responsiveBreakpoints: {
+                    portrait: {
+                        changePoint: 480,
+                        visibleItems: 2
+                    },
+                    landscape: {
+                        changePoint: 640,
+                        visibleItems: 3
+                    },
+                    tablet: {
+                        changePoint: 768,
+                        visibleItems: 3
+                    }
+                }
+            });
+        });
+    </script>
 <style>.full {
     background-color: #f5f5f5;
     height: 100%;
@@ -26,7 +83,8 @@ table {
 
 th, td {
     text-align: left;
-    padding: 6px;
+    border: 1px solid #ddd;
+    padding: 8px;
     color: #333;
     font-size: 16px;
 }
@@ -93,6 +151,14 @@ h1 {
                 </table>
 
             </div>
+        </div>
+        <div class="more-reviews">
+            <ul id="flexiselDemo2">
+                <c:forEach var="movie" begin="0" end="5" items="${movies}">
+                    <li onclick="location.href='movie-detail/${movie.id}'"><img src="${movie.largeImageURL}" alt=""/>
+                    </li>
+                </c:forEach>
+            </ul>
         </div>
         <%@ include file="footer.jsp" %>
     </div>
