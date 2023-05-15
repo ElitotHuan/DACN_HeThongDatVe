@@ -36,7 +36,6 @@
             <div class="top-header span_top">
             </div>
             <div class="main-ticket">
-                <h2>Multiplex Theatre Showing Screen 1</h2>
                 <div class="demo">
                     <div id="seat-map">
                         <div class="front">SCREEN</div>
@@ -44,17 +43,18 @@
                     <div class="booking-details">
                         <ul class="book-left">
                             <li>Movie:</li>
-                            <li>Time:</li>
+                            <li>StartDate:</li>
+                            <li>StartTime:</li>
                             <li>Tickets:</li>
                             <li>Total:</li>
                             <li>Seats:</li>
                         </ul>
                         <ul class="book-right">
-                            <li th:text="${mname}">Gingerclown</li>
-                            <li th:text="${time}"></li>
+                            <li th:text="${mname}">${movie}</li>
+                            <li th:text="${startDate}">${startdate}</li>
+                            <li th:text="${startTime}">${starttime}</li>
                             <li><span id="counter">0</span></li>
                             <li><b><i>$</i><span id="total">0</span></b></li>
-                            <li id="price" th:text="${price}" style="display: none"></li>
                         </ul>
                         <div class="clear"></div>
                         <ul id="selected-seats" class="scrollbar scrollbar1"></ul>
@@ -80,7 +80,7 @@
                 </div>
 
                 <script type="text/javascript">
-                    var price = parseFloat($('#price').text());
+                    var price = parseFloat('${price}');
                     $(document).ready(function () {
                         var $cart = $('#selected-seats'), //Sitting Area
                             $counter = $('#counter'), //Votes
@@ -123,7 +123,7 @@
                                         .appendTo($cart);
 
                                     $counter.text(sc.find('selected').length + 1);
-                                    $total.text(recalculateTotal(sc) + price);
+                                    $total.text(recalculateTotal(sc, price));
                                     $count.val($counter.text());
                                     $cart.each(function () {
                                         var s = $(this).children().text();
@@ -138,6 +138,7 @@
                                     //update totalnum
                                     $total.text(recalculateTotal(sc) - price);
                                     $count.val($counter.text())
+
 
                                     //Delete reservation
                                     $('#cart-item-' + this.settings.id).remove();
@@ -156,10 +157,10 @@
                     });
 
                     //sum total money
-                    function recalculateTotal(sc) {
-                        var total = 0;
+                    function recalculateTotal(sc, price) {
+                        var total = price||0;
                         sc.find('selected').each(function () {
-                            total += price;
+                            total += price||0;
                         });
 
                         return total;
