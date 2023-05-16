@@ -1,13 +1,12 @@
 package com.example.controllers;
 
 import com.example.models.Movie;
-import com.example.models.Food;
 import com.example.models.Schedule;
-import com.example.services.*;
+import com.example.services.BranchService;
+import com.example.services.MovieService;
+import com.example.services.RoomService;
+import com.example.services.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,19 +26,12 @@ public class AdminViewController {
     private RoomService roomService;
 
     @Autowired
-    private FoodService foodService;
-
-    @Autowired
     private BranchService branchService;
 
-    @Autowired
-    private UserService userService;
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = {"/api/", "/api/admin_home"})
-    public ModelAndView adminHomeView(@AuthenticationPrincipal UserDetails user) {
+    public ModelAndView adminHomeView() {
         ModelAndView mav = new ModelAndView("admin/admin_home");
-        mav.addObject("user",user);
         return mav;
     }
 
@@ -50,13 +42,7 @@ public class AdminViewController {
         mav.addObject("movies", movieList);
         return mav;
     }
-    @GetMapping(value = "/api/manage_food")
-    public ModelAndView foodMangamentView() {
-        List<Food> foodList =  foodService.getAll();
-        ModelAndView mav = new ModelAndView("admin/manage_food");
-        mav.addObject("foods", foodList);
-        return mav;
-    }
+
     @GetMapping(value = "/api/manage_schedule")
     public ModelAndView scheduleMangamentView() {
         ModelAndView mav = new ModelAndView("admin/manage_schedule");
@@ -82,13 +68,6 @@ public class AdminViewController {
         return mav;
     }
 
-
-    @GetMapping(value = "/api/manage_user")
-    public ModelAndView userManagementView(){
-        ModelAndView mav = new ModelAndView("admin/manage_user");
-        mav.addObject("users",userService.getAllUsers());
-        return mav;
-    }
 
     @GetMapping(value = "/api/login")
     public ModelAndView adminLoginView() {

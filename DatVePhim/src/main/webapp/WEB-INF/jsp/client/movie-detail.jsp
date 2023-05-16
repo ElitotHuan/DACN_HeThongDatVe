@@ -96,7 +96,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <p class="dirctr"><a href="">Reagan Gavin Rasquinha, </a>TNN,
                             Mar 12, 2015, 12.47PM IST</p>
                         <div class="clearfix"></div>
-
+                        ư
                         <p class="ratingview c-rating">Avg Readers' Rating:</p>
                         <p class="ratingview c-rating">&nbsp; 3.3/5</p>
                         <div class="clearfix"></div>

@@ -43,7 +43,7 @@
 </head>
 <div class="top-header span_top">
     <div class="logo">
-        <a href="/"><img src="../../../static/images/logo.png" alt=""/></a>
+        <a href="/Home"><img src="../../../static/images/logo.png" alt=""/></a>
     </div>
     <div class="search v-search">
         <form id="searchFrom" method="get" action="${pageContext.request.contextPath}/searchMovie?name="
