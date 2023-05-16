@@ -4,6 +4,7 @@ import com.example.dto.LoginDTO;
 import com.example.dto.UserDTO;
 import com.example.models.Role;
 import com.example.models.User;
+import com.example.services.CustomUserDetailsService;
 import com.example.services.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -65,6 +67,7 @@ public class UserManagerController {
         boolean result = userService.authenticateAdmin(user.getUsername(), user.getPassword());
         if (result) {
             User loggedInUser = userService.getUserByUsername(user.getUsername());
+
             List<Role> roles = loggedInUser.getRoles();
             String roleNames = "";
             for (Role role : roles) {
@@ -75,6 +78,7 @@ public class UserManagerController {
             model.addAttribute("loggedInUser", loggedInUser);
             model.addAttribute("successMsg", "Đăng Nhập thành công! Vai trò: " + roleNames);
             System.out.println(loggedInUser);
+
             return new ModelAndView("redirect:/api/admin_home");
 
         } else {
