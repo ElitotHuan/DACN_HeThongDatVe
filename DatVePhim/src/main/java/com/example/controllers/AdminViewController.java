@@ -67,6 +67,22 @@ public class AdminViewController {
         return mav;
     }
 
+    @GetMapping(value = "api/manage_branch")
+    public ModelAndView branchManagementView() {
+        ModelAndView mav = new ModelAndView("admin/manage_branch");
+        mav.addObject("branches", branchService.getAll());
+        return mav;
+    }
+
+    @GetMapping(value = "api/manage_room")
+    public ModelAndView roomManagementView() {
+        ModelAndView mav = new ModelAndView("admin/manage_room");
+        mav.addObject("rooms", roomService.getAll());
+        mav.addObject("branches", branchService.getAll());
+        return mav;
+    }
+
+
     @GetMapping(value = "/api/manage_user")
     public ModelAndView userManagementView(){
         ModelAndView mav = new ModelAndView("admin/manage_user");
