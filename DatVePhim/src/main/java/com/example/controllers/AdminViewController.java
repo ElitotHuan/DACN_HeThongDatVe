@@ -35,7 +35,7 @@ public class AdminViewController {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = {"/api/", "/api/admin_home"})
     public ModelAndView adminHomeView(@AuthenticationPrincipal UserDetails user) {
         ModelAndView mav = new ModelAndView("admin/admin_home");
