@@ -85,6 +85,16 @@ public class UserService {
         return false;
     }
 
+    public boolean hasRole(User user, String roleName) {
+        List<Role> roles = user.getRoles();
+        for (Role role : roles) {
+            if (role.getName().equals(roleName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);

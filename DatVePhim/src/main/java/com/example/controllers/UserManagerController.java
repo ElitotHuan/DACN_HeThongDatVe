@@ -65,25 +65,41 @@ public class UserManagerController {
         }
 
         boolean result = userService.authenticateAdmin(user.getUsername(), user.getPassword());
+
         if (result) {
-            User loggedInUser = userService.getUserByUsername(user.getUsername());
+            User loggedInAdmin = userService.getUserByUsername(user.getUsername());
 
-            List<Role> roles = loggedInUser.getRoles();
-            String roleNames = "";
-            for (Role role : roles) {
-                roleNames += role.getName() + " ";
-                System.out.println("ROLE" + roleNames);
+            if (userService.hasRole(loggedInAdmin, "ADMIN")) {
+                // người dùng có vai trò "ADMIN", cho phép truy cập vào trang quản lý của admin
+                List<Role> roles = loggedInAdmin.getRoles();
+                String roleNames = "";
+                for (Role role : roles) {
+                    roleNames += role.getName() + " ";
+                    System.out.println("ROLE" + roleNames);
+                }
+                session.setAttribute("loggedInAdmin", loggedInAdmin);
+                model.addAttribute("loggedInAdmin", loggedInAdmin);
+                model.addAttribute("successMsg", "Đăng Nhập thành công! Vai trò: " + roleNames);
+                System.out.println(loggedInAdmin);
+
+                return new ModelAndView("redirect:/api/admin_home");
+            } else {
+                // người dùng không có vai trò "ADMIN"
+                model.addAttribute("errorMsg", "Bạn không có quyền truy cập vào trang quản lý của admin!");
+                return new ModelAndView("redirect:/api/login?error=true");
             }
-            session.setAttribute("loggedInUser", loggedInUser);
-            model.addAttribute("loggedInUser", loggedInUser);
-            model.addAttribute("successMsg", "Đăng Nhập thành công! Vai trò: " + roleNames);
-            System.out.println(loggedInUser);
-
-            return new ModelAndView("redirect:/api/admin_home");
-
         } else {
-            model.addAttribute("errorMsg", "Tên đăng nhập hoặc mật khẩu không đúng hoặc bạn không có quyền truy cập !");
-            return new ModelAndView("redirect:/admin/login?error=true");
+            // không tìm thấy người dùng hoặc mật khẩu không đúng
+            model.addAttribute("errorMsg", "Tên đăng nhập hoặc mật khẩu không đúng!");
+            return new ModelAndView("redirect:/api/login?error=true");
         }
+    }
+
+    @GetMapping("/admin/logout")
+    public ModelAndView logout(HttpSession session) {
+        // Xóa thông tin người dùng đăng nhập khỏi session
+        session.removeAttribute("loggedInAdmin");
+        // Điều hướng đến trang đăng nhập
+        return new ModelAndView("redirect:/api/login");
     }
 }

@@ -39,6 +39,14 @@
 <%--                    &lt;%&ndash;          <%@ include file ="admin-profile.jsp" %>&ndash;%&gt;--%>
 <%--                </div>--%>
                 <div class="col-md-8 admin-box">
+                    <c:if test="${sessionScope.loggedInAdmin != null}">
+                        <span>Hello, <strong>${sessionScope.loggedInUser.username}</strong>!</span>
+                        <a href="/admin/logout">Đăng xuất</a>
+                    </c:if>
+                    <c:if test="${sessionScope.loggedInAdmin == null}">
+                       <h2>Bạn không có quyền</h2>
+                    </c:if>
+                    <h2>${successMsg}</h2>
                     <div class="row">
                         <div class="col-md-6">
                             <a href="/api/manage_user">

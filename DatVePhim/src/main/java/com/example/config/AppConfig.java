@@ -37,7 +37,7 @@ public class AppConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/","/api/admin_home","/api/manage_movie","/api/manage_schedule","/api/manage_user").hasAnyRole("ADMIN")
+                .requestMatchers("/api/","/api/admin_home","/api/manage_movie","/api/manage_schedule","/api/manage_user","/api/manage_food").hasAnyRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/register").permitAll() // allow unauthenticated access to /register
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
                 .anyRequest().permitAll()
@@ -54,6 +54,9 @@ public class AppConfig {
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/Home")
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/api/login?error=true") // redirect to this URL if user is authenticated but does not have sufficient privileges
                 .and()
                 .build();
     }
