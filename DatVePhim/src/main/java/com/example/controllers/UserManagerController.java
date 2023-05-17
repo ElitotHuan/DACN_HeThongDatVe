@@ -15,12 +15,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserManagerController {
@@ -59,30 +61,32 @@ public class UserManagerController {
     }
 
     @PostMapping("/admin/login")
-    public ModelAndView loginAdmin(@ModelAttribute("user") @Valid LoginDTO user, BindingResult bindingResult, Model model, HttpSession session) {
+    public ModelAndView loginAdmin(@ModelAttribute("user") @Valid LoginDTO user, BindingResult bindingResult, ModelMap model, HttpSession session) {
+        System.out.println("login ne");
         if (bindingResult.hasErrors()) {
             return new ModelAndView("admin/login");
         }
 
-        boolean result = userService.authenticateAdmin(user.getUsername(), user.getPassword());
+        boolean result = userService.authenticateAdmin(user.getUsername(), user.getPassword()); //chekc này chưa
+
+
 
         if (result) {
             User loggedInAdmin = userService.getUserByUsername(user.getUsername());
 
             if (userService.hasRole(loggedInAdmin, "ADMIN")) {
+                //check role trên rôi dưới này không cần làm lại
                 // người dùng có vai trò "ADMIN", cho phép truy cập vào trang quản lý của admin
                 List<Role> roles = loggedInAdmin.getRoles();
-                String roleNames = "";
-                for (Role role : roles) {
-                    roleNames += role.getName() + " ";
-                    System.out.println("ROLE" + roleNames);
-                }
+                String roleNames = "ADMIN";
+
                 session.setAttribute("loggedInAdmin", loggedInAdmin);
                 model.addAttribute("loggedInAdmin", loggedInAdmin);
                 model.addAttribute("successMsg", "Đăng Nhập thành công! Vai trò: " + roleNames);
-                System.out.println(loggedInAdmin);
+                System.out.println(roleNames);
 
-                return new ModelAndView("redirect:/api/admin_home");
+
+                return new ModelAndView("redirect:/api/admin_home", model);//ko vào dc controller này
             } else {
                 // người dùng không có vai trò "ADMIN"
                 model.addAttribute("errorMsg", "Bạn không có quyền truy cập vào trang quản lý của admin!");
