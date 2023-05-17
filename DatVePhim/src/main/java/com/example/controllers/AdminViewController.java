@@ -40,6 +40,9 @@ public class AdminViewController {
     public ModelAndView adminHomeView(@AuthenticationPrincipal UserDetails user) {
         ModelAndView mav = new ModelAndView("admin/admin_home");
         mav.addObject("user",user);
+
+        mav.addObject("sessionScope","user" );
+        mav.addObject("username",user.getUsername());
         return mav;
     }
 
