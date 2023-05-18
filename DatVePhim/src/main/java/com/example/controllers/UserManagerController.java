@@ -67,7 +67,7 @@ public class UserManagerController {
             return new ModelAndView("admin/login");
         }
 
-        boolean result = userService.authenticateAdmin(user.getUsername(), user.getPassword()); //chekc này chưa
+        boolean result = userService.authenticateAdmin(user.getUsername(), user.getPassword());
 
 
 
@@ -86,7 +86,7 @@ public class UserManagerController {
                 System.out.println(roleNames);
 
 
-                return new ModelAndView("redirect:/api/admin_home", model);//ko vào dc controller này
+                return new ModelAndView("redirect:/api/admin_home", model);
             } else {
                 // người dùng không có vai trò "ADMIN"
                 model.addAttribute("errorMsg", "Bạn không có quyền truy cập vào trang quản lý của admin!");

@@ -56,7 +56,7 @@ public class AppConfig {
                 .logoutSuccessUrl("/Home")
                 .and()
                 .exceptionHandling()
-                .accessDeniedPage("/api/login?error=true") // redirect to this URL if user is authenticated but does not have sufficient privileges
+                .accessDeniedPage("/api/login?error=true")
                 .and()
                 .build();
     }
