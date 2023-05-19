@@ -8,9 +8,6 @@
     <link href="../../../static/css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <!-- Custom Theme files -->
     <script src="../../../static/js/jquery.min.js"></script>
-    function hideURLbar() {
-    window.scrollTo(0, 1);
-    } </script>
 
     <script type="text/javascript">
         $(window).load(function () {
@@ -113,7 +110,24 @@ h1 {
     font-size: 36px;
     margin-bottom: 20px;
 }
+.book-now {
+    background-position: center;
+    background-size: cover;
+    color: white;
+    background-color: #bb7b29;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
+.book-now:hover {
+    opacity: 0.8;
+}
 </style>
 </head>
 <body>
@@ -143,8 +157,15 @@ h1 {
                             <td>${schedule.startTime}</td>
                             <td>${schedule.movie.name}</td>
                             <td>${schedule.branch.name}</td>
-                            <td > <a class="book" href="ticket"><i class="book1"></i>BOOK</a></td>
-
+                            <td >
+                            <form class="book" action="/ticket" method="post">
+                                <input type="hidden" name="movie" value="${schedule.movie.name}" />
+                                <input type="hidden" name="price" value="${schedule.price}" />
+                                <input type="hidden" name="startdate" value="${schedule.startDate}" />
+                                <input type="hidden" name="starttime" value="${schedule.startTime}" />
+                                <button class="book-now" type="submit"><i class="book1"></i>Book now</button>
+                            </form>
+                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -167,7 +188,5 @@ h1 {
 </div>
     <div class="clearfix"></div>
 </div>
-
 </body>
-
 </html>
