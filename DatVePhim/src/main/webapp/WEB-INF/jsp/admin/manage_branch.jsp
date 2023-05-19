@@ -19,8 +19,8 @@
 
     <script>
 
-        $(document).on('submit', '#addUserForm', function (event) {
-            var frm = $('#addUserForm');
+        $(document).on('submit', '#addBranchForm', function (event) {
+            var frm = $('#addBranchForm');
             var Form = this;
             var data = {};
 
@@ -56,14 +56,14 @@
             });
 
 
-            data["userId"] = parseInt(data["userId"]);
+            data["branchId"] = parseInt(data["branchId"]);
 
             console.log(JSON.stringify(data));
 
             $.ajax({
                 contentType: "application/json;charset=UTF-8",
                 type: frm.attr('method'),
-                url: frm.attr('action') + data["userId"],
+                url: frm.attr('action') + data["branchId"],
                 data: JSON.stringify(data),
                 success: function () {
                     window.location.reload();
@@ -73,7 +73,7 @@
 
     </script>
 
-    <title>Manage Users :: Admin</title>
+    <title>Manage Branches :: Admin</title>
 </head>
 <body>
 
@@ -89,65 +89,50 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <nav class="navbar navbar-light navbar-toggleable">
-                                    <a class="navbar-brand" href="#">Users</a>
+                                    <a class="navbar-brand" href="#">Branches</a>
                                     <div class="collapse navbar-collapse menu" id="navbarSupportedContent">
                                         <ul class="navbar-nav ml-auto menu-nav">
                                             <li>
                                                 <a href="#" class="nav-link menu-link" data-toggle="modal"
-                                                   data-target="#modalCenter">ADD USER</a>
+                                                   data-target="#modalCenter">ADD BRANCH</a>
                                                 <div class="modal fade" id="modalCenter" tabindex="-1" role="dialog"
                                                      aria-labelledby="AddCinema" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="modalLongTitle">Add
-                                                                    User</h5>
+                                                                    Branch</h5>
                                                                 <button type="button" class="close" data-dismiss="modal"
                                                                         aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form id="addUserForm" method="post"
-                                                                      action="${pageContext.request.contextPath}/api/addUser"
+                                                                <form id="addBranchForm" method="post"
+                                                                      action="${pageContext.request.contextPath}/api/addBranch"
                                                                       onsubmit="return false">
                                                                     <div class="row">
                                                                         <div class="col-sm-12">
                                                                             <div class="form-group">
-                                                                                <input id="fullName"
+                                                                                <input id="name"
                                                                                        class="form-control label"
-                                                                                       placeholder="FullName"/>
+                                                                                       placeholder="Name"/>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="form-group">
-                                                                                <input id="username" type="text"
+                                                                                <input id="address" type="text"
                                                                                        class="form-control label"
-                                                                                       placeholder="Username"/>
+                                                                                       placeholder="Address"/>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="form-group">
-                                                                                <input type="text" id="email"
+                                                                                <input type="text" id="phoneNo"
                                                                                        class="form-control label"
-                                                                                       placeholder="Email"/>
+                                                                                       placeholder="Phone Number"/>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="form-group">
-                                                                                <input type="password" id="password"
-                                                                                       class="form-control label"
-                                                                                       placeholder="Password"/>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="form-group">
-                                                                              <select id="roles" class="form-control label">
-                                                                                <option value="ADMIN">ADMIN</option>
-                                                                                <option value="USER">USER</option>
-                                                                              </select>
-                                                                            </div>
-                                                                          </div>
                                                                         <div class="col-sm-12">
                                                                             <input type="submit" value="ADD"
                                                                                    class="btn btn-primary form-control label"/>
@@ -172,43 +157,33 @@
                                 <table class="table table-sm">
                                     <thead>
                                     <tr>
-                                        <th>USER ID</th>
-                                        <th>FULLNAME</th>
-                                        <th>USERNAME</th>
-                                        <th>EMAIL</th>
-                                        <th>PASSWORD</th>
-                                        <th>ROLES</th>
+                                        <th>BRANCH ID</th>
+                                        <th>NAME</th>
+                                        <th>ADDRESS</th>
+                                        <th>PHONENUMBER</th>
+                                        <th>UPDATE</th>
+                                        <th>DELETE</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="user" items="${users}">
+                                    <c:forEach var="branch" items="${branches}">
                                         <tr>
                                             <form id="updateForm" method="PUT" onsubmit="return false"
-                                                  action="${pageContext.request.contextPath}/api/updateUser/">
+                                                  action="${pageContext.request.contextPath}/api/updateBranch/">
                                                 <td>
-                                                    <input class="form-control" name="userId" type="text"
-                                                           value="${user.id}"/>
+                                                    <input class="form-control" name="branchId" type="text"
+                                                           value="${branch.id}"/>
                                                 </td>
-                                                <td><input name="fullName" class="form-control" type="text"
-                                                           value="${user.fullName}"/></td>
+                                                <td><input name="name" class="form-control" type="text"
+                                                           value="${branch.name}"/></td>
                                                 <td>
-                                                    <input class="form-control" name="username" type="text"
-                                                           value="${user.username}"/>
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" name="email" type="text"
-                                                           value="${user.email}"/>
+                                                    <input class="form-control" name="address" type="text"
+                                                           value="${branch.diaChi}"/>
                                                 </td>
                                                 <td>
-                                                    <input class="form-control" name="password" type="text"
-                                                           value="${user.password}"/>
+                                                    <input class="form-control" name="phoneNo" type="text"
+                                                           value="${branch.phoneNo}"/>
                                                 </td>
-                                                <c:forEach var="role" items="${roles}">
-                                                <td>
-                                                    <input class="form-control" name="roles" type="text"
-                                                           value="${user.role}"/>
-                                                </td>
-                                                </c:forEach>
                                                 <td>
                                                     <button type="submit"
                                                             class="btn btn-success">
@@ -216,7 +191,7 @@
                                                     </button>
                                                 </td>
                                             </form>
-                                            <td><a href="/api/deleteUser/${user.id}"
+                                            <td><a href="/api/deleteBranch/${branch.id}"
                                                    class="btn btn-danger">DELETE</a></td>
                                         </tr>
                                     </c:forEach>

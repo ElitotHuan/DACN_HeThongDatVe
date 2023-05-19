@@ -1,3 +1,4 @@
+
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -19,8 +20,8 @@
 
     <script>
 
-        $(document).on('submit', '#addUserForm', function (event) {
-            var frm = $('#addUserForm');
+        $(document).on('submit', '#addRoomForm', function (event) {
+            var frm = $('#addRoomForm');
             var Form = this;
             var data = {};
 
@@ -29,6 +30,9 @@
                 data[input.attr("id")] = input.val();
                 delete data["undefined"];
             });
+
+            data['totalArea'] = parseFloat(data['totalArea']);
+            data['capacity'] = parseInt(data['capacity']);
 
             console.log(data);
             $.ajax({
@@ -55,15 +59,15 @@
                 delete data["undefined"];
             });
 
-
-            data["userId"] = parseInt(data["userId"]);
+            data["branchId"] = parseInt(data["branchId"]);
+            data["roomId"] = parseInt(data["roomId"]);
 
             console.log(JSON.stringify(data));
 
             $.ajax({
                 contentType: "application/json;charset=UTF-8",
                 type: frm.attr('method'),
-                url: frm.attr('action') + data["userId"],
+                url: frm.attr('action') + data["roomId"],
                 data: JSON.stringify(data),
                 success: function () {
                     window.location.reload();
@@ -73,7 +77,7 @@
 
     </script>
 
-    <title>Manage Users :: Admin</title>
+    <title>Manage Rooms :: Admin</title>
 </head>
 <body>
 
@@ -89,65 +93,63 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <nav class="navbar navbar-light navbar-toggleable">
-                                    <a class="navbar-brand" href="#">Users</a>
+                                    <a class="navbar-brand" href="#">Rooms</a>
                                     <div class="collapse navbar-collapse menu" id="navbarSupportedContent">
                                         <ul class="navbar-nav ml-auto menu-nav">
                                             <li>
                                                 <a href="#" class="nav-link menu-link" data-toggle="modal"
-                                                   data-target="#modalCenter">ADD USER</a>
+                                                   data-target="#modalCenter">ADD ROOM</a>
                                                 <div class="modal fade" id="modalCenter" tabindex="-1" role="dialog"
                                                      aria-labelledby="AddCinema" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="modalLongTitle">Add
-                                                                    User</h5>
+                                                                    Room</h5>
                                                                 <button type="button" class="close" data-dismiss="modal"
                                                                         aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form id="addUserForm" method="post"
-                                                                      action="${pageContext.request.contextPath}/api/addUser"
+                                                                <form id="addRoomForm" method="post"
+                                                                      action="${pageContext.request.contextPath}/api/addRoom"
                                                                       onsubmit="return false">
                                                                     <div class="row">
                                                                         <div class="col-sm-12">
                                                                             <div class="form-group">
-                                                                                <input id="fullName"
+                                                                                <input id="name"
                                                                                        class="form-control label"
-                                                                                       placeholder="FullName"/>
+                                                                                       placeholder="Name"/>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="form-group">
-                                                                                <input id="username" type="text"
+                                                                                <input id="capacity" type="Number"
                                                                                        class="form-control label"
-                                                                                       placeholder="Username"/>
+                                                                                       placeholder="Capacity"/>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="form-group">
-                                                                                <input type="text" id="email"
+                                                                                <input type="Number" id="totalArea"
                                                                                        class="form-control label"
-                                                                                       placeholder="Email"/>
+                                                                                       placeholder="Total Area"/>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-sm-6">
+
+                                                                        <div class="col-sm-12">
                                                                             <div class="form-group">
-                                                                                <input type="password" id="password"
-                                                                                       class="form-control label"
-                                                                                       placeholder="Password"/>
+                                                                                <select class="form-control"
+                                                                                        id="branchId">
+                                                                                    <c:forEach var="branch"
+                                                                                               items="${branches}">
+                                                                                        <option value="${branch.id}">${branch.name}</option>
+                                                                                    </c:forEach>
+                                                                                </select>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="form-group">
-                                                                              <select id="roles" class="form-control label">
-                                                                                <option value="ADMIN">ADMIN</option>
-                                                                                <option value="USER">USER</option>
-                                                                              </select>
-                                                                            </div>
-                                                                          </div>
+
                                                                         <div class="col-sm-12">
                                                                             <input type="submit" value="ADD"
                                                                                    class="btn btn-primary form-control label"/>
@@ -172,43 +174,49 @@
                                 <table class="table table-sm">
                                     <thead>
                                     <tr>
-                                        <th>USER ID</th>
-                                        <th>FULLNAME</th>
-                                        <th>USERNAME</th>
-                                        <th>EMAIL</th>
-                                        <th>PASSWORD</th>
-                                        <th>ROLES</th>
+                                        <th>ROOM ID</th>
+                                        <th>NAME</th>
+                                        <th>CAPACITY</th>
+                                        <th>AREA</th>
+                                        <th>BRANCH NAME</th>
+                                        <th>UPDATE</th>
+                                        <th>DELETE</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="user" items="${users}">
+                                    <c:forEach var="room" items="${rooms}">
                                         <tr>
                                             <form id="updateForm" method="PUT" onsubmit="return false"
-                                                  action="${pageContext.request.contextPath}/api/updateUser/">
+                                                  action="${pageContext.request.contextPath}/api/updateRoom/">
                                                 <td>
-                                                    <input class="form-control" name="userId" type="text"
-                                                           value="${user.id}"/>
+                                                    <input class="form-control" name="roomId" type="text"
+                                                           value="${room.id}"/>
                                                 </td>
-                                                <td><input name="fullName" class="form-control" type="text"
-                                                           value="${user.fullName}"/></td>
+                                                <td><input name="name" class="form-control" type="text"
+                                                           value="${room.name}"/></td>
                                                 <td>
-                                                    <input class="form-control" name="username" type="text"
-                                                           value="${user.username}"/>
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" name="email" type="text"
-                                                           value="${user.email}"/>
+                                                    <input class="form-control" name="capacity" type="text"
+                                                           value="${room.capacity}"/>
                                                 </td>
                                                 <td>
-                                                    <input class="form-control" name="password" type="text"
-                                                           value="${user.password}"/>
+                                                    <input class="form-control" name="totalArea" type="text"
+                                                           value="${room.totalArea}"/>
                                                 </td>
-                                                <c:forEach var="role" items="${roles}">
                                                 <td>
-                                                    <input class="form-control" name="roles" type="text"
-                                                           value="${user.role}"/>
+                                                    <select class="form-control" name="branchId">
+                                                        <c:forEach var="branch" items="${branches}">
+                                                            <c:choose>
+                                                                <c:when test="${room.branch.id eq branch.id}">
+                                                                    <option selected
+                                                                            value="${branch.id}">${branch.name}</option>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <option value="${branch.id}">${branch.name}</option>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:forEach>
+                                                    </select>
                                                 </td>
-                                                </c:forEach>
                                                 <td>
                                                     <button type="submit"
                                                             class="btn btn-success">
@@ -216,7 +224,7 @@
                                                     </button>
                                                 </td>
                                             </form>
-                                            <td><a href="/api/deleteUser/${user.id}"
+                                            <td><a href="/api/deleteRoom/${room.id}"
                                                    class="btn btn-danger">DELETE</a></td>
                                         </tr>
                                     </c:forEach>

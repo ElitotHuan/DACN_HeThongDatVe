@@ -80,6 +80,17 @@ public class UserService {
                     return true;
                 }
             }
+
+        }
+        return false;
+    }
+
+    public boolean hasRole(User user, String roleName) {
+        List<Role> roles = user.getRoles();
+        for (Role role : roles) {
+            if (role.getName().equals(roleName)) {
+                return true;
+            }
         }
         return false;
     }

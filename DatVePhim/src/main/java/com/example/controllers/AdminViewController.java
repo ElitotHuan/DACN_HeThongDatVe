@@ -35,11 +35,14 @@ public class AdminViewController {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = {"/api/", "/api/admin_home"})
     public ModelAndView adminHomeView(@AuthenticationPrincipal UserDetails user) {
         ModelAndView mav = new ModelAndView("admin/admin_home");
         mav.addObject("user",user);
+
+        mav.addObject("sessionScope","user" );
+        mav.addObject("username",user.getUsername());
         return mav;
     }
 
@@ -66,6 +69,22 @@ public class AdminViewController {
         mav.addObject("schedules",  scheduleService.getAll());
         return mav;
     }
+
+    @GetMapping(value = "api/manage_branch")
+    public ModelAndView branchManagementView() {
+        ModelAndView mav = new ModelAndView("admin/manage_branch");
+        mav.addObject("branches", branchService.getAll());
+        return mav;
+    }
+
+    @GetMapping(value = "api/manage_room")
+    public ModelAndView roomManagementView() {
+        ModelAndView mav = new ModelAndView("admin/manage_room");
+        mav.addObject("rooms", roomService.getAll());
+        mav.addObject("branches", branchService.getAll());
+        return mav;
+    }
+
 
     @GetMapping(value = "/api/manage_user")
     public ModelAndView userManagementView(){

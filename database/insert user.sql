@@ -1,9 +1,43 @@
-INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (1, NULL, NULL, '$2a$10$8JjFCX43vy7mk3LBABm6FOziLB9vl.kVnGB.w2UuDHRD6NIiVWJTW', 'nthduc');
-INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (2, NULL, NULL, '$2a$10$inkzlFTbkLiH88njGn5Le.sFPoyM8CZ.CHtZM/Jycehwcu4n44Xpq', 'huan');
-INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (3, NULL, NULL, '$2a$10$JCqwwL87w5NF09xgjMttSOQKwpTvZadCcUOj51PTAUaS6HUMWe21C', 'thicac');
-INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (4, NULL, NULL, '$2a$10$YdXrV1Oh253knjmy4nI.beLxEWE3adHzIDmLSZQyXJbITsAgvdF0m', 'abc');
-INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (5, NULL, NULL, '$2a$10$vQ1PUM28.hww0f893CsBjOrNUUtEYdcNPS5MFKzWErLYx3aw3ooVK', 'duc1');
-INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (6, NULL, NULL, '$2a$10$zDwZvkH5u.b6LsP/FNtWheQtWySJV23shT4npoJaiLxDIuPy3Ho3i', 'duc123');
-INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (7, NULL, NULL, '$2a$10$cFD9AXR/kMQ3N2M5hj84d.b5lkQDbdbel/lzW8zSAPhCmj9COR.3O', 'duc321');
-INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (8, NULL, NULL, '$2a$10$VHsHCs5H3bzgZxpCAA9sjuflvTfIP8fuDMeRrPZ1Wf6Vs.0s9MRZO', 'duc341');
-INSERT INTO `user` (`id`, `email`, `full_name`, `password`, `username`) VALUES (9, NULL, NULL, '$2a$10$gPDf6sPQljt4ag66PQxr4Onf5z.tycjbtjhfPAW3gZi4BWKZm8vce', 'duc');
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : localhost
+ Source Server Type    : MySQL
+ Source Server Version : 100427
+ Source Host           : localhost:3307
+ Source Schema         : ticketbooking
+
+ Target Server Type    : MySQL
+ Target Server Version : 100427
+ File Encoding         : 65001
+
+ Date: 16/05/2023 10:54:34
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `full_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `birthday` date NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES (1, 'ducnightcore12@gmail.com', NULL, '$2a$10$6hms89pblgJ/UKbUnkFYxuswkoYpH7FQXvRvqPUhoWtsEnk8ikIxO', 'duc', NULL, NULL);
+INSERT INTO `user` VALUES (2, 'huan@gmail.com', NULL, '$2a$10$QlmPwnVOOLmMJPG/QWArBed7/TP.oTrEYNuLFfE/vHoIjAl8dH0w.', 'huan', NULL, NULL);
+INSERT INTO `user` VALUES (3, 'voduyloc@gmail.com', NULL, '$2a$10$c4X5Z2Ia8KEmPOP2rxakHOx9nadIdLGxbEmvVt7yaoLywITQQ5vc.', 'voduyloc', NULL, NULL);
+INSERT INTO `user` VALUES (4, 'thicac@gmail.com', NULL, '$2a$10$1C.Z7TbxhvpKDFH5tsTWF.gUEDxmxmC8uXvRXE5JuE9JM8P/BAK8u', 'thicac', NULL, NULL);
+
+SET FOREIGN_KEY_CHECKS = 1;

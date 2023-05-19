@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -36,9 +37,17 @@
             <div class="row">
 <%--                <div class="col-md-4">--%>
 <%--                    &lt;%&ndash;          <sec:authentication var="user" property="principal" />&ndash;%&gt;--%>
-<%--                    &lt;%&ndash;          <%@ include file ="admin-profile.jsp" %>&ndash;%&gt;--%>
+<%--                    &lt;%&ndara sh;          <%@ include file ="admin-profile.jsp" %>&ndash;%&gt;--%>
 <%--                </div>--%>
                 <div class="col-md-8 admin-box">
+                    <c:if test="${sessionScope != null}">
+                        <span>Hello, <strong>${username}</strong>!</span>
+                        <a href="/admin/logout">Đăng xuất</a>
+                    </c:if>
+                    <c:if test="${sessionScope == null}">
+                        <h2>Bạn không có quyền</h2>
+                    </c:if>
+                    <h2>${successMsg}</h2>
                     <div class="row">
                         <div class="col-md-6">
                             <a href="/api/manage_user">
@@ -87,7 +96,7 @@
                             </a>
                         </div>
                         <div class="col-md-6">
-                            <a href="#">
+                            <a href="/api/manage_room">
                                 <div class="option-box">
                                     <div class="option-box-img">
                                         <img src="<%=request.getContextPath()%>/static/images/admin/manage-cinemas.png"
@@ -98,7 +107,7 @@
                             </a>
                         </div>
                         <div class="col-md-6">
-                            <a href="#">
+                            <a href="/api/manage_branch">
                                 <div class="option-box">
                                     <div class="option-box-img">
                                         <img src="<%=request.getContextPath()%>/static/images/admin/manage-branch.png"
