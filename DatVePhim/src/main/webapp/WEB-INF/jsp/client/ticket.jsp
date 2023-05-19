@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <!-- for-mobile-apps -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -19,7 +20,7 @@
           th:href="@{css/bootstrap.css}" rel='stylesheet' type='text/css'/>
     <link href="../static/css/style.css"
           th:href="@{css/style.css}" rel="stylesheet" type="text/css" media="all"/>
-
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap&subset=vietnamese" rel="stylesheet">
     <script src="../static/js/jquery.min.js"
             th:src="@{js/jquery.min.js}"></script>
     <script src="../static/js/jquery.seat-charts.js"
@@ -50,7 +51,7 @@
                             <li>Seats:</li>
                         </ul>
                         <ul class="book-right">
-                            <li th:text="${mname}">${movie}</li>
+                            <li th:text="${movie}">${movie}</li>
                             <li th:text="${startDate}">${startdate}</li>
                             <li th:text="${startTime}">${starttime}</li>
                             <li><span id="counter">0</span></li>
@@ -58,22 +59,32 @@
                         </ul>
                         <div class="clear"></div>
                         <ul id="selected-seats" class="scrollbar scrollbar1"></ul>
-                        <form id="order-form" th:action="@{/ticket_success}" method="POST">
+                        <form id="order-form" action="/payment" method="POST">
                             <fieldset>
-                                <div class="form-group input-group" th:object="${order}">
-                                    <input name="mname" type="text" th:value="${mname}" style="display: none">
-                                    <input id="count" name="count" type="text" th:value="*{count}"
-                                           style="display: none"/>
-                                    <input name="price" type="text" th:value="${price}" style="display: none">
-                                    <input id="seating" name="seating" type="text" th:value="*{seating}"
+                                <div class="form-group input-group">
+                                    <input name="movie" type="text" value="${movie}" style="display: none">
+                                    <input id="count" name="count" type="text" value="*{count}" style="display: none"/>
+                                    <input name="price" type="text" value="${price}" style="display: none">
+                                    <input id="seating" name="seating" type="text" value="*{seating}"
                                            style="display: none">
-                                    <input name="time" type="text" th:value="${time}" style="display: none">
+                                    <input name="startdate" type="text" value="${startdate}" style="display: none">
+                                    <input name="starttime" type="text" value="${starttime}" style="display: none">
                                     <span class="input-group-btn">
-                                        <input class="btn btn-warning" type="submit" value="Book Now!"/>
-                                    </span>
+                         <button class="btn btn-warning" id="book-now-btn" type="submit">Book Now!</button>
+            </span>
                                 </div>
                             </fieldset>
                         </form>
+
+                        <script>
+                            $(document).ready(function () {
+                                $('#book-now-btn').click(function () {
+                                    // Submit the form when "Book Now!" button is clicked
+                                    $('#order-form').submit();
+                                });
+                            });
+                        </script>
+
                         <div id="legend"></div>
                     </div>
                     <div style="clear:both"></div>
@@ -117,7 +128,7 @@
                             },
                             click: function () { //Click event
                                 if (this.status() == 'available') { //optional seat
-                                    $('<li>Row' + (this.settings.row + 1) + ' Seat' + this.settings.label + '</li>')
+                                    $('<li>[Row' + (this.settings.row + 1) + ' Seat' + this.settings.label +'] '+ '</li>')
                                         .attr('id', 'cart-item-' + this.settings.id)
                                         .data('seatId', this.settings.id)
                                         .appendTo($cart);
@@ -128,7 +139,7 @@
                                     $cart.each(function () {
                                         var s = $(this).children().text();
                                         var ss = $seating.text();
-                                        $seating.val(ss + s);
+                                        $seating.val(ss +s);
                                     });
 
                                     return 'selected';
@@ -158,9 +169,9 @@
 
                     //sum total money
                     function recalculateTotal(sc, price) {
-                        var total = price||0;
+                        var total = price || 0;
                         sc.find('selected').each(function () {
-                            total += price||0;
+                            total += price || 0;
                         });
 
                         return total;
