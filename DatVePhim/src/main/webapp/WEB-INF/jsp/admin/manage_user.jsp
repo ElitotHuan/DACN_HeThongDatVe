@@ -29,8 +29,8 @@
                 data[input.attr("id")] = input.val();
                 delete data["undefined"];
             });
-
-            console.log(data);
+            data.roles = [{id:Number.parseInt(data.roles)}];
+            console.log({data});
             $.ajax({
                 contentType: "application/json;charset=UTF-8",
                 type: frm.attr('method'),
@@ -142,9 +142,8 @@
                                                                         </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="form-group">
-                                                                              <select id="roles" class="form-control label">
-                                                                                <option value="ADMIN">ADMIN</option>
-                                                                                <option value="USER">USER</option>
+                                                                              <select id="roles" name="roles" class="form-control label">
+                                                                                <option value="2">ADMIN</option>
                                                                               </select>
                                                                             </div>
                                                                           </div>
@@ -206,8 +205,8 @@
 
                                                 <td>
                                                     <c:forEach var="role" items="${user.roles}">
-                                                        <c:out value="${role.name}"/>
-                                                        <br/>
+                                                        <input class="form-control" name="role" type="text"
+                                                        value="${role.name}"/>
                                                     </c:forEach>
                                                 </td>
 
