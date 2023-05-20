@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
@@ -13,6 +14,7 @@
     <link href='//fonts.googleapis.com/css?family=Kotta+One' rel='stylesheet' type='text/css'/>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic'
           rel='stylesheet' type='text/css'/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <link href="../static/css/ticket.css"
           th:href="@{css/ticket.css}" rel="stylesheet" type="text/css" media="all"/>
@@ -57,6 +59,7 @@
                             <li><span id="counter">0</span></li>
                             <li><b><i>$</i><span id="total">0</span></b></li>
                         </ul>
+
                         <div class="clear"></div>
                         <ul id="selected-seats" class="scrollbar scrollbar1"></ul>
                         <form id="order-form" action="/payment" method="POST">
@@ -65,16 +68,20 @@
                                     <input name="movie" type="text" value="${movie}" style="display: none">
                                     <input id="count" name="count" type="text" value="*{count}" style="display: none"/>
                                     <input name="price" type="text" value="${price}" style="display: none">
-                                    <input id="seating" name="seating" type="text" value="*{seating}"
+                                    <input id="seating" name="seating" type="text" value="${seating}"
                                            style="display: none">
+
                                     <input name="startdate" type="text" value="${startdate}" style="display: none">
                                     <input name="starttime" type="text" value="${starttime}" style="display: none">
+                                    <input name="username" type="text" value="${sessionScope.loggedInUser.username}"
+                                           style="display: none">
                                     <span class="input-group-btn">
-                         <button class="btn btn-warning" id="book-now-btn" type="submit">Book Now!</button>
-            </span>
+                    <button class="btn btn-warning" id="book-now-btn" type="submit">Book Now!</button>
+                </span>
                                 </div>
                             </fieldset>
                         </form>
+
 
                         <script>
                             $(document).ready(function () {
@@ -91,6 +98,7 @@
                 </div>
 
                 <script type="text/javascript">
+                    var seating = [];
                     var price = parseFloat('${price}');
                     $(document).ready(function () {
                         var $cart = $('#selected-seats'), //Sitting Area
@@ -128,7 +136,8 @@
                             },
                             click: function () { //Click event
                                 if (this.status() == 'available') { //optional seat
-                                    $('<li>[Row' + (this.settings.row + 1) + ' Seat' + this.settings.label +'] '+ '</li>')
+                                    var seatInfo = (this.settings.row + 1) + '_' + this.settings.label; // Tạo chuỗi dạng "row_seat"
+                                    $('<li>[Row' + (this.settings.row + 1) + ' Seat' + this.settings.label + '] ' + '</li>')
                                         .attr('id', 'cart-item-' + this.settings.id)
                                         .data('seatId', this.settings.id)
                                         .appendTo($cart);
@@ -136,23 +145,28 @@
                                     $counter.text(sc.find('selected').length + 1);
                                     $total.text(recalculateTotal(sc, price));
                                     $count.val($counter.text());
-                                    $cart.each(function () {
-                                        var s = $(this).children().text();
-                                        var ss = $seating.text();
-                                        $seating.val(ss +s);
-                                    });
+                                    seating.push(seatInfo); // Thêm thông tin ghế đã chọn vào mảng seating
+                                    $seating.val(seating.join(',')); // Cập nhật giá trị của input seating
+
 
                                     return 'selected';
                                 } else if (this.status() == 'selected') { //Checked
                                     //Update Number
                                     $counter.text(sc.find('selected').length - 1);
                                     //update totalnum
-                                    $total.text(recalculateTotal(sc) - price);
+                                    $total.text($counter.text() * price);
                                     $count.val($counter.text())
+
+                                    var seatId = this.settings.id;
+                                    var seatInfo = (this.settings.row + 1) + '_' + this.settings.label; // Tạo chuỗi dạng "row_seat"
+                                    seating = seating.filter(function (seat) {
+                                        return seat !== seatInfo; // Xóa ghế đã bỏ chọn khỏi mảng seating
+                                    });
 
 
                                     //Delete reservation
                                     $('#cart-item-' + this.settings.id).remove();
+                                    $seating.val(seating.join(','));
                                     //optional
                                     return 'available';
                                 } else if (this.status() == 'unavailable') { //sold
@@ -163,7 +177,15 @@
                             }
                         });
                         //sold seat
-                        sc.get(['1_2', '4_4', '4_5', '6_6', '6_7', '8_5', '8_6', '8_7', '8_8', '10_1', '10_2']).status('unavailable');
+                        //sc.get(['1_2', '4_4', '4_5', '6_6', '6_7', '8_5', '8_6', '8_7', '8_8', '10_1', '10_2']).status('unavailable');
+                        var seatingList = [
+                            <c:forEach var="seating" items="${seatingList}">
+                            '${seating}',
+                            </c:forEach>
+                        ];
+
+                        // Đặt trạng thái 'unavailable' cho các seating trong danh sách
+                        sc.get(seatingList).status('unavailable');
 
                     });
 

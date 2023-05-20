@@ -64,6 +64,10 @@
                     <h1>Trang thanh toán</h1>
                     <table class="table">
                         <tr>
+                            <th>ID USER</th>
+                            <td>${sessionScope.loggedInUser.username}</td>
+                        </tr>
+                        <tr>
                             <th>Tên phim</th>
                             <td>${movie}</td>
                         </tr>
@@ -92,34 +96,46 @@
                             <td>${price*count}</td>
                         </tr>
                     </table>
+                    <button class="book-now"  id="paymentButton"><i class="book1"></i>Thanh toán</button>
                 </div>
 
-                <h2>Thông tin thanh toán</h2>
-                <form id="paymentForm" action="/payment/process" method="post">
-                    <!-- Các trường nhập thông tin thanh toán -->
-                    <!-- Ví dụ: -->
-                    <label for="cardNumber">Số thẻ:</label>
-                    <input type="text" id="cardNumber" name="cardNumber" required>
 
-                    <label for="expirationDate">Ngày hết hạn:</label>
-                    <input type="text" id="expirationDate" name="expirationDate" required>
-
-                    <label for="cvv">CVV:</label>
-                    <input type="text" id="cvv" name="cvv" required>
-                    <button class="book-now" type="submit"><i class="book1"></i>Thanh Toán</button>
-                </form>
-
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
                 <script>
-                    $(document).ready(function() {
-                        $('#paymentForm').submit(function(event) {
-                            event.preventDefault(); // Ngăn chặn submit form mặc định
+                    document.getElementById('paymentButton').addEventListener('click', function() {
+                        // Kiểm tra trạng thái đăng nhập
+                        var isLoggedIn = ${sessionScope.loggedInUser != null}; // Kiểm tra session loggedInUser
 
-                            // Thực hiện các xử lý trước khi thanh toán (nếu cần)
+                        if (isLoggedIn) {
+                            // Lấy dữ liệu vé từ các biến và tạo một object chứa thông tin vé
+                            var ticketData = {
+                                movieName: '${movie}',
+                                startDate: '${startdate}',
+                                startTime: '${starttime}',
+                                seating: '${seating}',
+                                total: ${price * count},
+                                username: '${sessionScope.loggedInUser.username}'
+                            };
 
-                            // Gửi form
-                            this.submit();
-                        });
+                            // Gửi dữ liệu vé qua Ajax để lưu vào cơ sở dữ liệu
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('POST', '/saveTicket', true);
+                            xhr.setRequestHeader('Content-Type', 'application/json');
+                            xhr.onreadystatechange = function() {
+                                if (xhr.readyState === 4 && xhr.status === 200) {
+                                    // Xử lý kết quả sau khi lưu thành công
+                                    alert('Thanh toán thành công!');
+                                    // Chuyển hướng hoặc thực hiện các thao tác khác sau khi thanh toán
+                                } else if (xhr.readyState === 4 && xhr.status !== 200) {
+                                    // Xử lý kết quả sau khi lưu thất bại
+                                    alert('Thanh toán thất bại. Vui lòng thử lại sau!');
+                                    // Xử lý lỗi hoặc hiển thị thông báo lỗi
+                                }
+                            };
+                            xhr.send(JSON.stringify(ticketData));
+                        } else {
+                            // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+                            window.location.href = 'login';
+                        }
                     });
                 </script>
             </div>

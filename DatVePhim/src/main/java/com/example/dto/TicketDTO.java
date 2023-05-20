@@ -10,7 +10,7 @@ import java.time.LocalTime;
 
 @Data
 public class TicketDTO {
-    private User user;
+    private String username;
 
     private String movieName;
     private String seating;
