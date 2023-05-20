@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -22,4 +23,12 @@ public class UserDTO {
     @Email
     private String email;
     private List<Role> roles;
+
+    public List<Integer> getRoleIds() {
+        List<Integer> roleIds = new ArrayList<>();
+        for (Role role : roles) {
+            roleIds.add(role.getId());
+        }
+        return roleIds;
+    }
 }
