@@ -207,7 +207,7 @@ public class UserService {
             userDTO.setPassword(user.getPassword());
             userDTO.setUsername(user.getUsername());
             userDTO.setEmail(user.getEmail());
-//            userDTO.setRoles(user.getRoles());
+            userDTO.setRoles(user.getRoles()); // Set the roles property
             userDTOList.add(userDTO);
         }
         return userDTOList;

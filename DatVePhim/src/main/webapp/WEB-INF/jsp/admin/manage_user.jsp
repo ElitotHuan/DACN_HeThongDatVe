@@ -203,12 +203,14 @@
                                                     <input class="form-control" name="password" type="text"
                                                            value="${user.password}"/>
                                                 </td>
-                                                <c:forEach var="role" items="${roles}">
+
                                                 <td>
-                                                    <input class="form-control" name="roles" type="text"
-                                                           value="${user.role}"/>
+                                                    <c:forEach var="role" items="${user.roles}">
+                                                        <c:out value="${role.name}"/>
+                                                        <br/>
+                                                    </c:forEach>
                                                 </td>
-                                                </c:forEach>
+
                                                 <td>
                                                     <button type="submit"
                                                             class="btn btn-success">
