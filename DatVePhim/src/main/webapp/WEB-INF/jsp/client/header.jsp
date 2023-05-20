@@ -5,6 +5,7 @@
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script type="text/javascript">
+
         $(document).on('submit', '#searchFrom', function (event) {
             var frm = $('#searchFrom');
             var searchInput = document.getElementById("search-input").value;
@@ -19,6 +20,7 @@
                 }
             });
         });
+
 
         $(function () {
             $("#search-input").autocomplete({
@@ -63,8 +65,23 @@
             <a id="signup" href="register">Sign Up</a>
         </c:if>
     </div>
+    <div class="cart-icon">
+        <a href="/payment" onclick="openCart()"></a>
+        <span class="cart-badge" id="cart-badge">0</span>
+    </div>
+    <script>
+        // Lấy giá trị cart-badge từ sessionStorage và cập nhật lên giao diện
+        var cartBadge = document.getElementById('cart-badge');
+        cartBadge.innerText = sessionStorage.getItem('cartBadgeValue');
+    </script>
+    <script>
+        function openCart() {
+            // Thực hiện chuyển hướng đến trang payment.jsp
+            window.location.href = 'payment.jsp';
+        }
+    </script>
+
     <div class="clearfix"></div>
 </div>
-
 
 </html>

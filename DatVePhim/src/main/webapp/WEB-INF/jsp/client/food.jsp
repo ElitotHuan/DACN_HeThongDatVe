@@ -9,7 +9,14 @@
     <!-- Custom Theme files -->
     <script src="../../../static/js/jquery.min.js"></script>
 
+    <script>
+        function increaseCart() {
+            var cartBadge = document.getElementById("cart-badge");
+            var currentCount = parseInt(cartBadge.innerText);
 
+            cartBadge.innerText = currentCount + 1;
+        }
+    </script>
 </head>
 <body>
 
@@ -27,7 +34,8 @@
                             <h2>${food.name}</h2>
                             <p>Price: ${food.price}</p>
                             <div>
-                                <button class="add-to-cart" onclick="addToCart(${food.id})">+</button>
+                                <button class="plus-button" onclick="increaseCart()">+</button>
+
                             </div>
                         </div>
                     </c:forEach>

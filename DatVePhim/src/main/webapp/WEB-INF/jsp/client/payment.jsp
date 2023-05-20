@@ -61,7 +61,7 @@
             <div class="main-contact">
 
                 <div class="invoice">
-                    <h1>Trang thanh toán</h1>
+                    <h1>Giỏ hàng</h1>
                     <table class="table">
                         <tr>
                             <th>ID USER</th>
