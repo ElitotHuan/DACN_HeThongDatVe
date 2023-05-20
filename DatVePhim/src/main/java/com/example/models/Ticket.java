@@ -2,30 +2,65 @@ package com.example.models;
 
 import com.example.models.User;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Data
-@Table(name = "ticket")
 @Entity
-@NoArgsConstructor
+@Table(name = "ticket")
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id") // Đặt tên cột trong cơ sở dữ liệu mà Ticket tham chiếu đến
-    private User user;
 
+    @Column(name = "username")
+    private String username;
+    @Column(name = "movie_name")
     private String movieName;
+
+    @Column(name = "seating")
     private String seating;
+
+    @Column(name = "start_date")
     private LocalDate startDate;
+
+    @Column(name = "start_time")
     private LocalTime startTime;
+
+    @Column(name = "total")
     private Double total;
 
-    // Các getter và setter khác
+
+    public void setMovieName(String movieName) {
+        this.movieName=movieName;
+    }
+
+    public String getSeating() {
+        return seating;
+    }
+
+    public void setSeating(String seating) {
+        this.seating = seating;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate= startDate;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime=startTime;
+    }
+
+    public void setTotal(Double total) {
+        this.total=total;
+    }
+
+    public void setUsername(String username) {
+        this.username=username;
+    }
+
+    public String getMovieName() {
+        return movieName;
+    }
 }

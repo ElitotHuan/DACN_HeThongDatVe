@@ -163,6 +163,7 @@ h1 {
                                 <input type="hidden" name="price" value="${schedule.price}" />
                                 <input type="hidden" name="startdate" value="${schedule.startDate}" />
                                 <input type="hidden" name="starttime" value="${schedule.startTime}" />
+                                <input type="hidden" name="username" value="${sessionScope.loggedInUser.username}" />
                                 <button class="book-now" type="submit"><i class="book1"></i>Book now</button>
                             </form>
                             </td>
@@ -170,7 +171,6 @@ h1 {
                     </c:forEach>
                     </tbody>
                 </table>
-
             </div>
         </div>
         <div class="more-reviews">
