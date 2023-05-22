@@ -27,7 +27,10 @@
             th:src="@{js/jquery.min.js}"></script>
     <script src="../static/js/jquery.seat-charts.js"
             th:src="@{js/jquery.seat-charts.js}"></script>
-
+    <script>
+        // Lưu giá trị cart-badge vào sessionStorage
+        sessionStorage.setItem('cartBadgeValue', '0');
+    </script>
 </head>
 <body>
 <!-- header-section-starts -->
@@ -81,16 +84,22 @@
                                 </div>
                             </fieldset>
                         </form>
-
-
                         <script>
-                            $(document).ready(function () {
-                                $('#book-now-btn').click(function () {
-                                    // Submit the form when "Book Now!" button is clicked
-                                    $('#order-form').submit();
+                            $(document).ready(function() {
+                                $('#book-now-btn').click(function() {
+                                    // Lấy giá trị hiện tại của cart-badge từ sessionStorage
+                                    var currentCount = parseInt(sessionStorage.getItem('cartBadgeValue'));
+
+                                    // Cộng thêm 1 vào giá trị hiện tại
+                                    var updatedCount = currentCount + 1;
+
+                                    // Cập nhật giá trị mới vào sessionStorage
+                                    sessionStorage.setItem('cartBadgeValue', updatedCount.toString());
+
                                 });
                             });
                         </script>
+
 
                         <div id="legend"></div>
                     </div>

@@ -429,6 +429,96 @@ i.contact1 {
     -ms-transition: 0.5s all;
 }
 
+/*cart*/
+/* CSS cho phần giỏ hàng */
+.cart {
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    padding: 20px;
+}
+
+.cart-icon {
+    background: url('../images/cart.png') no-repeat 0px 0px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    outline: none;
+    top: 12px;
+    right: 510px;
+    width: 50px;
+    height: 50px;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    font-size: 15px;
+    padding: 4px 8px;
+    border-radius: 50%;
+}
+
+.cart-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.cart-items {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.cart-item img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.cart-item-name {
+    font-weight: bold;
+}
+
+.cart-item-price {
+    margin-left: auto;
+}
+
+.cart-total {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 20px;
+}
+
+.cart-checkout {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.cart-checkout button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.cart-checkout button:hover {
+    background-color: #45a049;
+}
+
+
+
 /*--start-search--*/
 .search {
     position: relative;
