@@ -37,12 +37,12 @@ public class ScheduleService {
         return setData(scheduleDTO, schedule);
     }
 
-    public Boolean updateSchedule(int id , ScheduleDTO scheduleDTO) {
+    public Boolean updateSchedule(int id, ScheduleDTO scheduleDTO) {
         Schedule schedule = scheduleRepository.getById(id);
         return setData(scheduleDTO, schedule);
     }
 
-    public Boolean deleteSchedule(int id){
+    public Boolean deleteSchedule(int id) {
         scheduleRepository.deleteById(id);
         return true;
     }
@@ -53,7 +53,7 @@ public class ScheduleService {
         schedule.setStartTime(LocalTime.parse(scheduleDTO.getStartTime()));
         schedule.setMovie(movieRepository.getById(scheduleDTO.getMovieId()));
         schedule.setBranch(branchRepository.getById(scheduleDTO.getBranchId()));
-        schedule.setRoom(roomRepository.searchByName(scheduleDTO.getRoomName()));
+        schedule.setRoom(roomRepository.searchByName(scheduleDTO.getRoomName(), scheduleDTO.getBranchId()));
         scheduleRepository.save(schedule);
         return true;
     }
