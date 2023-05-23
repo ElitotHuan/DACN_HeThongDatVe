@@ -14,6 +14,7 @@
         <a class="dropdown-item" href="/api/manage_room">Manage Room</a>
         <a class="dropdown-item" href="#">Manage Food</a>
         <a class="dropdown-item" href="/api/manage_food">Manage Food</a>
+        <a class="dropdown-item" href="/api/manage_satistics">Manage Satistics</a>
 
         <a class="dropdown-item" href="#">Manage Bookings</a>
     </div>

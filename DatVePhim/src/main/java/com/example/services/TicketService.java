@@ -34,6 +34,8 @@ public class TicketService {
         newTicket.setSeating(ticketDTO.getSeating());
         newTicket.setStartDate(ticketDTO.getStartDate());
         newTicket.setStartTime(ticketDTO.getStartTime());
+        newTicket.setBranch(ticketDTO.getBranchName());
+        newTicket.setRoom(ticketDTO.getRoom());
         newTicket.setTotal(ticketDTO.getTotal());
         newTicket.setUsername(ticketDTO.getUsername());
     }

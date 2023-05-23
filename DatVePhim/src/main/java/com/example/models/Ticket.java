@@ -28,6 +28,12 @@ public class Ticket {
     @Column(name = "start_time")
     private LocalTime startTime;
 
+    @Column(name = "branch_name")
+    private String branch;
+
+    @Column(name = "room_name")
+    private String room;
+
     @Column(name = "total")
     private Double total;
 
@@ -62,5 +68,21 @@ public class Ticket {
 
     public String getMovieName() {
         return movieName;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
     }
 }

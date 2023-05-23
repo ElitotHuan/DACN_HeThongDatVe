@@ -35,6 +35,9 @@ public class AdminViewController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SatisticsService satisticsService;
+
 //    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = {"/api/", "/api/admin_home"})
     public ModelAndView adminHomeView(@AuthenticationPrincipal UserDetails user) {
@@ -90,6 +93,13 @@ public class AdminViewController {
     public ModelAndView userManagementView(){
         ModelAndView mav = new ModelAndView("admin/manage_user");
         mav.addObject("users",userService.getAllUsers());
+        return mav;
+    }
+
+    @GetMapping(value = "/api/manage_satistics")
+    public ModelAndView satisticManagementView() {
+        ModelAndView mav = new ModelAndView("admin/manage_satistics");
+        mav.addObject("info",satisticsService.getTotalFromAllBranch());
         return mav;
     }
 
