@@ -1,12 +1,14 @@
 package com.example.dto;
 
+import com.example.models.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Getter
@@ -20,4 +22,13 @@ public class UserDTO {
     @NotEmpty(message = "Email should not be empty")
     @Email
     private String email;
+    private List<Role> roles;
+
+    public List<Integer> getRoleIds() {
+        List<Integer> roleIds = new ArrayList<>();
+        for (Role role : roles) {
+            roleIds.add(role.getId());
+        }
+        return roleIds;
+    }
 }

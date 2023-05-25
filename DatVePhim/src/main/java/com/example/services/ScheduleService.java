@@ -53,7 +53,7 @@ public class ScheduleService {
         schedule.setStartTime(LocalTime.parse(scheduleDTO.getStartTime()));
         schedule.setMovie(movieRepository.getById(scheduleDTO.getMovieId()));
         schedule.setBranch(branchRepository.getById(scheduleDTO.getBranchId()));
-        schedule.setRoom(roomRepository.searchByName(scheduleDTO.getRoomName()));
+        schedule.setRoom(roomRepository.searchByName(scheduleDTO.getRoomName(),scheduleDTO.getBranchId()));
         scheduleRepository.save(schedule);
         return true;
     }

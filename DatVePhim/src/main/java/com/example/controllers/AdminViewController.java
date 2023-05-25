@@ -35,11 +35,14 @@ public class AdminViewController {
     @Autowired
     private UserService userService;
 
-    @Autowired
+    @Autowiredc
     private TicketService ticketService;
 
     @Autowired
     private SatisticsService satisticsService;
+    
+    @Autowired
+    private RoleService roleService;
 
 //    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = {"/api/", "/api/admin_home"})
@@ -96,6 +99,7 @@ public class AdminViewController {
     public ModelAndView userManagementView(){
         ModelAndView mav = new ModelAndView("admin/manage_user");
         mav.addObject("users",userService.getAllUsers());
+        mav.addObject("roles",roleService.getAllRoles());
         return mav;
     }
 

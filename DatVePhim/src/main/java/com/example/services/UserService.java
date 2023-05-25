@@ -161,7 +161,17 @@ public class UserService {
             user.setPassword(userDTO.getPassword());
             user.setUsername(userDTO.getUsername());
             user.setEmail(userDTO.getEmail());
-//            user.setRoles(userDTO.getRoles());
+
+            // Lấy danh sách các vai trò mới được chọn từ UserDTO
+            List<Integer> roleIds = userDTO.getRoleIds();
+
+            // Xóa tất cả cácvai trò hiện tại của người dùng
+            user.getRoles().clear();
+
+            // Thêm các vai trò mới vào danh sách vai trò của người dùng
+            List<Role> roles = roleRepository.findAllById(roleIds);
+            user.setRoles(roles);
+
             userRepository.save(user);
             return true;
         } else {
@@ -173,13 +183,14 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
+            // Xóa tất cả các mối quan hệ giữa người dùng và các vai trò trước khi xóa người dùng
+            user.getRoles().clear();
             userRepository.delete(user);
             return true;
         } else {
             return false;
         }
     }
-
     public UserDTO getUserById(Integer id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
@@ -207,7 +218,7 @@ public class UserService {
             userDTO.setPassword(user.getPassword());
             userDTO.setUsername(user.getUsername());
             userDTO.setEmail(user.getEmail());
-//            userDTO.setRoles(user.getRoles());
+            userDTO.setRoles(user.getRoles());
             userDTOList.add(userDTO);
         }
         return userDTOList;
@@ -215,14 +226,17 @@ public class UserService {
 
     private Boolean setData(UserDTO userDTO, User user) {
         user.setFullName(userDTO.getFullName());
-        user.setPassword(userDTO.getPassword());
+        String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
+        user.setPassword(encodedPassword);
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
-//        user.setRoles(userDTO.getRoles());
+        List<Role> roles = new ArrayList<>();
+        Role roleAdmin = roleRepository.findByName("ADMIN");
+        roles.add(roleAdmin);
+        user.setRoles(roles);
         userRepository.save(user);
         return true;
     }
-
     public boolean checkAdminRoleByUsername(String username) {
         // Lấy thông tin người dùng từ cơ sở dữ liệu
         User user = userRepository.findByUsername(username);
