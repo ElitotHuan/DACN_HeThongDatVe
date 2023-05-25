@@ -33,6 +33,7 @@ public class UserManagerController {
 
     @PostMapping(value = "/api/addUser")
     public String addUser(@RequestBody UserDTO userDTO) {
+        System.out.println(userDTO);
         Boolean added = userService.addUser(userDTO);
         System.out.println(added);
         return "success";
