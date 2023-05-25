@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.example.dto.MovieDTO;
 import com.example.models.Ticket;
 import com.example.dto.TicketDTO;
 import com.example.models.User;
@@ -19,6 +20,9 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
+
+
+
     @PostMapping("/saveTicket")
     public ResponseEntity<String> saveTicket(@RequestBody TicketDTO ticketDTO) {
         // Chuyển đổi từ TicketDTO thành Ticket entity
@@ -29,11 +33,13 @@ public class TicketController {
     }
 
     @PostMapping("/ticket")
-    public ModelAndView handleTicketRequest(@RequestParam("movie") String movie, @RequestParam("startdate") String startDate, @RequestParam("starttime") String startTime, @RequestParam("price") String price) {
+    public ModelAndView handleTicketRequest(@RequestParam("movie") String movie, @RequestParam("startdate") String startDate, @RequestParam("starttime") String startTime, @RequestParam("branch") String branchName, @RequestParam("room") String roomName, @RequestParam("price") String price) {
         ModelAndView mav = new ModelAndView("client/ticket");
         mav.addObject("movie", movie);
         mav.addObject("startdate", startDate);
         mav.addObject("starttime", startTime);
+        mav.addObject("branch", branchName);
+        mav.addObject("room", roomName);
         mav.addObject("price", price);
 
         List<Ticket> tickets = ticketService.getAll();
@@ -63,14 +69,15 @@ public class TicketController {
     }
 
 
-
     @PostMapping("/payment")
     public ModelAndView handleTicketSuccess(@RequestParam("movie") String movie,
                                             @RequestParam("count") int count,
                                             @RequestParam("price") double price,
                                             @RequestParam("seating") String seating,
                                             @RequestParam("startdate") String startdate,
-                                            @RequestParam("starttime") String starttime
+                                            @RequestParam("starttime") String starttime,
+                                            @RequestParam("branch") String branchName,
+                                            @RequestParam("room") String roomName
 
     ) {
         // Xử lý thông tin thanh toán ở đây
@@ -83,8 +90,24 @@ public class TicketController {
         mav.addObject("seating", seating);
         mav.addObject("startdate", startdate);
         mav.addObject("starttime", starttime);
+        mav.addObject("branch", branchName);
+        mav.addObject("room", roomName);
 
         return mav;
+    }
+
+
+    @PutMapping("/api/updateTicket/{id}")
+    public String updateTicket(@PathVariable("id") int id, @RequestBody TicketDTO ticketDTO) {
+        Boolean up = ticketService.updateTicket(ticketDTO, id);
+        return "success";
+    }
+
+
+    @GetMapping("/api/deleteTicket/{id}")
+    public ModelAndView deleteTicket(@PathVariable("id") int id) {
+        Boolean del = ticketService.deleteTicket(id);
+        return new ModelAndView("redirect:/api/manage_ticket");
     }
 
 }

@@ -88,6 +88,14 @@
                             <td>${count}</td>
                         </tr>
                         <tr>
+                            <th>Chi nhánh</th>
+                            <td>${branch}</td>
+                        </tr>
+                        <tr>
+                            <th>Phòng</th>
+                            <td>${room}</td>
+                        </tr>
+                        <tr>
                             <th>Giá vé</th>
                             <td>${price}</td>
                         </tr>
@@ -111,6 +119,8 @@
                                 movieName: '${movie}',
                                 startDate: '${startdate}',
                                 startTime: '${starttime}',
+                                branchName: '${branch}',
+                                room: '${room}',
                                 seating: '${seating}',
                                 total: ${price * count},
                                 username: '${sessionScope.loggedInUser.username}'

@@ -119,6 +119,33 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="/api/manage_ticket">
+                                <div class="option-box">
+                                    <div class="option-box-img">
+                                        <img src="<%=request.getContextPath()%>/static/images/admin/manage-ticket.png"
+                                             width="100%">
+                                    </div>
+                                    <h5>MANAGE TICKET</h5>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-6">
+                            <a href="/api/manage_satistics">
+                                <div class="option-box">
+                                    <div class="option-box-img">
+                                        <img src="<%=request.getContextPath()%>/static/images/admin/statistics.png"
+                                             width="100%">
+                                    </div>
+                                    <h5>STATISTICS</h5>
+                                </div>
+                            </a>
+                        </div>
+                        
+                    </div>
+
                 </div>
             </div>
         </div>
