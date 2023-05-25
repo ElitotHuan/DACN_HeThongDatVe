@@ -36,6 +36,9 @@ public class AdminViewController {
     private UserService userService;
 
     @Autowired
+    private TicketService ticketService;
+
+    @Autowired
     private SatisticsService satisticsService;
 
 //    @PreAuthorize("hasRole('ADMIN')")
@@ -93,6 +96,13 @@ public class AdminViewController {
     public ModelAndView userManagementView(){
         ModelAndView mav = new ModelAndView("admin/manage_user");
         mav.addObject("users",userService.getAllUsers());
+        return mav;
+    }
+
+    @GetMapping("/api/manage_ticket")
+    public ModelAndView ticketManagement() {
+        ModelAndView mav = new ModelAndView("admin/manage_ticket");
+        mav.addObject("tickets",ticketService.getAll());
         return mav;
     }
 

@@ -29,6 +29,20 @@ public class TicketService {
         ticketRepository.save(newTicket);
         return true;
     }
+
+    public Boolean updateTicket(TicketDTO ticketDTO , int id){
+        Ticket t = ticketRepository.getReferenceById(id);
+        setData(ticketDTO , t);
+        ticketRepository.save(t);
+        return true;
+    }
+
+
+    public Boolean deleteTicket(int id) {
+        ticketRepository.deleteById(id);
+        return true;
+    }
+
     private void setData(TicketDTO ticketDTO, Ticket newTicket) {
         newTicket.setMovieName(ticketDTO.getMovieName());
         newTicket.setSeating(ticketDTO.getSeating());

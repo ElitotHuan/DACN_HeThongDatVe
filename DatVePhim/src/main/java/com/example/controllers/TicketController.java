@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.example.dto.MovieDTO;
 import com.example.models.Ticket;
 import com.example.dto.TicketDTO;
 import com.example.models.User;
@@ -18,6 +19,9 @@ public class TicketController {
 
     @Autowired
     private TicketService ticketService;
+
+
+
 
     @PostMapping("/saveTicket")
     public ResponseEntity<String> saveTicket(@RequestBody TicketDTO ticketDTO) {
@@ -90,6 +94,20 @@ public class TicketController {
         mav.addObject("room", roomName);
 
         return mav;
+    }
+
+
+    @PutMapping("/api/updateTicket/{id}")
+    public String updateTicket(@PathVariable("id") int id, @RequestBody TicketDTO ticketDTO) {
+        Boolean up = ticketService.updateTicket(ticketDTO, id);
+        return "success";
+    }
+
+
+    @GetMapping("/api/deleteTicket/{id}")
+    public ModelAndView deleteTicket(@PathVariable("id") int id) {
+        Boolean del = ticketService.deleteTicket(id);
+        return new ModelAndView("redirect:/api/manage_ticket");
     }
 
 }
