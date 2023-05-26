@@ -1,6 +1,7 @@
 package com.example.controllers;
 
 import com.example.dto.LoginDTO;
+import com.example.dto.PasswordDTO;
 import com.example.models.User;
 import com.example.services.UserService;
 import javax.validation.Valid;
@@ -110,7 +111,32 @@ import org.springframework.web.servlet.ModelAndView;
             return new ModelAndView("client/reset-password-success");
         }
 
-        // CRUD
+        @GetMapping("/change-password")
+        public ModelAndView changePasswordForm() {
+            ModelAndView mav = new ModelAndView("client/change-password");
+            mav.addObject("passwordDetails", new PasswordDTO());
+            return mav;
+        }
+
+        @PostMapping("/change-password")
+        public ModelAndView changePasswordSubmit(@ModelAttribute("passwordDetails") @Valid PasswordDTO passwordDetails,
+                                                 BindingResult bindingResult, Model model, HttpSession session) {
+            if (bindingResult.hasErrors()) {
+                return new ModelAndView("client/change-password");
+            }
+
+            User loggedInUser = (User) session.getAttribute("loggedInUser");
+            boolean result = userService.changePassword(loggedInUser.getUsername(),
+                    passwordDetails.getCurrentPassword(), passwordDetails.getNewPassword());
+
+            if (result) {
+                model.addAttribute("successMsgChangePassword", "Thay đổi mật khẩu thành công!");
+                return new ModelAndView("redirect:/");
+            } else {
+                model.addAttribute("errorMsg", "Mật khẩu hiện tại không đúng!");
+                return new ModelAndView("client/change-password");
+            }
+        }
 
 
 }
