@@ -11,7 +11,7 @@
  Target Server Version : 100427
  File Encoding         : 65001
 
- Date: 16/05/2023 10:54:45
+ Date: 26/05/2023 08:33:15
 */
 
 SET NAMES utf8mb4;
@@ -36,6 +36,7 @@ CREATE TABLE `users_roles`  (
 INSERT INTO `users_roles` VALUES (1, 2);
 INSERT INTO `users_roles` VALUES (2, 1);
 INSERT INTO `users_roles` VALUES (3, 1);
-INSERT INTO `users_roles` VALUES (4, 1);
+INSERT INTO `users_roles` VALUES (21, 2);
+INSERT INTO `users_roles` VALUES (22, 2);
 
 SET FOREIGN_KEY_CHECKS = 1;
