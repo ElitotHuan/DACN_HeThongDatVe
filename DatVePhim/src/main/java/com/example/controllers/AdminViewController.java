@@ -35,6 +35,12 @@ public class AdminViewController {
     @Autowired
     private UserService userService;
 
+    @Autowiredc
+    private TicketService ticketService;
+
+    @Autowired
+    private SatisticsService satisticsService;
+    
     @Autowired
     private RoleService roleService;
 
@@ -94,6 +100,20 @@ public class AdminViewController {
         ModelAndView mav = new ModelAndView("admin/manage_user");
         mav.addObject("users",userService.getAllUsers());
         mav.addObject("roles",roleService.getAllRoles());
+        return mav;
+    }
+
+    @GetMapping("/api/manage_ticket")
+    public ModelAndView ticketManagement() {
+        ModelAndView mav = new ModelAndView("admin/manage_ticket");
+        mav.addObject("tickets",ticketService.getAll());
+        return mav;
+    }
+
+    @GetMapping(value = "/api/manage_satistics")
+    public ModelAndView satisticManagementView() {
+        ModelAndView mav = new ModelAndView("admin/manage_satistics");
+        mav.addObject("info",satisticsService.getTotalFromAllBranch());
         return mav;
     }
 

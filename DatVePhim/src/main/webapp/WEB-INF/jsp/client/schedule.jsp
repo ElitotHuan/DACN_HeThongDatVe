@@ -163,6 +163,8 @@ h1 {
                                 <input type="hidden" name="price" value="${schedule.price}" />
                                 <input type="hidden" name="startdate" value="${schedule.startDate}" />
                                 <input type="hidden" name="starttime" value="${schedule.startTime}" />
+                                <input type="hidden" name="branch" value="${schedule.branch.name}" />
+                                <input type="hidden" name="room" value="${schedule.room.name}" />
                                 <input type="hidden" name="username" value="${sessionScope.loggedInUser.username}" />
                                 <button class="book-now" type="submit"><i class="book1"></i>Book now</button>
                             </form>

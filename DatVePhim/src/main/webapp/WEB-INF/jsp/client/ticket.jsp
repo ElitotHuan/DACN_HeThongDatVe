@@ -27,7 +27,10 @@
             th:src="@{js/jquery.min.js}"></script>
     <script src="../static/js/jquery.seat-charts.js"
             th:src="@{js/jquery.seat-charts.js}"></script>
-
+    <script>
+        // Lưu giá trị cart-badge vào sessionStorage
+        sessionStorage.setItem('cartBadgeValue', '0');
+    </script>
 </head>
 <body>
 <!-- header-section-starts -->
@@ -48,6 +51,8 @@
                             <li>Movie:</li>
                             <li>StartDate:</li>
                             <li>StartTime:</li>
+                            <li>Branch:</li>
+                            <li>Room:</li>
                             <li>Tickets:</li>
                             <li>Total:</li>
                             <li>Seats:</li>
@@ -56,6 +61,8 @@
                             <li th:text="${movie}">${movie}</li>
                             <li th:text="${startDate}">${startdate}</li>
                             <li th:text="${startTime}">${starttime}</li>
+                            <li th:text="${branch}">${branch}</li>
+                            <li th:text="${room}">${room}</li>
                             <li><span id="counter">0</span></li>
                             <li><b><i>$</i><span id="total">0</span></b></li>
                         </ul>
@@ -73,6 +80,8 @@
 
                                     <input name="startdate" type="text" value="${startdate}" style="display: none">
                                     <input name="starttime" type="text" value="${starttime}" style="display: none">
+                                    <input name="branch" type="text" value="${branch}" style="display: none">
+                                    <input name="room" type="text" value="${room}" style="display: none">
                                     <input name="username" type="text" value="${sessionScope.loggedInUser.username}"
                                            style="display: none">
                                     <span class="input-group-btn">
@@ -81,16 +90,22 @@
                                 </div>
                             </fieldset>
                         </form>
-
-
                         <script>
-                            $(document).ready(function () {
-                                $('#book-now-btn').click(function () {
-                                    // Submit the form when "Book Now!" button is clicked
-                                    $('#order-form').submit();
+                            $(document).ready(function() {
+                                $('#book-now-btn').click(function() {
+                                    // Lấy giá trị hiện tại của cart-badge từ sessionStorage
+                                    var currentCount = parseInt(sessionStorage.getItem('cartBadgeValue'));
+
+                                    // Cộng thêm 1 vào giá trị hiện tại
+                                    var updatedCount = currentCount + 1;
+
+                                    // Cập nhật giá trị mới vào sessionStorage
+                                    sessionStorage.setItem('cartBadgeValue', updatedCount.toString());
+
                                 });
                             });
                         </script>
+
 
                         <div id="legend"></div>
                     </div>
