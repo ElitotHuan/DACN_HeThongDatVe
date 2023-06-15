@@ -48,7 +48,8 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;}
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
 <body>
@@ -62,60 +63,62 @@
 
                 <div class="invoice">
                     <h1>Giỏ hàng</h1>
-                    <table class="table">
-                        <tr>
-                            <th>ID USER</th>
-                            <td>${sessionScope.loggedInUser.username}</td>
-                        </tr>
-                        <tr>
-                            <th>Tên phim</th>
-                            <td>${movie}</td>
-                        </tr>
-                        <tr>
-                            <th>Ngày chiếu</th>
-                            <td>${startdate}</td>
-                        </tr>
-                        <tr>
-                            <th>Thời gian chiếu</th>
-                            <td>${starttime}</td>
-                        </tr>
-                        <tr>
-                            <th>Chỗ ngồi</th>
-                            <td>${seating}</td>
-                        </tr>
-                        <tr>
-                            <th>Số vé</th>
-                            <td>${count}</td>
-                        </tr>
-                        <tr>
-                            <th>Chi nhánh</th>
-                            <td>${branch}</td>
-                        </tr>
-                        <tr>
-                            <th>Phòng</th>
-                            <td>${room}</td>
-                        </tr>
-                        <tr>
-                            <th>Giá vé</th>
-                            <td>${price}</td>
-                        </tr>
-                        <tr>
-                            <th>Tổng cộng</th>
-                            <td>${price*count}</td>
-                        </tr>
-                    </table>
-                    <button class="book-now"  id="paymentButton"><i class="book1"></i>Thanh toán</button>
+                    <form action="http://localhost:8080/pay" method="post" id="payment" onsubmit="return false">
+                        <table class="table">
+                            <tr>
+                                <th>ID USER</th>
+                                <td>${sessionScope.loggedInUser.username}</td>
+                            </tr>
+                            <tr>
+                                <th>Tên phim</th>
+                                <td>${movie}</td>
+                            </tr>
+                            <tr>
+                                <th>Ngày chiếu</th>
+                                <td>${startdate}</td>
+                            </tr>
+                            <tr>
+                                <th>Thời gian chiếu</th>
+                                <td>${starttime}</td>
+                            </tr>
+                            <tr>
+                                <th>Chỗ ngồi</th>
+                                <td>${seating}</td>
+                            </tr>
+                            <tr>
+                                <th>Số vé</th>
+                                <td>${count}</td>
+                            </tr>
+                            <tr>
+                                <th>Chi nhánh</th>
+                                <td>${branch}</td>
+                            </tr>
+                            <tr>
+                                <th>Phòng</th>
+                                <td>${room}</td>
+                            </tr>
+                            <tr>
+                                <th>Giá vé</th>
+                                <td>${price}</td>
+                            </tr>
+                            <tr>
+                                <th>Tổng cộng</th>
+                                <td>${price*count}</td>
+                            </tr>
+                        </table>
+                        <button class="book-now" type="submit"><i class="book1"></i>Thanh toán</button>
+                    </form>
                 </div>
 
 
                 <script>
-                    document.getElementById('paymentButton').addEventListener('click', function() {
-                        // Kiểm tra trạng thái đăng nhập
-                        var isLoggedIn = ${sessionScope.loggedInUser != null}; // Kiểm tra session loggedInUser
+
+                    $(document).on('submit', '#payment', function (event) {
+                        let isLoggedIn = ${sessionScope.loggedInUser != null}; // Kiểm tra session loggedInUser
 
                         if (isLoggedIn) {
-                            // Lấy dữ liệu vé từ các biến và tạo một object chứa thông tin vé
-                            var ticketData = {
+                            const frm = $('#payment');
+                            const ticketData = {
                                 movieName: '${movie}',
                                 startDate: '${startdate}',
                                 startTime: '${starttime}',
@@ -126,27 +129,66 @@
                                 username: '${sessionScope.loggedInUser.username}'
                             };
 
-                            // Gửi dữ liệu vé qua Ajax để lưu vào cơ sở dữ liệu
-                            var xhr = new XMLHttpRequest();
-                            xhr.open('POST', '/saveTicket', true);
-                            xhr.setRequestHeader('Content-Type', 'application/json');
-                            xhr.onreadystatechange = function() {
-                                if (xhr.readyState === 4 && xhr.status === 200) {
-                                    // Xử lý kết quả sau khi lưu thành công
-                                    alert('Thanh toán thành công!');
-                                    // Chuyển hướng hoặc thực hiện các thao tác khác sau khi thanh toán
-                                } else if (xhr.readyState === 4 && xhr.status !== 200) {
-                                    // Xử lý kết quả sau khi lưu thất bại
-                                    alert('Thanh toán thất bại. Vui lòng thử lại sau!');
-                                    // Xử lý lỗi hoặc hiển thị thông báo lỗi
+                            console.log(JSON.stringify(ticketData));
+
+
+                            $.ajax({
+                                contentType: "application/json;charset=UTF-8",
+                                type: frm.attr('method'),
+                                url: frm.attr('action'),
+                                data: JSON.stringify(ticketData),
+                                success: function (response, data) {
+
+                                    if (data == 'success') {
+                                        window.location.href = response
+                                    }
+
                                 }
-                            };
-                            xhr.send(JSON.stringify(ticketData));
+                            });
                         } else {
-                            // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
                             window.location.href = 'login';
                         }
+
                     });
+
+                    <%--document.getElementById('paymentButton').addEventListener('click', function() {--%>
+                    <%--    // Kiểm tra trạng thái đăng nhập--%>
+                    <%--    var isLoggedIn = ${sessionScope.loggedInUser != null}; // Kiểm tra session loggedInUser--%>
+
+                    <%--    if (isLoggedIn) {--%>
+                    <%--        // Lấy dữ liệu vé từ các biến và tạo một object chứa thông tin vé--%>
+                    <%--        var ticketData = {--%>
+                    <%--            movieName: '${movie}',--%>
+                    <%--            startDate: '${startdate}',--%>
+                    <%--            startTime: '${starttime}',--%>
+                    <%--            branchName: '${branch}',--%>
+                    <%--            room: '${room}',--%>
+                    <%--            seating: '${seating}',--%>
+                    <%--            total: ${price * count},--%>
+                    <%--            username: '${sessionScope.loggedInUser.username}'--%>
+                    <%--        };--%>
+
+                    <%--        // Gửi dữ liệu vé qua Ajax để lưu vào cơ sở dữ liệu--%>
+                    <%--        var xhr = new XMLHttpRequest();--%>
+                    <%--        xhr.open('POST', '/saveTicket', true);--%>
+                    <%--        xhr.setRequestHeader('Content-Type', 'application/json');--%>
+                    <%--        xhr.onreadystatechange = function() {--%>
+                    <%--            if (xhr.readyState === 4 && xhr.status === 200) {--%>
+                    <%--                // Xử lý kết quả sau khi lưu thành công--%>
+                    <%--                alert('Thanh toán thành công!');--%>
+                    <%--                // Chuyển hướng hoặc thực hiện các thao tác khác sau khi thanh toán--%>
+                    <%--            } else if (xhr.readyState === 4 && xhr.status !== 200) {--%>
+                    <%--                // Xử lý kết quả sau khi lưu thất bại--%>
+                    <%--                alert('Thanh toán thất bại. Vui lòng thử lại sau!');--%>
+                    <%--                // Xử lý lỗi hoặc hiển thị thông báo lỗi--%>
+                    <%--            }--%>
+                    <%--        };--%>
+                    <%--        xhr.send(JSON.stringify(ticketData));--%>
+                    <%--    } else {--%>
+                    <%--        // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập--%>
+                    <%--        window.location.href = 'login';--%>
+                    <%--    }--%>
+                    <%--});--%>
                 </script>
             </div>
         </div>
