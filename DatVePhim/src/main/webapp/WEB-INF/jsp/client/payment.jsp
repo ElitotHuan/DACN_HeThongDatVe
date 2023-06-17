@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,7 +64,7 @@
             <div class="main-contact">
 
                 <div class="invoice">
-                    <h1>Giỏ hàng</h1>
+                    <h1>THÔNG TIN VÉ</h1>
                     <form action="http://localhost:8080/pay" method="post" id="payment" onsubmit="return false">
                         <table class="table">
                             <tr>
@@ -106,6 +108,28 @@
                                 <td>${price*count}</td>
                             </tr>
                         </table>
+                        <h2>THÔNG TIN ĐỒ ĂN:</h2>
+                        <table class="table">
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Giá</th>
+                            </tr>
+                            <c:forEach var="item" items="${cartItems}">
+                                <tr>
+                                    <td>${item.food.name}</td>
+                                    <td>${item.count}</td>
+                                    <td>${item.food.price}</td>
+                                </tr>
+                                <c:set var="totalFoodPrice" value="0" />
+                                <c:forEach var="item" items="${cartItems}">
+                                    <c:set var="totalFoodPrice" value="${totalFoodPrice + (item.food.price * item.count)}" />
+                                </c:forEach>
+                            </c:forEach>
+                        </table>
+
+                        <h2>TỔNG TIỀN PHẢI THANH TOÁN: ${price * count + totalFoodPrice} VND</h2>
+
                         <button class="book-now" type="submit"><i class="book1"></i>Thanh toán</button>
                     </form>
                 </div>
@@ -150,45 +174,6 @@
                         }
 
                     });
-
-                    <%--document.getElementById('paymentButton').addEventListener('click', function() {--%>
-                    <%--    // Kiểm tra trạng thái đăng nhập--%>
-                    <%--    var isLoggedIn = ${sessionScope.loggedInUser != null}; // Kiểm tra session loggedInUser--%>
-
-                    <%--    if (isLoggedIn) {--%>
-                    <%--        // Lấy dữ liệu vé từ các biến và tạo một object chứa thông tin vé--%>
-                    <%--        var ticketData = {--%>
-                    <%--            movieName: '${movie}',--%>
-                    <%--            startDate: '${startdate}',--%>
-                    <%--            startTime: '${starttime}',--%>
-                    <%--            branchName: '${branch}',--%>
-                    <%--            room: '${room}',--%>
-                    <%--            seating: '${seating}',--%>
-                    <%--            total: ${price * count},--%>
-                    <%--            username: '${sessionScope.loggedInUser.username}'--%>
-                    <%--        };--%>
-
-                    <%--        // Gửi dữ liệu vé qua Ajax để lưu vào cơ sở dữ liệu--%>
-                    <%--        var xhr = new XMLHttpRequest();--%>
-                    <%--        xhr.open('POST', '/saveTicket', true);--%>
-                    <%--        xhr.setRequestHeader('Content-Type', 'application/json');--%>
-                    <%--        xhr.onreadystatechange = function() {--%>
-                    <%--            if (xhr.readyState === 4 && xhr.status === 200) {--%>
-                    <%--                // Xử lý kết quả sau khi lưu thành công--%>
-                    <%--                alert('Thanh toán thành công!');--%>
-                    <%--                // Chuyển hướng hoặc thực hiện các thao tác khác sau khi thanh toán--%>
-                    <%--            } else if (xhr.readyState === 4 && xhr.status !== 200) {--%>
-                    <%--                // Xử lý kết quả sau khi lưu thất bại--%>
-                    <%--                alert('Thanh toán thất bại. Vui lòng thử lại sau!');--%>
-                    <%--                // Xử lý lỗi hoặc hiển thị thông báo lỗi--%>
-                    <%--            }--%>
-                    <%--        };--%>
-                    <%--        xhr.send(JSON.stringify(ticketData));--%>
-                    <%--    } else {--%>
-                    <%--        // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập--%>
-                    <%--        window.location.href = 'login';--%>
-                    <%--    }--%>
-                    <%--});--%>
                 </script>
             </div>
         </div>

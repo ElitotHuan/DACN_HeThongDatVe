@@ -1,8 +1,11 @@
 package com.example.controllers;
 
 
+import com.example.models.Cart;
+import com.example.models.CartItem;
 import com.example.models.Ticket;
 import com.example.dto.TicketDTO;
+import com.example.services.CartService;
 import com.example.services.PaypalService;
 import com.example.services.TicketService;
 
@@ -24,7 +27,8 @@ import java.util.List;
 @RestController
 public class TicketController {
 
-
+    @Autowired
+    private CartService cartService;
     @Autowired
     private TicketService ticketService;
 
@@ -120,12 +124,15 @@ public class TicketController {
                                             @RequestParam("startdate") String startdate,
                                             @RequestParam("starttime") String starttime,
                                             @RequestParam("branch") String branchName,
-                                            @RequestParam("room") String roomName
+                                            @RequestParam("room") String roomName,
+                                            @RequestParam("username") String username
 
     ) {
         // Xử lý thông tin thanh toán ở đây
         ModelAndView mav = new ModelAndView("client/payment");
         // Truyền dữ liệu cho trang thanh toán
+        Cart cart = cartService.getCartByUsername(username);
+        List<CartItem> cartItems = cart.getCartItems();
 
         mav.addObject("movie", movie);
         mav.addObject("count", count);
@@ -135,7 +142,8 @@ public class TicketController {
         mav.addObject("starttime", starttime);
         mav.addObject("branch", branchName);
         mav.addObject("room", roomName);
-
+        mav.addObject("cartItems", cartItems );
+        System.out.println(cartItems);
         return mav;
     }
 

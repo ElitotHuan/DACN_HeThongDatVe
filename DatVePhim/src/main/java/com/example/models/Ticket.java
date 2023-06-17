@@ -38,6 +38,4 @@ public class Ticket {
     @Column(name = "total")
     private Double total;
 
-
-
 }

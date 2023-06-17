@@ -1,7 +1,9 @@
 package com.example.controllers;
 
 import com.example.dto.LoginDTO;
+import com.example.models.Cart;
 import com.example.models.User;
+import com.example.services.CartService;
 import com.example.services.UserService;
 import javax.validation.Valid;
 
@@ -24,6 +26,8 @@ import org.springframework.web.servlet.ModelAndView;
         private UserService userService;
         @Autowired
         private BCryptPasswordEncoder passwordEncoder;
+        @Autowired
+        private CartService cartService;
 
         @PostMapping("/register")
         public ModelAndView registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
@@ -50,9 +54,12 @@ import org.springframework.web.servlet.ModelAndView;
             if (result) {
                 User loggedInUser = userService.getUserByUsername(user.getUsername());
                 session.setAttribute("loggedInUser", loggedInUser);
+                if (cartService.getCartByUsername(user.getUsername()) != null) {
+                    int cartItemCount = cartService.countItemsByCartId(cartService.getCartByUsername(user.getUsername()).getId());
+                    session.setAttribute("cartItemCount", cartItemCount);
+                }
                 model.addAttribute("loggedInUser", loggedInUser);
                 model.addAttribute("successMsg", "Đăng Nhập thành công!");
-                System.out.println(loggedInUser);
                 return new ModelAndView("redirect:/");
             } else {
                 model.addAttribute("errorMsg", "Tên đăng nhập hoặc mật khẩu không đúng !");
@@ -77,6 +84,8 @@ import org.springframework.web.servlet.ModelAndView;
         public ModelAndView logout(HttpSession session) {
             // Xóa thông tin người dùng đăng nhập khỏi session
             session.removeAttribute("loggedInUser");
+            int cartItemCount=0;
+            session.setAttribute("cartItemCount", cartItemCount);
             // Điều hướng đến trang đăng nhập
             return new ModelAndView("redirect:/");
         }
