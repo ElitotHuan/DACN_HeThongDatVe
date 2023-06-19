@@ -35,7 +35,7 @@ public class AdminViewController {
     @Autowired
     private UserService userService;
 
-    @Autowiredc
+    @Autowired
     private TicketService ticketService;
 
     @Autowired
