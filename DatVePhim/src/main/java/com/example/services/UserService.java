@@ -258,4 +258,23 @@ public class UserService {
         // Người dùng không có role là "ADMIN"
         return false;
     }
+
+    public boolean changePassword(String username, String currentPassword, String newPassword) {
+        // Tìm kiếm người dùng trong cơ sở dữ liệu bằng tên đăng nhập
+        User user = userRepository.findByUsername(username);
+
+        // Kiểm tra xem mật khẩu hiện tại có khớp với mật khẩu trong cơ sở dữ liệu hay không
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            return false;
+        }
+
+        // Mã hóa mật khẩu mới bằng BCrypt
+        String encodedPassword = passwordEncoder.encode(newPassword);
+
+        // Cập nhật mật khẩu mới cho người dùng
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
+
+        return true;
+    }
 }

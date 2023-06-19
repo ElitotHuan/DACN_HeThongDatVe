@@ -62,8 +62,10 @@
         </form>
     </div>
     <div class="login-signup">
+        <p style="color:green">${successMsgChangePassword}</p>
         <c:if test="${sessionScope.loggedInUser != null}">
             <span>Hello, <strong>${sessionScope.loggedInUser.username}</strong>!</span>
+            <a href="change-password">Đổi mật khẩu</a>
             <a href="/logout">Đăng xuất</a>
         </c:if>
         <c:if test="${sessionScope.loggedInUser == null}">
