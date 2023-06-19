@@ -53,7 +53,59 @@
             transition: all 0.3s ease;
         }
     </style>
+
+    <script>
+        function addToCart(foodId, username) {
+
+            // Gửi request AJAX đến endpoint để thêm food vào giỏ hàng với thông tin username
+            var cartBadge = document.getElementById("cart-badge");
+            var currentCount = parseInt(cartBadge.innerText);
+
+            cartBadge.innerText = currentCount + 1;
+            $.ajax({
+                type: 'POST',
+                url: '/addToCart',
+                data: {
+                    foodId: foodId,
+                    username: username
+                },
+                success: function (response) {
+                    // Xử lý phản hồi từ server (nếu cần)
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi (nếu cần)
+                }
+            });
+        }
+
+        function removeFromCart(foodId, username) {
+            // Gửi request AJAX đến endpoint để thêm food vào giỏ hàng với thông tin username
+            var cartBadge = document.getElementById("cart-badge");
+            var currentCount = parseInt(cartBadge.innerText);
+
+            cartBadge.innerText = currentCount - 1;
+            $.ajax({
+                type: 'POST',
+                url: '/removeFromCart',
+                data: {
+                    foodId: foodId,
+                    username: username
+                },
+                success: function (response) {
+                    // Xử lý phản hồi từ server (nếu cần)
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi (nếu cần)
+                }
+            });
+        }
+    </script>
+
 </head>
+
+
 <body>
 
 <div class="full">
@@ -118,12 +170,23 @@
                             <c:forEach var="item" items="${cartItems}">
                                 <tr>
                                     <td>${item.food.name}</td>
-                                    <td>${item.count}</td>
+                                    <td>
+                                        <button class="plus-button"
+                                                onclick="removeFromCart(${item.food.id}, '${sessionScope.loggedInUser.username}')">
+                                            -
+                                        </button>
+                                            ${item.count}
+                                        <button class="plus-button" type="button"
+                                                onclick="addToCart(${item.food.id}, '${sessionScope.loggedInUser.username}')">
+                                            +
+                                        </button>
+                                    </td>
                                     <td>${item.food.price}</td>
                                 </tr>
-                                <c:set var="totalFoodPrice" value="0" />
+                                <c:set var="totalFoodPrice" value="0"/>
                                 <c:forEach var="item" items="${cartItems}">
-                                    <c:set var="totalFoodPrice" value="${totalFoodPrice + (item.food.price * item.count)}" />
+                                    <c:set var="totalFoodPrice"
+                                           value="${totalFoodPrice + (item.food.price * item.count)}"/>
                                 </c:forEach>
                             </c:forEach>
                         </table>
@@ -136,7 +199,6 @@
 
 
                 <script>
-
                     $(document).on('submit', '#payment', function (event) {
                         let isLoggedIn = ${sessionScope.loggedInUser != null}; // Kiểm tra session loggedInUser
 
@@ -149,7 +211,7 @@
                                 branchName: '${branch}',
                                 room: '${room}',
                                 seating: '${seating}',
-                                total: ${price * count},
+                                total: ${price * count + totalFoodPrice},
                                 username: '${sessionScope.loggedInUser.username}'
                             };
 
@@ -162,13 +224,12 @@
                                 url: frm.attr('action'),
                                 data: JSON.stringify(ticketData),
                                 success: function (response, data) {
-
                                     if (data == 'success') {
                                         window.location.href = response
                                     }
-
                                 }
                             });
+
                         } else {
                             window.location.href = 'login';
                         }

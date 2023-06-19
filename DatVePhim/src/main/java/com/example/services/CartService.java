@@ -55,6 +55,42 @@ public class CartService {
         cartRepository.save(cart);
     }
 
+
+    public void removeFromCart(Food food, String username) {
+        // Lấy thông tin user từ username
+        Cart cart = cartRepository.getCartByUsername(username);
+
+        // Kiểm tra xem user có giỏ hàng chưa
+        if (cart == null) {
+            // Nếu user chưa có giỏ hàng, tạo mới một giỏ hàng
+            cart = new Cart();
+            cart.setUsername(username);
+        }
+
+        // Kiểm tra xem food đã tồn tại trong cart hay chưa
+        CartItem existingCartItem = null;
+        for (CartItem cartItem : cart.getCartItems()) {
+            if (cartItem.getFood().equals(food)) {
+                existingCartItem = cartItem;
+                break;
+            }
+        }
+
+        if (existingCartItem != null) {
+            // Nếu food đã tồn tại trong cart, giảm count xuống 1
+            int newCount = existingCartItem.getCount() - 1;
+            existingCartItem.setCount(newCount);
+
+            if (existingCartItem.getCount() == 0) {
+                // Xóa cart item khỏi giỏ hàng nếu số lượng bằng 0
+                cart.getCartItems().remove(existingCartItem);
+            }
+        }
+
+        // Cập nhật giỏ hàng trong cơ sở dữ liệu
+        cartRepository.save(cart);
+    }
+
     public int countItemsByCartId(int cartId) {
         return cartRepository.sumCountByCartId(cartId);
     }

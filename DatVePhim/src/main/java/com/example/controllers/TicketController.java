@@ -66,7 +66,7 @@ public class TicketController {
             ModelAndView success = new ModelAndView("client/pay_success");
             success.addObject("ticketInfo" ,session.getAttribute("ticketData"));
             session.removeAttribute("ticketData");
-
+            session.removeAttribute("cartItemCount");
             return success;
         }
         return new ModelAndView("redirect:/");

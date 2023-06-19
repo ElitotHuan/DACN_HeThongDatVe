@@ -16,15 +16,28 @@ public class CartController {
     private CartService cartService;
     @Autowired
     private FoodService foodService;
+
     @PostMapping("/addToCart")
     @ResponseBody
     public void addToCart(@RequestParam("foodId") int foodId, @RequestParam("username") String username, HttpSession session) {
         // Lấy thông tin food từ foodId
         Food food = foodService.getFoodById(foodId);
         if (cartService.getCartByUsername(username) != null) {
-            int cartItemCount = cartService.countItemsByCartId(cartService.getCartByUsername(username).getId())+1;
+            int cartItemCount = cartService.countItemsByCartId(cartService.getCartByUsername(username).getId()) + 1;
             session.setAttribute("cartItemCount", cartItemCount);
         }
         cartService.addToCart(food, username);
+    }
+
+    @PostMapping("/removeFromCart")
+    @ResponseBody
+    public void removeFromCart(@RequestParam("foodId") int foodId, @RequestParam("username") String username, HttpSession session) {
+        // Lấy thông tin food từ foodId
+        Food food = foodService.getFoodById(foodId);
+        if (cartService.getCartByUsername(username) != null) {
+            int cartItemCount = cartService.countItemsByCartId(cartService.getCartByUsername(username).getId()) - 1;
+            session.setAttribute("cartItemCount", cartItemCount);
+        }
+        cartService.removeFromCart(food, username);
     }
 }
