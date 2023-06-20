@@ -2,6 +2,7 @@ package com.example.services;
 
 import com.example.dto.EmployeeDTO;
 import com.example.models.Employee;
+import com.example.repositories.BranchRepository;
 import com.example.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository empRepository;
+
+    @Autowired
+    private BranchRepository branchRepository;
 
     public List<Employee> getAll() {
         return empRepository.findAll();
@@ -39,13 +43,16 @@ public class EmployeeService {
         empRepository.deleteById(id);
         return true;
     }
-
+    public boolean checkExist(EmployeeDTO emp) {
+        return (empRepository.findByEmail(emp.getEmail())==null);
+    }
     private void setData(EmployeeDTO emp, Employee newEmp) {
         newEmp.setFullName(emp.getFullName());
         newEmp.setBirthday(LocalDate.parse(emp.getBirthday()));
         newEmp.setAddress(emp.getAddress());
         newEmp.setEmail(emp.getEmail());
         newEmp.setPosition(emp.getPosition());
+        newEmp.setBranch(branchRepository.getById(emp.getBranchId()));
     }
 
 

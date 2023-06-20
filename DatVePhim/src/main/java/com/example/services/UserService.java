@@ -303,4 +303,9 @@ public class UserService {
 
         return true;
     }
+
+
+    public boolean checkEmail(String email) {
+        return userRepository.findByEmail(email) == null;
+    }
 }

@@ -35,8 +35,12 @@ import org.springframework.web.servlet.ModelAndView;
             if (result) {
                 model.addAttribute("successMsg", "Đăng ký thành công!");
                 return new ModelAndView("redirect:/login");
-            } else {
+            } else if((userService.checkEmail(user.getEmail())))
+            {
                 model.addAttribute("errorMsg", "Tên đăng nhập đã tồn tại, vui lòng chọn tên đăng nhập khác!");
+            }
+            {
+                model.addAttribute("errorMsg", "Email đã tồn tại, vui lòng chọn tên email khác!");
             }
             return new ModelAndView("client/register");
         }
@@ -48,16 +52,21 @@ import org.springframework.web.servlet.ModelAndView;
                 return new ModelAndView("client/login");
             }
             boolean result = userService.authenticateUser(user.getUsername(), user.getPassword());
-            if (result) {
+            if (!result) {
+                model.addAttribute("errorMsg", "Tên đăng nhập hoặc mật khẩu không đúng !");
+                return new ModelAndView("client/login");
+            } else if(userService.authenticateAdmin(user.getUsername(), user.getPassword())){
+                User loggedInUser = userService.getUserByUsername(user.getUsername());
+                session.setAttribute("loggedInUser", loggedInUser);
+                model.addAttribute("loggedInUser", loggedInUser);
+                return new ModelAndView("redirect:/api/");
+            } else {
                 User loggedInUser = userService.getUserByUsername(user.getUsername());
                 session.setAttribute("loggedInUser", loggedInUser);
                 model.addAttribute("loggedInUser", loggedInUser);
                 model.addAttribute("successMsg", "Đăng Nhập thành công!");
                 System.out.println(loggedInUser);
                 return new ModelAndView("redirect:/");
-            } else {
-                model.addAttribute("errorMsg", "Tên đăng nhập hoặc mật khẩu không đúng !");
-                return new ModelAndView("client/login");
             }
         }
         // Get Quên mật khẩu

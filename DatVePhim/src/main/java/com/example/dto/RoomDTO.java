@@ -9,6 +9,5 @@ public class RoomDTO {
     private String name;
     private int capacity;
     private double totalArea;
-
     private int branchId;
 }

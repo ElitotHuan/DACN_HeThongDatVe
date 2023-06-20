@@ -36,8 +36,12 @@
                 type: frm.attr('method'),
                 url: frm.attr('action'),
                 data: JSON.stringify(data),
-                success: function () {
-                    window.location.reload();
+                success: function (response) {
+                    alert(response)
+                        window.location.reload();
+
+                }, error: function () {
+                    alert("error: email already used")
                 }
             });
 
@@ -67,6 +71,7 @@
                 success: function () {
                     window.location.reload();
                 }
+
             });
         });
 
@@ -110,7 +115,7 @@
                                                                     <div class="row">
                                                                         <div class="col-sm-12">
                                                                             <div class="form-group">
-                                                                                <input id="full_name"
+                                                                                <input id="fullName"
                                                                                        class="form-control label"
                                                                                        placeholder="Full Name" required/>
                                                                             </div>
@@ -132,7 +137,7 @@
                                                                         </div>
                                                                         <div class="col-sm-12">
                                                                             <div class="form-group">
-                                                                                <input id="email"
+                                                                                <input type="email" id="email"
                                                                                        class="form-control label"
                                                                                        placeholder="Email" required/>
                                                                             </div>
@@ -142,6 +147,16 @@
                                                                                 <input id="position"
                                                                                        class="form-control label"
                                                                                        placeholder="Position" required/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-12">
+                                                                            <div class="form-group">
+                                                                                <select class="form-control" id="branchId">
+                                                                                    <c:forEach var="branch" items="${branches}">
+                                                                                                 <option
+                                                                                                        value="${branch.id}">${branch.name}</option>
+                                                                                    </c:forEach>
+                                                                                </select>
                                                                             </div>
                                                                         </div>
 
@@ -169,12 +184,13 @@
                                 <table class="table table-sm">
                                     <thead>
                                     <tr>
-                                        <th>EMP ID</th>
+                                        <th>EMPLOYEE ID</th>
                                         <th>FULL NAME</th>
                                         <th>BIRTHDAY</th>
                                         <th>ADDRESS</th>
                                         <th>EMAIL</th>
                                         <th>POSITION</th>
+                                        <th>BRANCH</th>
                                         <th>UPDATE</th>
                                         <th>DELETE</th>
                                     </tr>
@@ -188,19 +204,34 @@
                                                            value="${emp.id}" disabled/>
                                                 </td>
                                                 <td><input name="fullName" class="form-control" type="text"
-                                                           value="${emp.fullName}"/></td>
+                                                           value="${emp.fullName}" required/></td>
                                                 <td>
                                                     <input class="form-control" name="birthday" type="date"
-                                                           value="${emp.birthday}"/>
+                                                           value="${emp.birthday}" required/>
                                                 </td>
                                                 <td><input name="address" class="form-control" type="text"
                                                            value="${emp.address}"/>
                                                 </td>
                                                 <td><input name="email" class="form-control" type="emali"
-                                                           value="${emp.email}"/>
+                                                           value="${emp.email}" required/>
                                                 </td>
                                                 <td><input name="position" class="form-control" type="text"
-                                                           value="${emp.position}"/>
+                                                           value="${emp.position}"required/>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" name="branchId">
+                                                        <c:forEach var="branch" items="${branches}">
+                                                            <c:choose>
+                                                                <c:when test="${emp.branch.id eq branch.id}">
+                                                                    <option selected
+                                                                            value="${branch.id}">${branch.name}</option>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <option value="${branch.id}">${branch.name}</option>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:forEach>
+                                                    </select>
                                                 </td>
                                                 <td>
                                                     <button type="submit"

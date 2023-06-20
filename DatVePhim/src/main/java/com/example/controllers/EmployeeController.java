@@ -18,6 +18,9 @@ public class EmployeeController {
         if (empDTO == null) {
             return "error: employee data is null";
         }
+        if (!(service.checkExist(empDTO))) {
+            return "error: email already used";
+        }
         System.out.println(empDTO.toString());
         Boolean ad = service.addEmployee(empDTO);
         return "success";

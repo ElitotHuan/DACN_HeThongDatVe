@@ -124,6 +124,7 @@ public class AdminViewController {
         List<Employee> empList =  empService.getAll();
         ModelAndView mav = new ModelAndView("admin/manage_employee");
         mav.addObject("employees", empList);
+        mav.addObject("branches", branchService.getAll());
         return mav;
     }
 
