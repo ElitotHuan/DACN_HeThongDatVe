@@ -40,7 +40,13 @@
                 },
             });
         });
+
+            // Lấy giá trị cart-badge từ sessionStorage và cập nhật lên giao diện
+            var cartBadge = document.getElementById('cart-badge');
+            cartBadge.innerText = sessionStorage.getItem('cartBadgeValue');
+
     </script>
+
     <script type="text/javascript" src="../../../static/js/jquery.flexisel.js"></script>
 </head>
 <div class="top-header span_top">
@@ -68,20 +74,8 @@
         </c:if>
     </div>
     <div class="cart-icon">
-        <a href="/payment" onclick="openCart()"></a>
-        <span class="cart-badge" id="cart-badge">0</span>
+        <span class="cart-badge" id="cart-badge">${sessionScope.cartItemCount}</span>
     </div>
-    <script>
-        // Lấy giá trị cart-badge từ sessionStorage và cập nhật lên giao diện
-        var cartBadge = document.getElementById('cart-badge');
-        cartBadge.innerText = sessionStorage.getItem('cartBadgeValue');
-    </script>
-    <script>
-        function openCart() {
-            // Thực hiện chuyển hướng đến trang payment.jsp
-            window.location.href = 'payment.jsp';
-        }
-    </script>
 
     <div class="clearfix"></div>
 </div>

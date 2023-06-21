@@ -1,36 +1,83 @@
 package com.example.controllers;
 
-import com.example.dto.MovieDTO;
+
+import com.example.models.Cart;
+import com.example.models.CartItem;
 import com.example.models.Ticket;
 import com.example.dto.TicketDTO;
-import com.example.models.User;
+import com.example.services.CartService;
+import com.example.services.PaypalService;
 import com.example.services.TicketService;
+
+import com.paypal.api.payments.Links;
+import com.paypal.api.payments.Payment;
+import com.paypal.base.rest.PayPalRESTException;
+
+import jakarta.servlet.http.HttpSession;
+import org.eclipse.tags.shaded.org.apache.xpath.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.http.ResponseEntity;
 
+import java.sql.PseudoColumnUsage;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @RestController
 public class TicketController {
 
     @Autowired
+    private CartService cartService;
+    @Autowired
     private TicketService ticketService;
 
+    @Autowired
+    private PaypalService paypalService;
 
+    @PostMapping("/pay")
+    public String pay(HttpSession session , @RequestBody TicketDTO ticket) throws PayPalRESTException {
+        String cancelURL = "http://localhost:8080" + "/" + "pay/cancel";
+        String successURL = "http://localhost:8080" + "/" + "saveTicket";
 
+        //Tạo thanh toán từ dữ liệu của hóa đơn
+        Payment payment = paypalService.createPayment(ticket.getTotal(), "USD",
+                "payemnt description", cancelURL, successURL);
 
-    @PostMapping("/saveTicket")
-    public ResponseEntity<String> saveTicket(@RequestBody TicketDTO ticketDTO) {
-        // Chuyển đổi từ TicketDTO thành Ticket entity
-        // Lưu dữ liệu vé vào cơ sở dữ liệu
-        ticketService.saveTicket(ticketDTO);
-        // Trả về thông báo thành công
-        return ResponseEntity.ok("Dữ liệu vé đã được lưu thành công");
+        for (Links links : payment.getLinks()) {
+            //Sau khi tạo thanh toán nếu không xảy lỗi, tự động chuyển hướng sang giao diện paypal
+            if (links.getRel().equals("approval_url")) {
+                session.setAttribute("ticketData", ticket);
+                return links.getHref();
+            }
+        }
+
+        return "redirect:/";
     }
+
+    @GetMapping("/saveTicket")
+    public ModelAndView saveTicket(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId, HttpSession session) throws PayPalRESTException {
+        Payment payment = paypalService.executePayment(paymentId, payerId);
+        if (payment.getState().equals("approved")) {
+            // Lưu dữ liệu vé vào cơ sở dữ liệu
+            ticketService.saveTicket((TicketDTO) session.getAttribute("ticketData"));
+
+            //Gửi thông tin vé tới người dùng
+            ModelAndView success = new ModelAndView("client/pay_success");
+            success.addObject("ticketInfo" ,session.getAttribute("ticketData"));
+            session.removeAttribute("ticketData");
+            session.removeAttribute("cartItemCount");
+            return success;
+        }
+        return new ModelAndView("redirect:/");
+    }
+
+
+    @GetMapping("/pay/cancel")
+    public ModelAndView cancelPayment() {
+        return new ModelAndView("redirect:/");
+    }
+
 
     @PostMapping("/ticket")
     public ModelAndView handleTicketRequest(@RequestParam("movie") String movie, @RequestParam("startdate") String startDate, @RequestParam("starttime") String startTime, @RequestParam("branch") String branchName, @RequestParam("room") String roomName, @RequestParam("price") String price) {
@@ -77,12 +124,15 @@ public class TicketController {
                                             @RequestParam("startdate") String startdate,
                                             @RequestParam("starttime") String starttime,
                                             @RequestParam("branch") String branchName,
-                                            @RequestParam("room") String roomName
+                                            @RequestParam("room") String roomName,
+                                            @RequestParam("username") String username
 
     ) {
         // Xử lý thông tin thanh toán ở đây
         ModelAndView mav = new ModelAndView("client/payment");
         // Truyền dữ liệu cho trang thanh toán
+        Cart cart = cartService.getCartByUsername(username);
+        List<CartItem> cartItems = cart.getCartItems();
 
         mav.addObject("movie", movie);
         mav.addObject("count", count);
@@ -92,7 +142,8 @@ public class TicketController {
         mav.addObject("starttime", starttime);
         mav.addObject("branch", branchName);
         mav.addObject("room", roomName);
-
+        mav.addObject("cartItems", cartItems );
+        System.out.println(cartItems);
         return mav;
     }
 

@@ -9,14 +9,32 @@
     <!-- Custom Theme files -->
     <script src="../../../static/js/jquery.min.js"></script>
 
+
     <script>
-        function increaseCart() {
+        function addToCart(foodId, username) {
+            // Gửi request AJAX đến endpoint để thêm food vào giỏ hàng với thông tin username
             var cartBadge = document.getElementById("cart-badge");
             var currentCount = parseInt(cartBadge.innerText);
 
             cartBadge.innerText = currentCount + 1;
+            $.ajax({
+                type: 'POST',
+                url: '/addToCart',
+                data: {
+                    foodId: foodId,
+                    username: username
+                },
+                success: function(response) {
+                    // Xử lý phản hồi từ server (nếu cần)
+                },
+                error: function(xhr, status, error) {
+                    // Xử lý lỗi (nếu cần)
+                }
+            });
         }
+
     </script>
+
 </head>
 <body>
 
@@ -34,8 +52,7 @@
                             <h2>${food.name}</h2>
                             <p>Price: ${food.price}</p>
                             <div>
-                                <button class="plus-button" onclick="increaseCart()">+</button>
-
+                                <button class="plus-button" onclick="addToCart(${food.id}, '${sessionScope.loggedInUser.username}')">+</button>
                             </div>
                         </div>
                     </c:forEach>
