@@ -159,6 +159,7 @@ h1 {
                             <td>${schedule.branch.name}</td>
                             <td >
                             <form class="book" action="/ticket" method="post">
+                                <input type="hidden" name="id" value="${schedule.id}" />
                                 <input type="hidden" name="movie" value="${schedule.movie.name}" />
                                 <input type="hidden" name="price" value="${schedule.price}" />
                                 <input type="hidden" name="startdate" value="${schedule.startDate}" />

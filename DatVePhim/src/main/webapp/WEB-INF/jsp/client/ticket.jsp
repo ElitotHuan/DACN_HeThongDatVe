@@ -72,6 +72,7 @@
                         <form id="order-form" action="/payment" method="POST">
                             <fieldset>
                                 <div class="form-group input-group">
+                                    <input name="id" type="text" value="${id}" style="display: none">
                                     <input name="movie" type="text" value="${movie}" style="display: none">
                                     <input id="count" name="count" type="text" value="*{count}" style="display: none"/>
                                     <input name="price" type="text" value="${price}" style="display: none">

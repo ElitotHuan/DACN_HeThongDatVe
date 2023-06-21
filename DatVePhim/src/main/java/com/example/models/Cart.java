@@ -3,6 +3,8 @@ package com.example.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +18,10 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "username")
-    private String username;
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems = new ArrayList<>();
@@ -34,7 +38,7 @@ public class Cart {
     public String toString() {
         return "Cart{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", username='" + user.getUsername() + '\'' +
                 ", cartItems=" + cartItems.size() +
                 '}';
     }
