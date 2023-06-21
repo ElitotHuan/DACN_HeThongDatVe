@@ -3,10 +3,12 @@ package com.example.controllers;
 
 import com.example.models.Cart;
 import com.example.models.CartItem;
+import com.example.models.Schedule;
 import com.example.models.Ticket;
 import com.example.dto.TicketDTO;
 import com.example.services.CartService;
 import com.example.services.PaypalService;
+import com.example.services.ScheduleService;
 import com.example.services.TicketService;
 
 import com.paypal.api.payments.Links;
@@ -29,8 +31,12 @@ public class TicketController {
 
     @Autowired
     private CartService cartService;
+
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private ScheduleService scheduleService;
 
     @Autowired
     private PaypalService paypalService;
@@ -60,11 +66,11 @@ public class TicketController {
         Payment payment = paypalService.executePayment(paymentId, payerId);
         if (payment.getState().equals("approved")) {
             // Lưu dữ liệu vé vào cơ sở dữ liệu
-            ticketService.saveTicket((TicketDTO) session.getAttribute("ticketData"));
+            Ticket ticketSaved = ticketService.saveTicket((TicketDTO) session.getAttribute("ticketData"));
 
             //Gửi thông tin vé tới người dùng
             ModelAndView success = new ModelAndView("client/pay_success");
-            success.addObject("ticketInfo" ,session.getAttribute("ticketData"));
+            success.addObject("ticketInfo" ,ticketSaved);
             session.removeAttribute("ticketData");
             session.removeAttribute("cartItemCount");
             return success;
@@ -80,8 +86,9 @@ public class TicketController {
 
 
     @PostMapping("/ticket")
-    public ModelAndView handleTicketRequest(@RequestParam("movie") String movie, @RequestParam("startdate") String startDate, @RequestParam("starttime") String startTime, @RequestParam("branch") String branchName, @RequestParam("room") String roomName, @RequestParam("price") String price) {
+    public ModelAndView handleTicketRequest(@RequestParam("id") String id, @RequestParam("movie") String movie, @RequestParam("startdate") String startDate, @RequestParam("starttime") String startTime, @RequestParam("branch") String branchName, @RequestParam("room") String roomName, @RequestParam("price") String price) {
         ModelAndView mav = new ModelAndView("client/ticket");
+        mav.addObject("id", id);
         mav.addObject("movie", movie);
         mav.addObject("startdate", startDate);
         mav.addObject("starttime", startTime);
@@ -94,7 +101,7 @@ public class TicketController {
 
         for (Ticket ticket : tickets) {
             String seating = ticket.getSeating();
-            String ticketMovie = ticket.getMovieName(); // Lấy tên phim của vé
+            String ticketMovie = ticket.getSchedule().getMovie().getName(); // Lấy tên phim của vé
 
             if (ticketMovie.equals(movie)) { // Kiểm tra tên phim của vé có giống với movieName không
                 if (seating.contains(",")) {
@@ -118,6 +125,7 @@ public class TicketController {
 
     @PostMapping("/payment")
     public ModelAndView handleTicketSuccess(@RequestParam("movie") String movie,
+                                            @RequestParam("id") int id,
                                             @RequestParam("count") int count,
                                             @RequestParam("price") double price,
                                             @RequestParam("seating") String seating,
@@ -133,7 +141,7 @@ public class TicketController {
         // Truyền dữ liệu cho trang thanh toán
         Cart cart = cartService.getCartByUsername(username);
         List<CartItem> cartItems = cart.getCartItems();
-
+        mav.addObject("id", id);
         mav.addObject("movie", movie);
         mav.addObject("count", count);
         mav.addObject("price", price);

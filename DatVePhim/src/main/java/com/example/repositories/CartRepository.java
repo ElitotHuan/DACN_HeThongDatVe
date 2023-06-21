@@ -8,11 +8,14 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Integer> {
-    Cart getCartByUsername(String username);
+
+    @Query(value = "SELECT c FROM Cart c WHERE c.user.username=:username")
+    Cart getCartByUsername(@Param("username") String username);
 
     @Query("SELECT SUM(ci.count) FROM CartItem ci WHERE ci.cart.id = :cartId")
     int sumCountByCartId(@Param("cartId") int cartId);
 
-    Cart findByUsername(String username);
+    @Query(value = "SELECT c FROM Cart c WHERE c.user.username=:username")
+    Cart findByUsername(@Param("username") String username);
 }
 

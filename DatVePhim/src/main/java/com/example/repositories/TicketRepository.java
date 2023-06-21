@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
-   @Query(value = "SELECT Ticket.branch_name as name , SUM(Ticket.total) as total from Ticket group by Ticket.branch_name" , nativeQuery = true)
+   @Query(value = "SELECT b.name , sum(t.total) as total FROM Ticket t " +
+           "inner join Schedule s " +
+           "inner join Branch b where t.schedule_id = s.id and  s.branch_id = b.id group by b.name" , nativeQuery = true)
    public List<SatisticDTO> getTotalOfBranch();
 }

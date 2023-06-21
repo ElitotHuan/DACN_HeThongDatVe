@@ -205,11 +205,7 @@
                         if (isLoggedIn) {
                             const frm = $('#payment');
                             const ticketData = {
-                                movieName: '${movie}',
-                                startDate: '${startdate}',
-                                startTime: '${starttime}',
-                                branchName: '${branch}',
-                                room: '${room}',
+                                scheduleId:'${id}',
                                 seating: '${seating}',
                                 total: ${price * count + totalFoodPrice},
                                 username: '${sessionScope.loggedInUser.username}'

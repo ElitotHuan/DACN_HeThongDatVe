@@ -79,13 +79,13 @@
                                     <tr>
                                         <th>TICKET ID</th>
                                         <th>USERNAME</th>
+                                        <th>SEATS</th>
+                                        <th>TOTAL</th>
                                         <th>MOVIE NAME</th>
                                         <th>START DATE</th>
                                         <th>START TIME</th>
-                                        <th>SEATS</th>
                                         <th>BRANCH</th>
                                         <th>ROOM</th>
-                                        <th>TOTAL</th>
                                         <th>UPDATE</th>
                                         <th>DELETE</th>
                                     </tr>
@@ -93,41 +93,58 @@
                                     <tbody>
                                     <c:forEach var="ticket" items="${tickets}">
                                         <tr>
-                                            <form id="updateForm" method="PUT" onsubmit="return false" action="${pageContext.request.contextPath}/api/updateTicket/">
+                                            <form id="updateForm" method="PUT" onsubmit="return false"
+                                                  action="${pageContext.request.contextPath}/api/updateTicket/">
                                                 <td>
                                                     <input class="form-control" name="ticketId" type="text"
                                                            value="${ticket.id}"/>
                                                 </td>
                                                 <td>
-                                                    <input name="username" class="form-control" type="text" value="${ticket.username}"/>
+                                                    <input name="username" class="form-control" type="text"
+                                                           value="${ticket.username}"/>
                                                 </td>
                                                 <td>
-                                                    <input name="movieName" class="form-control" type="text" value="${ticket.movieName}"/>
+                                                    <input name="seating" class="form-control" type="text"
+                                                           value="${ticket.seating}"/>
                                                 </td>
                                                 <td>
-                                                    <input name="startDate" class="form-control" type="date" value="${ticket.startDate}"/>
+                                                    <input name="total" class="form-control" type="number"
+                                                           value="${ticket.total}"/>
+                                                </td>
+
+                                                <input name="scheduleId" class="form-control" type="text"
+                                                       style="display: none"
+                                                       value="${ticket.schedule.id}"/>
+
+                                                <td>
+                                                    <input class="form-control" type="text"
+                                                           value="${ticket.schedule.movie.name}"/>
                                                 </td>
                                                 <td>
-                                                    <input name="startTime" class="form-control" type="time" value="${ticket.startTime}"/>
+                                                    <input class="form-control" type="date"
+                                                           value="${ticket.schedule.startDate}"/>
                                                 </td>
                                                 <td>
-                                                    <input name="seating" class="form-control" type="text" value="${ticket.seating}"/>
+                                                    <input class="form-control" type="time"
+                                                           value="${ticket.schedule.startTime}"/>
+                                                </td>
+
+                                                <td>
+                                                    <input class="form-control" type="text"
+                                                           value="${ticket.schedule.branch.name}"/>
                                                 </td>
                                                 <td>
-                                                    <input name="branchName" class="form-control" type="text" value="${ticket.branch}"/>
+                                                    <input class="form-control" type="text"
+                                                           value="${ticket.schedule.room.name}"/>
                                                 </td>
+
                                                 <td>
-                                                    <input name="room" class="form-control" type="text" value="${ticket.room}"/>
-                                                </td>
-                                                <td>
-                                                    <input name="total" class="form-control" type="number" value="${ticket.total}"/>
-                                                </td>
-                                                <td>
-                                                    <button type="submit" class="btn btn-success"> UPDATE </button>
+                                                    <button type="submit" class="btn btn-success"> UPDATE</button>
                                                 </td>
                                             </form>
                                             <td>
-                                                <a href="/api/deleteTicket/${ticket.id}" class="btn btn-danger">DELETE</a>
+                                                <a href="/api/deleteTicket/${ticket.id}"
+                                                   class="btn btn-danger">DELETE</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

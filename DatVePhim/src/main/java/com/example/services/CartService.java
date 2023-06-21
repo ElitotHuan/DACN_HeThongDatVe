@@ -4,6 +4,7 @@ import com.example.models.Cart;
 import com.example.models.CartItem;
 import com.example.models.Food;
 import com.example.repositories.CartRepository;
+import com.example.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +12,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class CartService {
     private final CartRepository cartRepository;
+
+    private final UserRepository userRepository;
+
     @Autowired
-    public CartService(CartRepository cartRepository) {
+    public CartService(CartRepository cartRepository, UserRepository userRepository) {
         this.cartRepository = cartRepository;
+        this.userRepository = userRepository;
     }
 
     public void addToCart(Food food, String username) {
@@ -24,7 +29,7 @@ public class CartService {
         if (cart == null) {
             // Nếu user chưa có giỏ hàng, tạo mới một giỏ hàng
             cart = new Cart();
-            cart.setUsername(username);
+            cart.setUser(userRepository.findByUsername(username));
         }
 
         // Kiểm tra xem food đã tồn tại trong cart hay chưa
@@ -64,7 +69,7 @@ public class CartService {
         if (cart == null) {
             // Nếu user chưa có giỏ hàng, tạo mới một giỏ hàng
             cart = new Cart();
-            cart.setUsername(username);
+            cart.setUser(userRepository.findByUsername(username));
         }
 
         // Kiểm tra xem food đã tồn tại trong cart hay chưa
