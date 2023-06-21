@@ -42,16 +42,17 @@
                             <li>Thời gian chiếu:</li>
                             <li>Rạp:</li>
                             <li>Phòng:</li>
-                            <li>Tổng tiền:</li>
                             <li>Vị trí ghế:</li>
+                            <li>Tổng tiền:</li>
+
                         </ul>
                         <ul class="ticket-right">
                             <li>${ticketInfo.username}</li>
-                            <li>${ticketInfo.movieName}</li>
-                            <li>${ticketInfo.startDate}</li>
-                            <li>${ticketInfo.startTime}</li>
-                            <li>${ticketInfo.branchName}</li>
-                            <li>${ticketInfo.room}</li>
+                            <li>${ticketInfo.schedule.movie.name}</li>
+                            <li>${ticketInfo.schedule.startDate}</li>
+                            <li>${ticketInfo.schedule.startTime}</li>
+                            <li>${ticketInfo.schedule.branch.name}</li>
+                            <li>${ticketInfo.schedule.room.name}</li>
                             <li>${ticketInfo.total}</li>
                             <li>${ticketInfo.seating}</li>
                         </ul>

@@ -11,12 +11,8 @@ import java.time.LocalTime;
 @Data
 public class TicketDTO {
     private String username;
-    private String movieName;
+    private int scheduleId;
     private String seating;
-    private LocalDate startDate;
-    private LocalTime startTime;
-    private String branchName;
-    private String room;
     private Double total;
 }
 
