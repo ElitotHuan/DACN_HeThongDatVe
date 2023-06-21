@@ -14,4 +14,6 @@ public class AppConfigTest {
         String encodedPassword = encoder.encode(password);
         assertTrue(encoder.matches(password, encodedPassword));
     }
+
+    // Passed
 }
