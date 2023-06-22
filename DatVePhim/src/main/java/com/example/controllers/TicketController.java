@@ -36,9 +36,6 @@ public class TicketController {
     private TicketService ticketService;
 
     @Autowired
-    private ScheduleService scheduleService;
-
-    @Autowired
     private PaypalService paypalService;
 
     @PostMapping("/pay")
@@ -48,7 +45,7 @@ public class TicketController {
 
         //Tạo thanh toán từ dữ liệu của hóa đơn
         Payment payment = paypalService.createPayment(ticket.getTotal(), "USD",
-                "payemnt description", cancelURL, successURL);
+                "Ticke payment", cancelURL, successURL);
 
         for (Links links : payment.getLinks()) {
             //Sau khi tạo thanh toán nếu không xảy lỗi, tự động chuyển hướng sang giao diện paypal

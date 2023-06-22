@@ -1,10 +1,13 @@
 package com.example.controllers;
 
 import com.example.dto.FoodDTO;
+import com.example.models.Food;
 import com.example.services.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 
 @RestController
@@ -12,6 +15,15 @@ public class FoodController {
 
     @Autowired
     private FoodService service;
+
+
+    @RequestMapping(value = {"/food"}, method = RequestMethod.GET)
+    public ModelAndView food() {
+        List<Food> foodList = service.getAll();
+        ModelAndView mav = new ModelAndView("client/food");
+        mav.addObject("foods", foodList);
+        return mav;
+    }
 
     @PostMapping(value = "/api/addFood")
     public String addFood(@RequestBody FoodDTO foodDTO) {
