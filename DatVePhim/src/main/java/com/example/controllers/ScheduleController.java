@@ -1,7 +1,9 @@
 package com.example.controllers;
 
-import com.example.dto.MovieDTO;
 import com.example.dto.ScheduleDTO;
+import com.example.services.BranchService;
+import com.example.services.MovieService;
+import com.example.services.RoomService;
 import com.example.services.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,28 @@ public class ScheduleController {
 
     @Autowired
     private ScheduleService service;
+
+    @Autowired
+    private MovieService movieService;
+
+    @Autowired
+    private RoomService roomService;
+
+    @Autowired
+    private BranchService branchService;
+
+    @Autowired
+    private ScheduleService scheduleService;
+
+    @RequestMapping(value = {"/schedule"}, method = RequestMethod.GET)
+    public ModelAndView schedule() {
+        ModelAndView mav = new ModelAndView("client/schedule");
+        mav.addObject("movies", movieService.getAll());
+        mav.addObject("rooms", roomService.getAll());
+        mav.addObject("branches", branchService.getAll());
+        mav.addObject("schedules", scheduleService.getAll());
+        return mav;
+    }
 
     @PostMapping(value = "/api/addSchedule")
     public String addMovie(@RequestBody ScheduleDTO scheduleDTO) {

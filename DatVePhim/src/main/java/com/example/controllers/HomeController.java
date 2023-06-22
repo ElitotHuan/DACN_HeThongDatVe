@@ -18,17 +18,6 @@ public class HomeController {
 
     @Autowired
     private MovieService movieService;
-    @Autowired
-    private TicketService ticketService;
-
-    @Autowired
-    private RoomService roomService;
-    @Autowired
-    private BranchService branchService;
-    @Autowired
-    private ScheduleService scheduleService;
-    @Autowired
-    private FoodService foodService;
 
     @RequestMapping(value = {"/", "/Home"}, method = RequestMethod.GET)
     public ModelAndView home() {
@@ -38,58 +27,6 @@ public class HomeController {
         return mav;
     }
 
-    @RequestMapping(value = {"/food"}, method = RequestMethod.GET)
-    public ModelAndView food() {
-        List<Food> foodList = foodService.getAll();
-        ModelAndView mav = new ModelAndView("client/food");
-        mav.addObject("foods", foodList);
-        return mav;
-    }
-
-    @RequestMapping(value = {"/schedule"}, method = RequestMethod.GET)
-    public ModelAndView schedule() {
-        ModelAndView mav = new ModelAndView("client/schedule");
-        mav.addObject("movies", movieService.getAll());
-        mav.addObject("rooms", roomService.getAll());
-        mav.addObject("branches", branchService.getAll());
-        mav.addObject("schedules",  scheduleService.getAll());
-        return mav;
-    }
-
-
-    @RequestMapping(value = "/movie-detail/{id}", method = RequestMethod.GET)
-    public ModelAndView movieDetail(@PathVariable("id") int id) {
-        Movie m = movieService.getMovieById(id);
-        ModelAndView mav = new ModelAndView("client/movie-detail");
-        mav.addObject("movie", m);
-        return mav;
-    }
-
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public ResponseEntity<String> search(@RequestParam("q") String input) {
-        List<String> strings = movieService.doAutoComplete(input);
-        System.out.println(strings);
-        ObjectMapper mapper = new ObjectMapper();
-        String resp = "";
-
-        try {
-            resp = mapper.writeValueAsString(strings);
-        } catch (JsonProcessingException e) {
-        }
-        return ResponseEntity.ok(resp);
-    }
-
-    @RequestMapping(value = "/searchMovie", method = RequestMethod.GET)
-    public ModelAndView searchMovie(@RequestParam("name") String name) {
-        Movie m = movieService.getMovieByName(name);
-        if (m == null) {
-            ModelAndView mav = new ModelAndView("client/not-found");
-            return mav;
-        }
-        ModelAndView mav = new ModelAndView("client/movie-detail");
-        mav.addObject("movie", m);
-        return mav;
-    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView loginView() {
