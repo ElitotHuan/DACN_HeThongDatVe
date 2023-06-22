@@ -1,6 +1,7 @@
 package com.example.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Table(name = "movie")
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 public class Movie {
 
     @Id

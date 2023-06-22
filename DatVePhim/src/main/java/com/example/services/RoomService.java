@@ -44,6 +44,7 @@ public class RoomService {
 
     public Boolean deleteRoom(int id) {
         roomRepository.deleteById(id);
+
         return true;
     }
 }

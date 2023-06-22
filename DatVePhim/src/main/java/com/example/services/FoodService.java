@@ -54,6 +54,7 @@ public class FoodService {
 
     private void setData(FoodDTO food, Food newFood) {
         newFood.setName(food.getName());
+        newFood.setUrlImage(food.getUrlImage());
         newFood.setPrice(food.getPrice());
     }
 

@@ -38,7 +38,7 @@
                 data: JSON.stringify(data),
                 success: function (response) {
                     alert(response)
-                        window.location.reload();
+                    window.location.reload();
 
                 }, error: function () {
                     alert("error: email already used")
@@ -153,8 +153,8 @@
                                                                             <div class="form-group">
                                                                                 <select class="form-control" id="branchId">
                                                                                     <c:forEach var="branch" items="${branches}">
-                                                                                                 <option
-                                                                                                        value="${branch.id}">${branch.name}</option>
+                                                                                        <option
+                                                                                                value="${branch.id}">${branch.name}</option>
                                                                                     </c:forEach>
                                                                                 </select>
                                                                             </div>

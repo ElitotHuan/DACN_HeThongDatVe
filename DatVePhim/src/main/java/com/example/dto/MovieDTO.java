@@ -1,8 +1,10 @@
 package com.example.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class MovieDTO {
     private String name;
     private String smallImageURl;

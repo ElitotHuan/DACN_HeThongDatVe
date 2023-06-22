@@ -26,10 +26,10 @@
 
             $.each(this, function (i, v) {
                 var input = $(v);
-                data[input.attr("id")] = input.val();
+                if (input.attr("id") !== "role") {
+                    data[input.attr("id")] = input.val();}
                 delete data["undefined"];
             });
-            data.roles = [{id:Number.parseInt(data.roles)}];
             console.log({data});
             $.ajax({
                 contentType: "application/json;charset=UTF-8",
@@ -157,8 +157,8 @@
                                                                         </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="form-group">
-                                                                                <select id="roles" name="roles" class="form-control label">
-                                                                                    <option value="2">ADMIN</option>
+                                                                                <select id="role"  class="form-control label">
+                                                                                    <option value="ADMIN">ADMIN</option>
                                                                                 </select>
                                                                             </div>
                                                                         </div>

@@ -1,6 +1,7 @@
 package com.example.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
@@ -13,6 +14,7 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "schedule")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Schedule {
 
     @Id
