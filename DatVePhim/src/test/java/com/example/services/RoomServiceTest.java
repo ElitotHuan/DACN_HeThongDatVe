@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class RoomServiceTest {
+public class RoomServiceTest {
 
     @Mock
     private RoomRepository roomRepository;

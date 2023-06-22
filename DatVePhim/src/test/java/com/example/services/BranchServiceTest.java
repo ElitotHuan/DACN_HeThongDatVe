@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class BranchServiceTest {
+public class BranchServiceTest {
 
     @Mock
     private BranchRepository branchRepository;

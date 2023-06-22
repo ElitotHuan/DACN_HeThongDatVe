@@ -13,7 +13,7 @@ import static org.mockito.Mockito.*;
 import com.example.dto.FoodDTO;
 
 @ExtendWith(MockitoExtension.class)
-class FoodServiceTest {
+public class FoodServiceTest {
 
     @Mock
     private FoodRepository foodRepository;
