@@ -47,7 +47,7 @@
 
                         </ul>
                         <ul class="ticket-right">
-                            <li>${ticketInfo.username}</li>
+                            <li>${ticketInfo.user.fullName}</li>
                             <li>${ticketInfo.schedule.movie.name}</li>
                             <li>${ticketInfo.schedule.startDate}</li>
                             <li>${ticketInfo.schedule.startTime}</li>

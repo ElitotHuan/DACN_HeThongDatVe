@@ -50,6 +50,6 @@ public class TicketService {
         newTicket.setSeating(ticketDTO.getSeating());
         newTicket.setSchedule(scheduleRepository.getReferenceById(ticketDTO.getScheduleId()));
         newTicket.setTotal(ticketDTO.getTotal());
-        newTicket.setUsername(ticketDTO.getUsername());
+        newTicket.setUser(userRepository.findByUsername(ticketDTO.getUsername()));
     }
 }

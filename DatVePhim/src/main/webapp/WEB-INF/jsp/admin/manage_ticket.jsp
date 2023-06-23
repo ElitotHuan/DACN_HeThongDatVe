@@ -99,9 +99,13 @@
                                                     <input class="form-control" name="ticketId" type="text"
                                                            value="${ticket.id}"/>
                                                 </td>
+
+                                                <input name="username" class="form-control" type="text"
+                                                       style="display: none"
+                                                       value="${ticket.user.id}"/>
                                                 <td>
-                                                    <input name="username" class="form-control" type="text"
-                                                           value="${ticket.username}"/>
+                                                    <input class="form-control" type="text"
+                                                           value="${ticket.user.fullName}"/>
                                                 </td>
                                                 <td>
                                                     <input name="seating" class="form-control" type="text"
@@ -111,6 +115,7 @@
                                                     <input name="total" class="form-control" type="number"
                                                            value="${ticket.total}"/>
                                                 </td>
+
 
                                                 <input name="scheduleId" class="form-control" type="text"
                                                        style="display: none"

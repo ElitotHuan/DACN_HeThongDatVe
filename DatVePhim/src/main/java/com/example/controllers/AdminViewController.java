@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.example.models.Employee;
 import com.example.models.Movie;
 import com.example.models.Food;
 import com.example.models.Schedule;
@@ -40,6 +41,9 @@ public class AdminViewController {
 
     @Autowired
     private SatisticsService satisticsService;
+
+    @Autowired
+    private EmployeeService empService;
     
     @Autowired
     private RoleService roleService;
@@ -98,7 +102,7 @@ public class AdminViewController {
     @GetMapping(value = "/api/manage_user")
     public ModelAndView userManagementView(){
         ModelAndView mav = new ModelAndView("admin/manage_user");
-        mav.addObject("users",userService.getAllUsers());
+        mav.addObject("users",userService.getAll());
         mav.addObject("roles",roleService.getAllRoles());
         return mav;
     }
@@ -107,6 +111,16 @@ public class AdminViewController {
     public ModelAndView ticketManagement() {
         ModelAndView mav = new ModelAndView("admin/manage_ticket");
         mav.addObject("tickets",ticketService.getAll());
+        return mav;
+    }
+
+    @GetMapping(value = "/api/manage_employee")
+    public ModelAndView employeeMangamentView() {
+
+        List<Employee> empList =  empService.getAll();
+        ModelAndView mav = new ModelAndView("admin/manage_employee");
+        mav.addObject("employees", empList);
+        mav.addObject("branches", branchService.getAll());
         return mav;
     }
 

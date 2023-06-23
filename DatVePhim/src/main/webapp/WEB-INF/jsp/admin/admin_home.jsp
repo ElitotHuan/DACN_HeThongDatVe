@@ -143,6 +143,20 @@
                                 </div>
                             </a>
                         </div>
+
+                        <div class="col-md-6">
+                            <a href="/api/manage_employee">
+                                <div class="option-box">
+                                    <div class="option-box-img">
+                                        <img src="<%=request.getContextPath()%>/static\images\admin\manage_employee.png"
+                                             width="100%">
+
+                                    </div>
+                                    <h5>MANAGE EMPLOYEE</h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                         
                     </div>
 
