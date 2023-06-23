@@ -42,12 +42,16 @@ public class AdminViewController {
     @Autowired
     private SatisticsService satisticsService;
 
+
     @Autowired
     private RoleService roleService;
 
     @Autowired
     private EmployeeService empService;
   
+
+
+
     @GetMapping(value = {"/api/", "/api/admin_home"})
     public ModelAndView adminHomeView(@AuthenticationPrincipal UserDetails user) {
         ModelAndView mav = new ModelAndView("admin/admin_home");
