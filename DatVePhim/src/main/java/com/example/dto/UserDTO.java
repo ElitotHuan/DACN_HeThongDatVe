@@ -14,21 +14,14 @@ import java.util.List;
 @Getter
 @Setter
 public class UserDTO {
-    private Integer id;
     private String fullName;
     @NotEmpty(message = "Password should not be empty")
     private String password;
     private String username;
+    private String birthday;
+    private String address;
     @NotEmpty(message = "Email should not be empty")
     @Email
     private String email;
-    private List<Role> roles;
-
-    public List<Integer> getRoleIds() {
-        List<Integer> roleIds = new ArrayList<>();
-        for (Role role : roles) {
-            roleIds.add(role.getId());
-        }
-        return roleIds;
-    }
+    private String roles;
 }

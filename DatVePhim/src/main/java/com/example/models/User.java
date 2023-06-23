@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,12 @@ public class User {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "birthday")
+    private LocalDate birthday;
+
+    @Column(name = "address")
+    private String address;
+
     @Column(name = "email")
     private String email;
 
@@ -38,7 +45,6 @@ public class User {
             joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")})
     private List<Role> roles = new ArrayList<>();
-
 
 
 }

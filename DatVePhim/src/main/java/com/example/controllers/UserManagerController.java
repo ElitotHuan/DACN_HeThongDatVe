@@ -51,15 +51,6 @@ public class UserManagerController {
         return new ModelAndView("redirect:/api/manage_user");
     }
 
-    @GetMapping(value = "/api/getUser/{id}")
-    public UserDTO getUser(@PathVariable("id") int id) {
-        return userService.getUserById(id);
-    }
-
-    @GetMapping(value = "/api/getAllUsers")
-    public List<UserDTO> getAllUsers() {
-        return userService.getAllUsers();
-    }
 
     @PostMapping("/admin/login")
     public ModelAndView loginAdmin(@ModelAttribute("user") @Valid LoginDTO user, BindingResult bindingResult, ModelMap model, HttpSession session) {
@@ -69,7 +60,6 @@ public class UserManagerController {
         }
 
         boolean result = userService.authenticateAdmin(user.getUsername(), user.getPassword());
-
 
 
         if (result) {

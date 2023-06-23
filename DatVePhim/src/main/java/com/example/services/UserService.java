@@ -1,6 +1,7 @@
 package com.example.services;
 
 import com.example.dto.UserDTO;
+import com.example.models.Movie;
 import com.example.models.Role;
 import com.example.models.User;
 import com.example.repositories.RoleRepository;
@@ -11,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,7 +28,11 @@ public class UserService {
     @Autowired
     private RoleRepository roleRepository;
 
-    public boolean registerUser(String username, String password, String email, String fullName) {
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }
+    public boolean registerUser(String username, String password, String email, String fullName,LocalDate birthday, String address) {
+        passwordEncoder = new BCryptPasswordEncoder();
         // Kiểm tra xem người dùng đã tồn tại trong cơ sở dữ liệu chưa
         if (userRepository.findByUsername(username) != null) {
             return false;
@@ -52,6 +58,8 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(password)); // Mã hóa mật khẩu bằng BCrypt trước khi lưu vào cơ sở dữ liệu
         user.setEmail(email);
         user.setFullName(fullName);
+        user.setAddress(address);
+        user.setBirthday(birthday);
         user.getRoles().add(userRole);
 
         // Lưu thông tin người dùng vào cơ sở dữ liệu
@@ -108,70 +116,27 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void saveUser(UserDTO userDto) {
-        User user = new User();
-        user.setFullName(userDto.getFullName());
-        user.setEmail(userDto.getEmail());
-        user.setUsername(userDto.getUsername());
-        //encrypt the password using spring security
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-
-        Role role = roleRepository.findByName("ROLE_ADMIN");
-        if (role == null) {
-            role = checkRoleExist();
-        }
-        user.setRoles(List.of(role));
-        userRepository.save(user);
-    }
-
-    private Role checkRoleExist() {
-        Role role = new Role();
-        role.setName("ROLE_ADMIN");
-        return roleRepository.save(role);
-    }
-
-
-    public List<UserDTO> findAllUsers() {
-        List<User> users = userRepository.findAll();
-        return users.stream().map((user) -> convertEntityToDto(user))
-                .collect(Collectors.toList());
-    }
-
-    private UserDTO convertEntityToDto(User user) {
-        UserDTO userDto = new UserDTO();
-
-        userDto.setFullName(user.getFullName());
-        userDto.setUsername(user.getUsername());
-        userDto.setEmail(user.getEmail());
-        return userDto;
-    }
-
     // CRUD
     public boolean addUser(UserDTO userDTO) {
         User newUser = new User();
         setData(userDTO, newUser);
+        userRepository.save(newUser);
         return true;
     }
 
     public boolean updateUser(UserDTO userDTO, Integer id) {
+        passwordEncoder = new BCryptPasswordEncoder();
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setFullName(userDTO.getFullName());
-            user.setPassword(userDTO.getPassword());
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             user.setUsername(userDTO.getUsername());
+            user.setAddress(userDTO.getAddress());
+            user.setBirthday(LocalDate.parse(userDTO.getBirthday()));
             user.setEmail(userDTO.getEmail());
 
-            // Lấy danh sách các vai trò mới được chọn từ UserDTO
-            List<Integer> roleIds = userDTO.getRoleIds();
-
-            // Xóa tất cả cácvai trò hiện tại của người dùng
-            user.getRoles().clear();
-
-            // Thêm các vai trò mới vào danh sách vai trò của người dùng
-            List<Role> roles = roleRepository.findAllById(roleIds);
-            user.setRoles(roles);
-
+            // vai trò không thể thay đổi (USER sẽ được thêm từ register/Admim được thêm từ api/addUser)
             userRepository.save(user);
             return true;
         } else {
@@ -187,79 +152,28 @@ public class UserService {
             user.getRoles().clear();
             userRepository.delete(user);
             return true;
-        } else {
-            return false;
         }
-    }
-    public UserDTO getUserById(Integer id) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            UserDTO userDTO = new UserDTO();
-            userDTO.setId(user.getId());
-            userDTO.setFullName(user.getFullName());
-            userDTO.setPassword(user.getPassword());
-            userDTO.setUsername(user.getUsername());
-            userDTO.setEmail(user.getEmail());
-//            userDTO.setRoles(user.getRoles());
-            return userDTO;
-        } else {
-            return null;
-        }
-    }
+        return false;
 
-    public List<UserDTO> getAllUsers() {
-        List<User> userList = userRepository.findAll();
-        List<UserDTO> userDTOList = new ArrayList<>();
-        for (User user : userList) {
-            UserDTO userDTO = new UserDTO();
-            userDTO.setId(user.getId());
-            userDTO.setFullName(user.getFullName());
-            userDTO.setPassword(user.getPassword());
-            userDTO.setUsername(user.getUsername());
-            userDTO.setEmail(user.getEmail());
-            userDTO.setRoles(user.getRoles());
-            userDTOList.add(userDTO);
-        }
-        return userDTOList;
     }
 
     private Boolean setData(UserDTO userDTO, User user) {
+        passwordEncoder = new BCryptPasswordEncoder();
         user.setFullName(userDTO.getFullName());
         String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
         user.setPassword(encodedPassword);
         user.setUsername(userDTO.getUsername());
+        user.setBirthday(LocalDate.parse(userDTO.getBirthday()));
+        user.setAddress(userDTO.getAddress());
         user.setEmail(userDTO.getEmail());
         List<Role> roles = new ArrayList<>();
         Role roleAdmin = roleRepository.findByName("ADMIN");
         roles.add(roleAdmin);
         user.setRoles(roles);
-        userRepository.save(user);
         return true;
     }
-    public boolean checkAdminRoleByUsername(String username) {
-        // Lấy thông tin người dùng từ cơ sở dữ liệu
-        User user = userRepository.findByUsername(username);
-
-        // Kiểm tra xem người dùng có tồn tại hay không
-        if (user != null) {
-            // Lấy danh sách các role của người dùng
-            List<Role> roles = user.getRoles();
-
-            // Kiểm tra xem người dùng có role là "ADMIN" hay không
-            for (Role role : roles) {
-                System.out.println(role.getName());
-                if (role.getName().equals("ADMIN")) {
-                    return true;
-                }
-            }
-        }
-
-        // Người dùng không có role là "ADMIN"
-        return false;
-    }
-
     public boolean changePassword(String username, String currentPassword, String newPassword) {
+        passwordEncoder = new BCryptPasswordEncoder();
         // Tìm kiếm người dùng trong cơ sở dữ liệu bằng tên đăng nhập
         User user = userRepository.findByUsername(username);
 
@@ -276,5 +190,10 @@ public class UserService {
         userRepository.save(user);
 
         return true;
+    }
+
+
+    public boolean checkEmail(String email) {
+        return userRepository.findByEmail(email) == null;
     }
 }

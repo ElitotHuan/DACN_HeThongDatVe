@@ -4,5 +4,8 @@ public interface SatisticDTO {
 
     String getName();
 
+
+    Integer getEmployee();
+
     Double getTotal();
 }

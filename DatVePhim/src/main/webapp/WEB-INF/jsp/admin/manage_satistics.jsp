@@ -108,6 +108,7 @@
                                     <thead>
                                     <tr>
                                         <th>BRANCH NAME</th>
+                                        <th>EMPLOYEE TOTAL</th>
                                         <th>TOTAL</th>
                                     </tr>
                                     </thead>
@@ -117,6 +118,10 @@
                                             <td>
                                                 <input class="form-control" name="branchName" type="text"
                                                        value="${in.name}"/>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="branchName" type="text"
+                                                       value="${in.employee}"/>
                                             </td>
                                             <td><input name="total" class="form-control" type="number"
                                                        value="${in.total}"/></td>
