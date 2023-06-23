@@ -41,12 +41,12 @@ public class AdminViewController {
 
     @Autowired
     private SatisticsService satisticsService;
-
-    @Autowired
-    private EmployeeService empService;
     
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private EmployeeService empService;
 
 //    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = {"/api/", "/api/admin_home"})
