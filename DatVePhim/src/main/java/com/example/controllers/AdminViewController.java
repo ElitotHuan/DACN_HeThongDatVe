@@ -3,10 +3,8 @@ package com.example.controllers;
 import com.example.models.Employee;
 import com.example.models.Movie;
 import com.example.models.Food;
-import com.example.models.Schedule;
 import com.example.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,14 +40,11 @@ public class AdminViewController {
     @Autowired
     private SatisticsService satisticsService;
 
-
     @Autowired
     private RoleService roleService;
 
     @Autowired
     private EmployeeService empService;
-  
-
 
 
     @GetMapping(value = {"/api/", "/api/admin_home"})
