@@ -21,7 +21,6 @@
 
         $(document).on('submit', '#updateForm', function (e) {
             var frm = $('#updateForm');
-            e.preventDefault();
             var Form = this;
             var data = {};
 
@@ -57,8 +56,8 @@
         <div class="admin-reg">
             <div class="row">
 
-                <div class="col-md-9">
-                    <div class="col-md-9">
+                <div class="col-md-12">
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
                                 <nav class="navbar navbar-light navbar-toggleable">

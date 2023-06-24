@@ -93,8 +93,8 @@
                 <%--                <div class="col-md-3">--%>
                 <%--                    <%@ include file ="admin-profile.jsp" %>--%>
                 <%--                </div>--%>
-                <div class="col-md-9">
-                    <div class="col-md-9">
+                <div class="col-md-12">
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
                                 <nav class="navbar navbar-light navbar-toggleable">
@@ -239,7 +239,7 @@
                                             <form id="updateForm" method="PUT" onsubmit="return false"
                                                   action="${pageContext.request.contextPath}/api/updateMovie/">
                                                 <td>
-                                                    <input class="form-control" name="movieId" type="text"
+                                                    <input class="form-control" name="movieId" type="text" disabled
                                                            value="${mov.id}"/>
                                                 </td>
                                                 <td><input name="name" class="form-control" type="text"

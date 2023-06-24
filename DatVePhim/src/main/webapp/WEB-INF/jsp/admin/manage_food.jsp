@@ -83,8 +83,8 @@
         <div class="admin-reg">
             <div class="row">
 
-                <div class="col-md-9">
-                    <div class="col-md-9">
+                <div class="col-md-12">
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
                                 <nav class="navbar navbar-light navbar-toggleable">
