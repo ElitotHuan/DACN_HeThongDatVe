@@ -20,7 +20,15 @@ public class MovieController {
     @Autowired
     private MovieService service;
 
-    @RequestMapping(value = "/movie-detail/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/api/manage_movie")
+    public ModelAndView movieMangamentView() {
+        List<Movie> movieList =  service.getAll();
+        ModelAndView mav = new ModelAndView("admin/manage_movie");
+        mav.addObject("movies", movieList);
+        return mav;
+    }
+
+    @GetMapping(value = "/movie-detail/{id}")
     public ModelAndView movieDetail(@PathVariable("id") int id) {
         Movie m = service.getMovieById(id);
         ModelAndView mav = new ModelAndView("client/movie-detail");
@@ -28,7 +36,7 @@ public class MovieController {
         return mav;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @GetMapping(value = "/search")
     public ResponseEntity<String> search(@RequestParam("q") String input) {
         List<String> strings = service.doAutoComplete(input);
         System.out.println(strings);

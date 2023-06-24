@@ -17,10 +17,18 @@ public class FoodController {
     private FoodService service;
 
 
-    @RequestMapping(value = {"/food"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/food"})
     public ModelAndView food() {
         List<Food> foodList = service.getAll();
         ModelAndView mav = new ModelAndView("client/food");
+        mav.addObject("foods", foodList);
+        return mav;
+    }
+
+    @GetMapping(value = "/api/manage_food")
+    public ModelAndView foodMangamentView() {
+        List<Food> foodList =  service.getAll();
+        ModelAndView mav = new ModelAndView("admin/manage_food");
         mav.addObject("foods", foodList);
         return mav;
     }

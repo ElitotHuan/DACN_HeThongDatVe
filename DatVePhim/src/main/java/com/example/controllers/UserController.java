@@ -31,6 +31,19 @@ public class UserController {
     @Autowired
     private CartService cartService;
 
+
+    @GetMapping(value = "/login")
+    public ModelAndView loginView() {
+        ModelAndView mav = new ModelAndView("client/login");
+        return mav;
+    }
+
+    @GetMapping(value = "/register")
+    public ModelAndView RegisterView() {
+        ModelAndView mav = new ModelAndView("client/register");
+        return mav;
+    }
+
     @PostMapping("/register")
     public ModelAndView registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {

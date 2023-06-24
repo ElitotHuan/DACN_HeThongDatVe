@@ -13,6 +13,15 @@ public class BranchController {
     @Autowired
     BranchService service;
 
+
+    @GetMapping(value = "api/manage_branch")
+    public ModelAndView branchManagementView() {
+        ModelAndView mav = new ModelAndView("admin/manage_branch");
+        mav.addObject("branches", service.getAll());
+        return mav;
+    }
+
+
     @PostMapping(value = "/api/addBranch")
     public String addMovie(@RequestBody BranchDTO branchDTO) {
         System.out.println(branchDTO.toString());

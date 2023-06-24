@@ -1,10 +1,14 @@
 package com.example.controllers;
 
 import com.example.dto.EmployeeDTO;
+import com.example.models.Employee;
+import com.example.services.BranchService;
 import com.example.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 
 @RestController
@@ -12,6 +16,19 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService service;
+
+    @Autowired
+    private BranchService branchService;
+
+    @GetMapping(value = "/api/manage_employee")
+    public ModelAndView employeeMangamentView() {
+
+        List<Employee> empList =  service.getAll();
+        ModelAndView mav = new ModelAndView("admin/manage_employee");
+        mav.addObject("employees", empList);
+        mav.addObject("branches", branchService.getAll());
+        return mav;
+    }
 
     @PostMapping(value = "/api/addEmployee")
     public String addEmployee(@RequestBody EmployeeDTO empDTO) {

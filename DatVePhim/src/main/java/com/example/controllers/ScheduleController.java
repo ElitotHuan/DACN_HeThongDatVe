@@ -27,13 +27,23 @@ public class ScheduleController {
     @Autowired
     private ScheduleService scheduleService;
 
-    @RequestMapping(value = {"/schedule"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/schedule"})
     public ModelAndView schedule() {
         ModelAndView mav = new ModelAndView("client/schedule");
         mav.addObject("movies", movieService.getAll());
         mav.addObject("rooms", roomService.getAll());
         mav.addObject("branches", branchService.getAll());
         mav.addObject("schedules", scheduleService.getAll());
+        return mav;
+    }
+
+    @GetMapping(value = "/api/manage_schedule")
+    public ModelAndView scheduleMangamentView() {
+        ModelAndView mav = new ModelAndView("admin/manage_schedule");
+        mav.addObject("movies", movieService.getAll());
+        mav.addObject("rooms", roomService.getAll());
+        mav.addObject("branches", branchService.getAll());
+        mav.addObject("schedules",  scheduleService.getAll());
         return mav;
     }
 

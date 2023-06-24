@@ -38,6 +38,16 @@ public class TicketController {
     @Autowired
     private PaypalService paypalService;
 
+
+    @GetMapping("/api/manage_ticket")
+    public ModelAndView ticketManagement() {
+        ModelAndView mav = new ModelAndView("admin/manage_ticket");
+        mav.addObject("tickets",ticketService.getAll());
+        return mav;
+    }
+
+
+
     @PostMapping("/pay")
     public String pay(HttpSession session , @RequestBody TicketDTO ticket) throws PayPalRESTException {
         String cancelURL = "http://localhost:8080" + "/" + "pay/cancel";

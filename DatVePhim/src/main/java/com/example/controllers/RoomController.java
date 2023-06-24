@@ -4,6 +4,7 @@ package com.example.controllers;
 
 import com.example.dto.BranchDTO;
 import com.example.dto.RoomDTO;
+import com.example.services.BranchService;
 import com.example.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,18 @@ public class RoomController {
 
     @Autowired
     private RoomService service;
+
+    @Autowired
+    private BranchService branchService;
+
+    @GetMapping(value = "api/manage_room")
+    public ModelAndView roomManagementView() {
+        ModelAndView mav = new ModelAndView("admin/manage_room");
+        mav.addObject("rooms", service.getAll());
+        mav.addObject("branches", branchService.getAll());
+        return mav;
+    }
+
 
     @PostMapping(value = "/api/addRoom")
     public String addMovie(@RequestBody RoomDTO roomDTO) {

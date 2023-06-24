@@ -28,18 +28,6 @@ public class HomeController {
     }
 
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView loginView() {
-        ModelAndView mav = new ModelAndView("client/login");
-        return mav;
-    }
-
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public ModelAndView RegisterView() {
-        ModelAndView mav = new ModelAndView("client/register");
-        return mav;
-    }
-
     @RequestMapping(value = "/404", method = RequestMethod.GET)
     public ModelAndView NotFound404Page() {
         ModelAndView mav = new ModelAndView("client/404");

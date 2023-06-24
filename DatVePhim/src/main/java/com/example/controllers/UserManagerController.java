@@ -5,6 +5,7 @@ import com.example.dto.UserDTO;
 import com.example.models.Role;
 import com.example.models.User;
 import com.example.services.CustomUserDetailsService;
+import com.example.services.RoleService;
 import com.example.services.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +30,26 @@ public class UserManagerController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RoleService roleService;
+
     private Authentication authentication;
+
+
+    @GetMapping(value = "/api/login")
+    public ModelAndView adminLoginView() {
+        ModelAndView mav = new ModelAndView("admin/login");
+        return mav;
+    }
+
+    @GetMapping(value = "/api/manage_user")
+    public ModelAndView userManagementView(){
+        ModelAndView mav = new ModelAndView("admin/manage_user");
+        mav.addObject("users",userService.getAll());
+        mav.addObject("roles",roleService.getAllRoles());
+        return mav;
+    }
+
 
     @PostMapping(value = "/api/addUser")
     public String addUser(@RequestBody UserDTO userDTO) {
