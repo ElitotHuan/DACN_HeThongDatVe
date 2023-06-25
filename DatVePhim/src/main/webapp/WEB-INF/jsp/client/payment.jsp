@@ -169,7 +169,7 @@
                             </tr>
                             <c:forEach var="item" items="${cartItems}">
                                 <tr>
-                                    <td>${item.food.name}</td>
+                                     <td>${item.food.name}</td>
                                     <td>
                                         <button class="plus-button"
                                                 onclick="removeFromCart(${item.food.id}, '${sessionScope.loggedInUser.username}')">
